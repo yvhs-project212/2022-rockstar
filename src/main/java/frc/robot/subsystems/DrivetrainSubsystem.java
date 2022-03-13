@@ -50,8 +50,8 @@ public class DrivetrainSubsystem extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
   }
-  public void driveWithJoysticks(XboxController controller, double speed) {
-    drive.arcadeDrive(controller.getRawAxis(Constants.OI.XBOX_Y_AXIS)*-(speed), controller.getRawAxis(Constants.OI.XBOX_X_AXIS)*speed);
+  public void driveWithJoysticks(XboxController controller, double forwardSpeed, double turnSpeed) {
+    drive.arcadeDrive(controller.getRawAxis(Constants.OI.XBOX_Y_AXIS)*-(forwardSpeed), controller.getRawAxis(Constants.OI.XBOX_X_AXIS)*turnSpeed);
   }
 
   public void setGear(DoubleSolenoid.Value value) {

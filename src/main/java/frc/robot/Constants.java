@@ -62,7 +62,8 @@ public final class Constants {
     }
 
     public static final class DriveConstants {
-		public static final double DRIVETRAINSPEED = 1;
+		public static final double FORWARD_SPEED = 0.65;
+		public static final double TURN_SPEED = 0.8;
         public static final double MIN_PRESSURE = 30;       //This should be in PSI's - LL
         public static final double MAX_PRESSURE = 60;
 

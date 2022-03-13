@@ -7,6 +7,10 @@ package frc.robot;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.commands.DriveWithJoysticksCmd;
+import frc.robot.commands.HangCmd;
+import frc.robot.subsystems.DrivetrainSubsystem;
+import frc.robot.subsystems.HangSubsystem;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -16,9 +20,30 @@ import edu.wpi.first.wpilibj2.command.Command;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
+  
+  // DriveTrain files - LL
+  public static DrivetrainSubsystem driveTrain = new DrivetrainSubsystem();
+  private final DriveWithJoysticksCmd driveWithJoysticksCmd = new DriveWithJoysticksCmd(driveTrain);
+
+  // Hang files - LL
+  public static HangSubsystem hang = new HangSubsystem();
+  private final HangCmd hangCmd = new HangCmd(hang);
+
+  
+  // Controller files - LL
+  public static XboxController driverJoystick = new XboxController(Constants.OI.DRIVER_NUMBER);
+  public static XboxController gunnerJoystick = new XboxController(Constants.OI.GUNNER_NUMBER);
+
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
+    System.out.println("In the Construtor for RobotContainer");
+
+    //INITALIZE all the things we made - LL
+
+    driveTrain.setDefaultCommand(driveWithJoysticksCmd);   //Drive is always looking to read this command - LL
+    hang.setDefaultCommand(hangCmd);
+
     // Configure the button bindings
     configureButtonBindings();
   }
