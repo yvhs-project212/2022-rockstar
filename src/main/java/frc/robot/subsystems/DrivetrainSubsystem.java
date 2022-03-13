@@ -4,10 +4,12 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.interfaces.Gyro;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -47,5 +49,39 @@ public class DrivetrainSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+  }
+  public void driveWithJoysticks(XboxController controller, double speed) {
+    drive.arcadeDrive(controller.getRawAxis(Constants.OI.XBOX_Y_AXIS)*-(speed), controller.getRawAxis(Constants.OI.XBOX_X_AXIS)*speed);
+  }
+
+  public void setGear(DoubleSolenoid.Value value) {
+    gearbox.set(value);
+  }
+
+  public void stop() {
+    drive.stopMotor();
+  }
+
+  public void setFalconMode(NeutralMode neutralMode) {
+    leftBottomFollower.setNeutralMode(neutralMode);
+    leftTopLeader.setNeutralMode(neutralMode);
+    rightBottomFollower.setNeutralMode(neutralMode);
+    rightTopLeader.setNeutralMode(neutralMode);   
+  }
+
+  public double getLeftEncoder() {
+    return 0;
+  }
+
+  public double getRightEncoder() {
+    return 0;
+  }
+
+  public double getPressure() {
+    return Constants.pcmCompressor.getPressure();
+  }
+
+  public double getCurrent() {
+    return Constants.pcmCompressor.getCurrent();
   }
 }
