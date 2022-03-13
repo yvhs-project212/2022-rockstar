@@ -5,24 +5,36 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.subsystems.ShooterSubsystem;
 
 public class ShooterCmd extends CommandBase {
   /** Creates a new ShooterCmd. */
-  public ShooterCmd() {
+  ShooterSubsystem shooter;
+
+  public ShooterCmd(ShooterSubsystem shoot) {
     // Use addRequirements() here to declare subsystem dependencies.
+    shooter = shoot;
+    addRequirements(shoot);
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    System.out.println("ShooterCmd Started!");
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {}
+  public void execute() {
+    shooter.printEncoderVelocity();
+    shooter.stopMotors();
+  }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    System.out.println("ShooterCmd Ended!");
+  }
 
   // Returns true when the command should end.
   @Override

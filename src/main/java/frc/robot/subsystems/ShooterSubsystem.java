@@ -4,14 +4,136 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.TalonFXFeedbackDevice;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
+
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
+import frc.robot.Constants.ShooterConstants;
 
 public class ShooterSubsystem extends SubsystemBase {
   /** Creates a new ShooterSubsystem. */
-  public ShooterSubsystem() {}
+  WPI_TalonFX bottomFlywheel;
+  WPI_TalonFX topFlywheel;
+
+  public ShooterSubsystem() {
+    bottomFlywheel = new WPI_TalonFX(Constants.PWM.Shooter.BOTTOM_FLYWHEEL);
+    bottomFlywheel.setInverted(false);
+    bottomFlywheel.setNeutralMode(NeutralMode.Coast);
+    
+
+    topFlywheel = new WPI_TalonFX(Constants.PWM.Shooter.TOP_FLYWEEL);
+    topFlywheel.setInverted(true);
+    topFlywheel.setNeutralMode(NeutralMode.Coast);
+
+    SmartDashboard.putNumber("Top Flywheel Velocity Input", 0);
+    SmartDashboard.putNumber("Bottom Flywheel Velocity Input", 0);
+
+    SmartDashboard.putNumber("Top Flywheel Velocity Output", 0);
+    SmartDashboard.putNumber("Bottom Flywheel Velocity Output", 0);
+
+    
+    /* Factory Default all hardware to prevent unexpected behaviour */
+		bottomFlywheel.configFactoryDefault();
+    topFlywheel.configFactoryDefault();
+		
+		/* Config neutral deadband to be the smallest possible */
+    bottomFlywheel.configNeutralDeadband(0.001);
+    topFlywheel.configNeutralDeadband(0.001);
+
+		/* Config sensor used for Primary PID [Velocity] */
+    bottomFlywheel.configSelectedFeedbackSensor(TalonFXFeedbackDevice.IntegratedSensor, ShooterConstants.kPIDLoopIdx,ShooterConstants.kTimeoutMs);
+    topFlywheel.configSelectedFeedbackSensor(TalonFXFeedbackDevice.IntegratedSensor, ShooterConstants.kPIDLoopIdx,ShooterConstants.kTimeoutMs);
+
+		/* Config the peak and nominal outputs */
+		bottomFlywheel.configNominalOutputForward(0, ShooterConstants.kTimeoutMs);
+		bottomFlywheel.configNominalOutputReverse(0, ShooterConstants.kTimeoutMs);
+		bottomFlywheel.configPeakOutputForward(1, ShooterConstants.kTimeoutMs);
+		bottomFlywheel.configPeakOutputReverse(-1, ShooterConstants.kTimeoutMs);
+
+    topFlywheel.configNominalOutputForward(0, ShooterConstants.kTimeoutMs);
+		topFlywheel.configNominalOutputReverse(0, ShooterConstants.kTimeoutMs);
+		topFlywheel.configPeakOutputForward(1, ShooterConstants.kTimeoutMs);
+		topFlywheel.configPeakOutputReverse(-1, ShooterConstants.kTimeoutMs);
+
+		/* Config the Velocity closed loop gains in slot0 */
+		bottomFlywheel.config_kF(ShooterConstants.kPIDLoopIdx, ShooterConstants.kGains_Velocit_Bottom_Flywheel.kF, ShooterConstants.kTimeoutMs);
+		bottomFlywheel.config_kP(ShooterConstants.kPIDLoopIdx, ShooterConstants.kGains_Velocit_Bottom_Flywheel.kP, ShooterConstants.kTimeoutMs);
+		bottomFlywheel.config_kI(ShooterConstants.kPIDLoopIdx, ShooterConstants.kGains_Velocit_Bottom_Flywheel.kI, ShooterConstants.kTimeoutMs);
+		bottomFlywheel.config_kD(ShooterConstants.kPIDLoopIdx, ShooterConstants.kGains_Velocit_Bottom_Flywheel.kD, ShooterConstants.kTimeoutMs);
+
+    topFlywheel.config_kF(ShooterConstants.kPIDLoopIdx, ShooterConstants.kGains_Velocit_Top_Flywheel.kF, ShooterConstants.kTimeoutMs);
+		topFlywheel.config_kP(ShooterConstants.kPIDLoopIdx, ShooterConstants.kGains_Velocit_Top_Flywheel.kP, ShooterConstants.kTimeoutMs);
+		topFlywheel.config_kI(ShooterConstants.kPIDLoopIdx, ShooterConstants.kGains_Velocit_Top_Flywheel.kI, ShooterConstants.kTimeoutMs);
+		topFlywheel.config_kD(ShooterConstants.kPIDLoopIdx, ShooterConstants.kGains_Velocit_Top_Flywheel.kD, ShooterConstants.kTimeoutMs);
+		/*
+		 * Talon FX does not need sensor phase set for its integrated sensor
+		 * This is because it will always be correct if the selected feedback device is integrated sensor (default value)
+		 * and the user calls getSelectedSensor* to get the sensor's position/velocity.
+		 * 
+		 * https://phoenix-documentation.readthedocs.io/en/latest/ch14_MCSensor.html#sensor-phase
+		 */
+        // _talon.setSensorPhase(true);
+  }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
   }
+
+  public void enable() {
+    /* Velocity Closed Loop */
+
+    /**
+     * Convert 2000 RPM to units / 100ms.
+     * 2048 Units/Rev * 2000 RPM / 600 100ms/min in either direction:
+     * velocity setpoint is in units/100ms
+     */
+
+    /** How to calculate the RPM of a flywheel for a specific velocity
+     *  "It’s not too much physics. If we ignore slippage, 
+     * the ball moves at the same linear speed as the surface of your wheels 
+     * (assuming by 2 flywheels you mean the ball is between them). 
+     * So if your wheels have a circumference of 12.5” and 
+     * are spinning at 5000 rpms:"
+     * 
+     * 5000 rpms * 12.5 in / 12 in/ft / 60 sec/min = 87.27 ft/sec
+     * 
+     *  "You can rearrange to get rpms out for a given ft/sec desired"
+     * 
+     * X ft/sec * 60 sec/min * 12 in/ft / circum inches = rpms
+     * 
+     * https://www.reddit.com/r/FRC/comments/s7hn82/help_with_velocity_to_rpm_calculations/
+     */
+    
+    //double targetVelocity_UnitsPer100ms = leftYstick * 2000.0 * 2048.0 / 600.0;
+    double bottomFlywheel_targetVelocity_UnitsPer100ms = SmartDashboard.getNumber("Top Flywheel Velocity Input", 0);
+    double topFlywheel_targetVelocity_UnitsPer100ms = SmartDashboard.getNumber("Top Flywheel Velocity Input", 0);
+    
+    /* 2000 RPM in either direction */
+
+    //bottomFlywheel.set(ControlMode.Velocity, bottomFlywheel_targetVelocity_UnitsPer100ms);
+    //topFlywheel.set(ControlMode.Velocity, topFlywheel_targetVelocity_UnitsPer100ms);
+
+    bottomFlywheel.set(ControlMode.Velocity, 1000);
+    topFlywheel.set(ControlMode.Velocity, 1000);
+  }
+
+  public double getLimelightDistance() {
+    return 0;
+  }
+
+  public void printEncoderVelocity() {
+    SmartDashboard.putNumber("Top Flywheel Velocity Output", topFlywheel.getSelectedSensorVelocity());
+    SmartDashboard.putNumber("Bottom Flywheel Velocity Output", bottomFlywheel.getSelectedSensorVelocity());
+  }
+
+  public void stopMotors() {
+    topFlywheel.stopMotor();
+    bottomFlywheel.stopMotor();
+  }
+
 }

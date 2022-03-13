@@ -86,11 +86,9 @@ public final class Constants {
 	}
 
     public static final class HangConstants {
-        public static final double [] UP_DOWN_SPEED = {0.5, -0.5, 0};
-        /*
-		public static final double UP_SPEED = 0.35;
-		public static final double DOWN_SPEED = -0.4;
-        */
+		public static final double UP_SPEED = 0.65;
+		public static final double DOWN_SPEED = -0.65;
+        
 	}
 
     public static final class ShooterConstants {
