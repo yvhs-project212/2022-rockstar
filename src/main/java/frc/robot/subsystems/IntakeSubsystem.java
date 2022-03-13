@@ -30,4 +30,10 @@ public class IntakeSubsystem extends SubsystemBase {
   public void intakeWithTriggers(XboxController controller, double speed) {
     intake.set((controller.getRightTriggerAxis() - controller.getLeftTriggerAxis()) * speed);
   }
+  /**
+   * DO THIS PLEASE!
+   * https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
+   * --> 
+   * https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html#functionalcommand
+   */
 }
