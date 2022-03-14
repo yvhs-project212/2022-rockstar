@@ -93,7 +93,7 @@ public final class Constants {
 	}
 
     public static final class ShooterConstants {
-        public static final double kp = 0.5; // I have no idea how to do PID - LL 2.23.22
+        public static final double velocityTolerance = 10; // native sensor units per 100ms??? --> https://docs.ctre-phoenix.com/en/stable/ch16_ClosedLoop.html#velocity-closed-loop-control-mode 
 
         /**
          * Which PID slot to pull gains from. Starting 2018, you can choose from
@@ -114,6 +114,12 @@ public final class Constants {
          */
         public static final int kTimeoutMs = 30;
 
+        public static final double LIMELIGHT_MOUNT_ANGLE_DEGREES = 24;
+
+        public static final double LIMELIGHT_LENS_HEIGHT_INCHES = 38;
+
+        public static final double GOAL_HEIGHT_INCHES = 104;
+
         /**
          * PID Gains may have to be adjusted based on the responsiveness of control loop.
          * kF: 1023 represents output value to Talon at 100%, 20660 represents Velocity units at 100% output
@@ -123,27 +129,34 @@ public final class Constants {
         public final static Gains kGains_Velocit  = new Gains( 0.1, 0.001, 5, 1023.0/20660.0,  300,  1.00);
         */
 
+        public final static class TopFlywheelConstants {
+            public final static class kGains_Velocit_Top_Flywheel {
+                public final static double kP = 0.1;
+                public final static double kI = 0.001;
+                public final static double kD = 5;
+                public final static double kF = 0; // 1023.0 / 20660.0
+                public final static double Iz = 300;
+                public final static double PeakOut = 1.00;
+            }
+            
+            public final static double TOP_SLOPE = 88.23;
+            public final static double TOP_Y_INT = 6000;
+        }
         
-        public final static class kGains_Velocit_Bottom_Flywheel {
-            public final static double kP = 0.1;
-            public final static double kI = 0.001;
-            public final static double kD = 5;
-            public final static double kF = 0; // 1023.0 / 20660.0
-            public final static double Iz = 300;
-            public final static double PeakOut = 1.00;
+        public final static class BottomFlywheelConstants {
+            public final static class kGains_Velocit_Bottom_Flywheel {
+                public final static double kP = 0.1;
+                public final static double kI = 0.001;
+                public final static double kD = 5;
+                public final static double kF = 0; // 1023.0 / 20660.0
+                public final static double Iz = 300;
+                public final static double PeakOut = 1.00;
+            }
+            public final static double BOTTOM_SLOPE = 720.58824;
+            public final static double BOTTOM_Y_INT = -900;   
         }
-        public final static class kGains_Velocit_Top_Flywheel {
-            public final static double kP = 0.1;
-            public final static double kI = 0.001;
-            public final static double kD = 5;
-            public final static double kF = 0; // 1023.0 / 20660.0
-            public final static double Iz = 300;
-            public final static double PeakOut = 1.00;
-        }
+        //public static final double kShooterRPM2Velocity = 1; // Per encoder tick to flywheel velocity (ft/min)
 
-        public static final double velocityTolerance = 10; // native sensor units per 100ms??? --> https://docs.ctre-phoenix.com/en/stable/ch16_ClosedLoop.html#velocity-closed-loop-control-mode 
-
-        public static final double kShooterRPM2Velocity = 1; // Per encoder tick to flywheel velocity (ft/min)
     }
     public static final class StorageConstants {
         public static final double INDEXER_SPEED = 0.5;
