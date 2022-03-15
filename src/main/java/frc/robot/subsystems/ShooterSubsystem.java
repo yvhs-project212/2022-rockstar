@@ -112,6 +112,8 @@ public class ShooterSubsystem extends SubsystemBase {
     topFlywheelAtSetpoint();
     // To know if the bottom flywheel is at the setpoint velocity
     bottomFlywheelAtSetpoint();
+    // To know if the Shooter is on
+    SmartDashboard.putBoolean("Shooter On/Off", shooterOnOff);
   }
 
   public void enable() {
@@ -186,13 +188,13 @@ public class ShooterSubsystem extends SubsystemBase {
   public boolean goalDetected () {
     NetworkTableEntry tv = table.getEntry("tv");
     double validTargets = tv.getDouble(0.0);
-        if (validTargets == 1.0) {
-          SmartDashboard.putBoolean("Goal Detected", true);
-          return true;
-        } else {
-          SmartDashboard.putBoolean("Goal Detected", false);
-          return false;
-        }
+    if (validTargets == 1.0) {
+      SmartDashboard.putBoolean("Goal Detected", true);
+      return true;
+    } else {
+      SmartDashboard.putBoolean("Goal Detected", false);
+      return false;
+    }
   }
 
   public double getLimelightDistanceInches() {

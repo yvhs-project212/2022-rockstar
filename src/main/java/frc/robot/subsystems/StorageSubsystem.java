@@ -4,29 +4,110 @@
 
 package frc.robot.subsystems;
 
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
-public class StorageSubsystem extends CommandBase {
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants.PWM;
+
+public class StorageSubsystem extends SubsystemBase {
   /** Creates a new StorageSubsystem. */
-  public StorageSubsystem() {
-    // Use addRequirements() here to declare subsystem dependencies.
+  WPI_TalonSRX indexer;
+  WPI_TalonSRX feeder;
+
+  MotorSelection setMotorSelection;
+  MotorSelection runMotorSelection;
+  double motorSpeed;
+
+  public enum MotorSelection {
+    NONE, 
+    ALL, 
+    INDEXER, 
+    FEEDER, 
+    REVERSE_ALL,
+    REVERSE_INDEXER,
+    REVERSE_FEEDER;
   }
 
-  // Called when the command is initially scheduled.
-  @Override
-  public void initialize() {}
 
-  // Called every time the scheduler runs while the command is scheduled.
-  @Override
-  public void execute() {}
+  public StorageSubsystem() {
+    setMotorSelection = StorageSubsystem.MotorSelection.NONE;
+    indexer = new WPI_TalonSRX(PWM.Storage.INDEXER);
+    indexer.setInverted(false);
 
-  // Called once the command ends or is interrupted.
-  @Override
-  public void end(boolean interrupted) {}
+    feeder = new WPI_TalonSRX(PWM.Storage.FEEDER);
+    feeder.setInverted(true);
 
-  // Returns true when the command should end.
+  setMotorSelection = MotorSelection.NONE;
+  runMotorSelection = MotorSelection.NONE;
+  motorSpeed = 0;
+  }
+
   @Override
-  public boolean isFinished() {
-    return false;
+  public void periodic() {
+    // This method will be called once per scheduler run
+  }
+
+  public void setMotors(final StorageSubsystem.MotorSelection setMotorSelection, double userSelectedMotorSpeed) {
+    runMotorSelection = setMotorSelection;
+    motorSpeed = userSelectedMotorSpeed;
+  }
+
+  public void runMotors() {
+    switch (runMotorSelection) {
+      case NONE:
+        stopMotors();
+        break;
+      case INDEXER:
+        indexer(motorSpeed);
+        break;
+      case FEEDER:
+        feeder(motorSpeed);
+        break;
+      case ALL:
+        all(motorSpeed);
+        break;
+      case REVERSE_ALL:
+        reverseAll(motorSpeed);
+        break;
+      case REVERSE_FEEDER:
+        reverseFeeder(motorSpeed);
+        break;
+      case REVERSE_INDEXER:
+        reverseIndexer(motorSpeed);
+        break;
+    }
+  }
+  
+  public void indexer(double speed) {
+    this.indexer.set(speed);
+    this.feeder.set(0.0);
+  }
+
+  public void feeder(double speed) {
+    this.indexer.set(0.0);
+    this.feeder.set(speed);
+  }
+
+  public void all(double speed) {
+    this.indexer.set(speed);
+    this.feeder.set(speed);
+  }
+
+  public void reverseAll(double speed) {
+    this.indexer.set(-speed);
+    this.feeder.set(-speed);
+  }
+  public void reverseIndexer(double speed) {
+    this.indexer.set(-speed);
+    this.feeder.set(0);
+  }
+  public void reverseFeeder(double speed) {
+    this.indexer.set(0);
+    this.feeder.set(-speed);
+  }
+
+  public void stopMotors() {
+    indexer.stopMotor();
+    feeder.stopMotor();
   }
 }
