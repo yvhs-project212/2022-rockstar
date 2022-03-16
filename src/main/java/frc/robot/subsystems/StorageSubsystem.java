@@ -11,12 +11,12 @@ import frc.robot.Constants.PWM;
 
 public class StorageSubsystem extends SubsystemBase {
   /** Creates a new StorageSubsystem. */
-  WPI_TalonSRX indexer;
-  WPI_TalonSRX feeder;
+  private final WPI_TalonSRX indexer;
+  private final WPI_TalonSRX feeder;
 
-  MotorSelection setMotorSelection;
-  MotorSelection runMotorSelection;
-  double motorSpeed;
+  public MotorSelection setMotorSelection;
+  public MotorSelection runMotorSelection;
+  public double motorSpeed;
 
   public enum MotorSelection {
     NONE, 

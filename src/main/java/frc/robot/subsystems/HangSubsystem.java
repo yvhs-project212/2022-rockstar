@@ -14,8 +14,8 @@ import frc.robot.Constants.HangConstants;
 public class HangSubsystem extends SubsystemBase {
   /** Creates a new HangSubsystem. */
   
-  WPI_TalonSRX hangLeft;
-  WPI_TalonSRX hangRight;
+  private final WPI_TalonSRX hangLeft;
+  private final WPI_TalonSRX hangRight;
 
   public enum Direction {
     UP(HangConstants.UP_SPEED), DOWN(HangConstants.DOWN_SPEED), STOP(0);

@@ -16,8 +16,8 @@ import frc.robot.Constants.Solenoid;
 
 public class IntakeSubsystem extends SubsystemBase {
   /** Creates a new IntakeSubsystem. */
-  WPI_TalonSRX intake;
-  DoubleSolenoid piston;
+  private final WPI_TalonSRX intake;
+  private final DoubleSolenoid piston;
 
   public IntakeSubsystem() {
     intake = new WPI_TalonSRX(Constants.PWM.Intake.INTAKE);

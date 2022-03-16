@@ -18,11 +18,11 @@ import frc.robot.Constants.ShooterConstants;
 
 public class ShooterSubsystem extends SubsystemBase {
   /** Creates a new ShooterSubsystem. */
-  WPI_TalonFX bottomFlywheel;
-  WPI_TalonFX topFlywheel;
+  private final WPI_TalonFX bottomFlywheel;
+  private final WPI_TalonFX topFlywheel;
 
-  NetworkTable table;
-  Boolean shooterOnOff;
+  public NetworkTable table;
+  public Boolean shooterOnOff;
 
 
   public ShooterSubsystem() {
