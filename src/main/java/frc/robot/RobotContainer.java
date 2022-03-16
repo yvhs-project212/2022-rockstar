@@ -8,9 +8,15 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.commands.DriveWithJoysticksCmd;
+import frc.robot.commands.EnableFeederCmd;
+import frc.robot.commands.EnableShooterCmd;
 import frc.robot.commands.HangCmd;
+import frc.robot.commands.ShooterCmd;
+import frc.robot.commands.StorageCmd;
 import frc.robot.subsystems.DrivetrainSubsystem;
 import frc.robot.subsystems.HangSubsystem;
+import frc.robot.subsystems.ShooterSubsystem;
+import frc.robot.subsystems.StorageSubsystem;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -28,6 +34,16 @@ public class RobotContainer {
   // Hang files - LL
   public static HangSubsystem hang = new HangSubsystem();
   private final HangCmd hangCmd = new HangCmd(hang);
+
+  // Shooter files - LL
+  public static ShooterSubsystem shooter = new ShooterSubsystem();
+  private final ShooterCmd shooterCmd = new ShooterCmd(shooter);
+  private final EnableShooterCmd enableShooterCmd = new EnableShooterCmd(shooter);
+
+  // Storage files - LL
+  public static StorageSubsystem storage = new StorageSubsystem();
+  private final EnableFeederCmd enableFeederCmd = new EnableFeederCmd(storage);
+  private final StorageCmd storageCmd = new StorageCmd(storage);
 
   
   // Controller files - LL

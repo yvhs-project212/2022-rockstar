@@ -16,7 +16,8 @@ public class StorageSubsystem extends SubsystemBase {
 
   public MotorSelection setMotorSelection;
   public MotorSelection runMotorSelection;
-  public double motorSpeed;
+  public double indexerSpeed;
+  public double feederSpeed;
 
   public enum MotorSelection {
     NONE, 
@@ -39,7 +40,8 @@ public class StorageSubsystem extends SubsystemBase {
 
   setMotorSelection = MotorSelection.NONE;
   runMotorSelection = MotorSelection.NONE;
-  motorSpeed = 0;
+  indexerSpeed = 0;
+  feederSpeed = 0;
   }
 
   @Override
@@ -47,9 +49,10 @@ public class StorageSubsystem extends SubsystemBase {
     // This method will be called once per scheduler run
   }
 
-  public void setMotors(final StorageSubsystem.MotorSelection setMotorSelection, double userSelectedMotorSpeed) {
+  public void setMotors(final StorageSubsystem.MotorSelection setMotorSelection, double userSelectedIndexerSpeed, double userSelectedFeederSpeed) {
     runMotorSelection = setMotorSelection;
-    motorSpeed = userSelectedMotorSpeed;
+    indexerSpeed = userSelectedIndexerSpeed;
+    feederSpeed = userSelectedFeederSpeed;
   }
 
   public void runMotors() {
@@ -58,52 +61,52 @@ public class StorageSubsystem extends SubsystemBase {
         stopMotors();
         break;
       case INDEXER:
-        indexer(motorSpeed);
+        indexer(indexerSpeed);
         break;
       case FEEDER:
-        feeder(motorSpeed);
+        feeder(feederSpeed);
         break;
       case ALL:
-        all(motorSpeed);
+        all(indexerSpeed, feederSpeed);
         break;
       case REVERSE_ALL:
-        reverseAll(motorSpeed);
+        reverseAll(indexerSpeed, feederSpeed);
         break;
       case REVERSE_FEEDER:
-        reverseFeeder(motorSpeed);
+        reverseFeeder(indexerSpeed);
         break;
       case REVERSE_INDEXER:
-        reverseIndexer(motorSpeed);
+        reverseIndexer(indexerSpeed);
         break;
     }
   }
   
-  public void indexer(double speed) {
-    this.indexer.set(speed);
+  public void indexer(double indexerSpeed) {
+    this.indexer.set(indexerSpeed);
     this.feeder.set(0.0);
   }
 
-  public void feeder(double speed) {
+  public void feeder(double feederSpeed) {
     this.indexer.set(0.0);
-    this.feeder.set(speed);
+    this.feeder.set(feederSpeed);
   }
 
-  public void all(double speed) {
-    this.indexer.set(speed);
-    this.feeder.set(speed);
+  public void all(double indexerSpeed, double feederSpeed) {
+    this.indexer.set(indexerSpeed);
+    this.feeder.set(feederSpeed);
   }
 
-  public void reverseAll(double speed) {
-    this.indexer.set(-speed);
-    this.feeder.set(-speed);
+  public void reverseAll(double indexerSpeed, double feederSpeed) {
+    this.indexer.set(-indexerSpeed);
+    this.feeder.set(-feederSpeed);
   }
-  public void reverseIndexer(double speed) {
-    this.indexer.set(-speed);
+  public void reverseIndexer(double indexerSpeed) {
+    this.indexer.set(-indexerSpeed);
     this.feeder.set(0);
   }
-  public void reverseFeeder(double speed) {
+  public void reverseFeeder(double feederSpeed) {
     this.indexer.set(0);
-    this.feeder.set(-speed);
+    this.feeder.set(-feederSpeed);
   }
 
   public void stopMotors() {

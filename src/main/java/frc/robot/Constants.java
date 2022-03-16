@@ -40,6 +40,9 @@ public final class Constants {
             public static final int INDEXER = 2;
             public static final int FEEDER = 3;
         } 
+        public static final class Turret {
+            public static final int TURRET = 10;
+        }
     }
 
     public static final class Solenoid {
