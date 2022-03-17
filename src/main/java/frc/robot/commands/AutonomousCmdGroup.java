@@ -4,6 +4,7 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
@@ -14,6 +15,10 @@ public class AutonomousCmdGroup extends SequentialCommandGroup {
   public AutonomousCmdGroup() {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
-    addCommands();
+    addCommands(
+      new PrintCommand("AutonomousCmdGroup started!"),
+      
+      new PrintCommand("AutonomousCmdGroup ended!")
+    );
   }
 }
