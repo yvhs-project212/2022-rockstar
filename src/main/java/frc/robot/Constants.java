@@ -167,7 +167,13 @@ public final class Constants {
 
     }
 
-	public static final class AutonomousConstants{
+	public static final class TurretConstants{
+		public static final double TURRET_SPEED = 0.1;
+
+        
+	}
+
+    public static final class AutonomousConstants{
 		public static final double DRIVE_FORWARD_TIME = 3.0;
 		public static final double AUTONOMOUS_SPEED = 0.6;
 

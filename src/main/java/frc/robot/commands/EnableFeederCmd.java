@@ -5,24 +5,47 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.RobotContainer;
+import frc.robot.subsystems.StorageSubsystem;
+import frc.robot.subsystems.StorageSubsystem.MotorSelection;
 
 public class EnableFeederCmd extends CommandBase {
   /** Creates a new EnableFeederCmd. */
-  public EnableFeederCmd() {
+  StorageSubsystem storage;
+
+  public EnableFeederCmd(StorageSubsystem storage) {
     // Use addRequirements() here to declare subsystem dependencies.
+    this.storage = storage;
+    addRequirements(storage);
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    System.out.println("EnableFeederCmd started!");
+    
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {}
+  public void execute() {
+    if (RobotContainer.shooter.bottomFlywheelAtSetpoint() 
+    && RobotContainer.shooter.topFlywheelAtSetpoint()) {
+       storage.setMotors(MotorSelection.ALL, 0.5, 0.5);
+       storage.runMotors();
+       System.out.println("Indexer and Feeder begun!");
+    } else {
+      storage.stopMotors();
+      System.out.println("Shooter is not at target velocity!");
+    }
+  }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    System.out.println("Indexer and Feeder ended!");
+    System.out.println("EnableFeederCmd Ended!");
+  }
 
   // Returns true when the command should end.
   @Override

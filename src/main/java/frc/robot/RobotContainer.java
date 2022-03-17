@@ -4,15 +4,13 @@
 
 package frc.robot;
 
-import edu.wpi.first.wpilibj.GenericHID;
-import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.GenericHID; 
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
-import edu.wpi.first.wpilibj.XboxController.Button;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import frc.robot.commands.DeployIntakeCmdGroup;
+import frc.robot.commands.ExtendIntakeCmdGroup;
 import frc.robot.commands.DriveWithJoysticksCmd;
 import frc.robot.commands.EnableFeederCmd;
 import frc.robot.commands.EnableShooterCmd;
@@ -58,7 +56,7 @@ public class RobotContainer {
   // Intake files - LL
   public static IntakeSubsystem intake = new IntakeSubsystem();
   private final IntakeWithPaddlesCmd intakeWithPaddlesCmd = new IntakeWithPaddlesCmd(intake);
-  private final DeployIntakeCmdGroup deployIntakeCmdGroup = new DeployIntakeCmdGroup(intake);
+  private final ExtendIntakeCmdGroup deployIntakeCmdGroup = new ExtendIntakeCmdGroup(intake);
   
   // Turret files - LL
   public static TurretSubsystem turret = new TurretSubsystem();
@@ -93,7 +91,7 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    // Driver Joystick buttons
+    // Driver Joystick buttons  -----------------------------------------------------------------
 
     // Low gear
     new JoystickButton(driverJoystick, XboxController.Button.kA.value)
@@ -102,27 +100,24 @@ public class RobotContainer {
     new JoystickButton(driverJoystick, XboxController.Button.kA.value)
       .whenPressed(new InstantCommand(() -> driveTrain.setGear(Value.kReverse)));
 
-    // Gunner Joystick buttons
+    // Gunner Joystick buttons  -----------------------------------------------------------------
 
     // Toggle Shooter
     final JoystickButton toggleShooter = new JoystickButton(gunnerJoystick, XboxController.Button.kLeftBumper.value);
     toggleShooter.whenHeld(enableShooterCmd);
 
-    // Deploy Intake
-    final JoystickButton deployIntake = new JoystickButton(gunnerJoystick, XboxController.Button.kA.value);
+    // Extend Intake
+    final JoystickButton deployIntake = new JoystickButton(gunnerJoystick, XboxController.Button.kB.value);
     deployIntake.whenPressed(deployIntakeCmdGroup);
 
-    // Undeploy Intake
-    new JoystickButton(gunnerJoystick, XboxController.Button.kB.value)
+    // Retract Intake
+    new JoystickButton(gunnerJoystick, XboxController.Button.kA.value)
       .whenPressed(new InstantCommand(() -> intake.setPiston(Value.kReverse)));
 
     // Enable Feeder
     final JoystickButton enableFeeder = new JoystickButton(gunnerJoystick, XboxController.Button.kRightBumper.value);
     enableFeeder.whileHeld(enableFeederCmd);
   
-    // Enable auto-aim
-    final JoystickButton autoAim = new JoystickButton(gunnerJoystick, XboxController.Button.kX.value);
-    //autoAim.whileHeld();
 
   
   }
