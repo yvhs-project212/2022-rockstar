@@ -33,10 +33,10 @@ public class StorageSubsystem extends SubsystemBase {
   public StorageSubsystem() {
     setMotorSelection = StorageSubsystem.MotorSelection.NONE;
     indexer = new WPI_TalonSRX(PWM.Storage.INDEXER);
-    indexer.setInverted(false);
+    indexer.setInverted(true);
 
     feeder = new WPI_TalonSRX(PWM.Storage.FEEDER);
-    feeder.setInverted(true);
+    feeder.setInverted(false);
 
   setMotorSelection = MotorSelection.NONE;
   runMotorSelection = MotorSelection.NONE;

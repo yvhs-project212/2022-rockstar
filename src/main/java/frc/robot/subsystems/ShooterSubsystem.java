@@ -24,6 +24,7 @@ public class ShooterSubsystem extends SubsystemBase {
 
   public NetworkTable table;
   public Boolean shooterOnOff;
+  public Boolean manualMode;
 
 
   public ShooterSubsystem() {
@@ -38,9 +39,15 @@ public class ShooterSubsystem extends SubsystemBase {
     table = NetworkTableInstance.getDefault().getTable("limelight");
 
     shooterOnOff = false;
+    manualMode = false;
 
-    SmartDashboard.putNumber("Target Top Flywheel Velocity (Input)", 0);
-    SmartDashboard.putNumber("Target Bottom Flywheel Velocity (Input)", 0);
+    SmartDashboard.putNumber("Target Top Flywheel Velocity", 0);
+    SmartDashboard.putNumber("Target Bottom Flywheel Velocity", 0);
+
+    SmartDashboard.putNumber("User-inputed Top Flywheel Velocity", 0);
+    SmartDashboard.putNumber("User-inputed Bottom Flywheel Velocity", 0);
+
+    SmartDashboard.putBoolean("Manual mode", false);
 
     SmartDashboard.putNumber("Top Flywheel Velocity Output", 0);
     SmartDashboard.putNumber("Bottom Flywheel Velocity Output", 0);
@@ -162,28 +169,40 @@ public class ShooterSubsystem extends SubsystemBase {
   public double getTargetBottomFlyWheelVelocity() {
     double m = ShooterConstants.BottomFlywheelConstants.BOTTOM_SLOPE;
     double b = ShooterConstants.BottomFlywheelConstants.BOTTOM_Y_INT;
-    double bottomFlywheel_targetVelocity_UnitsPer100ms = (m * (getLimelightDistanceInches() / 12.0)) + (b);
+
+    if (manualMode) {
+      double bottomFlywheel_targetVelocity_UnitsPer100ms = 
+      SmartDashboard.getNumber("User-inputed Bottom Flywheel Velocity", 0);
+      return bottomFlywheel_targetVelocity_UnitsPer100ms;
+    } else {
+      double bottomFlywheel_targetVelocity_UnitsPer100ms = 
+      (m * (getLimelightDistanceInches() / 12.0)) + (b);
+      return bottomFlywheel_targetVelocity_UnitsPer100ms;
+    }
     
-    SmartDashboard.putNumber("Target Bottom Flywheel Velocity (Input)", 0);
-    return bottomFlywheel_targetVelocity_UnitsPer100ms;
   }
 
   public double getTargetTopFlyWheelVelocity() {
     double m = ShooterConstants.TopFlywheelConstants.TOP_SLOPE;
     double b = ShooterConstants.TopFlywheelConstants.TOP_Y_INT;
-    double topFlywheel_targetVelocity_UnitsPer100ms = (m * (getLimelightDistanceInches() / 12.0)) + (b);
 
-    
-    SmartDashboard.putNumber("Target Bottom Flywheel Velocity (Input)", 0);
-    return topFlywheel_targetVelocity_UnitsPer100ms;
+    if (manualMode) {
+      double topFlywheel_targetVelocity_UnitsPer100ms = 
+      SmartDashboard.getNumber("User-inputed Top Flywheel Velocity", 0);
+      return topFlywheel_targetVelocity_UnitsPer100ms;
+    } else {
+      double topFlywheel_targetVelocity_UnitsPer100ms = 
+      (m * (getLimelightDistanceInches() / 12.0)) + (b);
+      return topFlywheel_targetVelocity_UnitsPer100ms;
+    }
   }
 
   public void disable() {
     shooterOnOff = false;
     bottomFlywheel.stopMotor();
     topFlywheel.stopMotor();
-    SmartDashboard.putNumber("Target Top Flywheel Velocity (Input)", getTargetTopFlyWheelVelocity() );
-    SmartDashboard.putNumber("Target Bottom Flywheel Velocity (Input)", getTargetBottomFlyWheelVelocity());
+    SmartDashboard.putNumber("Target Top Flywheel Velocity", getTargetTopFlyWheelVelocity() );
+    SmartDashboard.putNumber("Target Bottom Flywheel Velocity", getTargetBottomFlyWheelVelocity());
   }
 
   public boolean goalDetected () {
@@ -253,6 +272,20 @@ public class ShooterSubsystem extends SubsystemBase {
       return false;
     }
   }
+
+  public void setManualMode(boolean manualMode) {
+    this.manualMode = manualMode;
+  }
+  public boolean getManualMode() {
+    if (manualMode) {
+      SmartDashboard.putBoolean("Manual mode", true);
+      return true;
+    } else {
+      SmartDashboard.putBoolean("Manual mode", false);
+      return false;
+    }
+  }
+
   public void stopMotors() {
     topFlywheel.stopMotor();
     bottomFlywheel.stopMotor();

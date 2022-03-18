@@ -26,13 +26,19 @@ public class EnableShooterCmd extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if (shooter.goalDetected()) {
+    if (shooter.getManualMode()) {
       shooter.enable();
-      System.out.println("Shooter enabled!");
-    }
-    else {
-      shooter.disable();
-      System.out.println("Shooter disabled!");
+      System.out.println("Shooter Manual Mode enabled!");
+    } else {
+      System.out.println("Shooter Manual Mode disabled!");
+      if (shooter.goalDetected()) {
+        shooter.enable();
+        System.out.println("Shooter enabled!");
+      }
+      else {
+        shooter.disable();
+        System.out.println("Shooter disabled!");
+      }
     }
   }
 

@@ -25,20 +25,20 @@ public final class Constants {
 			public static final int RIGHT_BOTTOM = 15;
         }
         public static final class Shooter {
-            public static final int BOTTOM_FLYWHEEL = 1;
-            public static final int TOP_FLYWEEL = 0;
+            public static final int BOTTOM_FLYWHEEL = 13;
+            public static final int TOP_FLYWEEL = 3;
 
         }
         public static final class Intake {
-            public static final int INTAKE = 103;
+            public static final int INTAKE = 8;
         }
         public static final class Hang {
-            public static final int LEFT = 104;
-            public static final int RIGHT = 105;
+            public static final int LEFT = 14;
+            public static final int RIGHT = 2;
         } 
         public static final class Storage {
-            public static final int INDEXER = 2;
-            public static final int FEEDER = 3;
+            public static final int INDEXER = 11;
+            public static final int FEEDER = 4;
         } 
         public static final class Turret {
             public static final int TURRET = 10;
@@ -142,7 +142,7 @@ public final class Constants {
                 public final static double PeakOut = 1.00;
             }
             
-            public final static double TOP_SLOPE = 88.23;
+            public final static double TOP_SLOPE = 48.23;
             public final static double TOP_Y_INT = 6000;
         }
         
@@ -155,7 +155,7 @@ public final class Constants {
                 public final static double Iz = 300;
                 public final static double PeakOut = 1.00;
             }
-            public final static double BOTTOM_SLOPE = 720.58824;
+            public final static double BOTTOM_SLOPE = 320.58824;
             public final static double BOTTOM_Y_INT = -900;   
         }
         //public static final double kShooterRPM2Velocity = 1; // Per encoder tick to flywheel velocity (ft/min)

@@ -106,6 +106,13 @@ public class RobotContainer {
     final JoystickButton toggleShooter = new JoystickButton(gunnerJoystick, XboxController.Button.kLeftBumper.value);
     toggleShooter.whenHeld(enableShooterCmd);
 
+    // Manual Mode Off
+    new JoystickButton(gunnerJoystick, 7)
+      .whenPressed(new InstantCommand(() -> shooter.setManualMode(false)));
+    // Manual Mode On
+    new JoystickButton(gunnerJoystick, 8)
+      .whenPressed(new InstantCommand(() -> shooter.setManualMode(true)));
+
     // Extend Intake
     final JoystickButton deployIntake = new JoystickButton(gunnerJoystick, XboxController.Button.kB.value);
     deployIntake.whenPressed(deployIntakeCmdGroup);
