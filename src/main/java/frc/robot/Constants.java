@@ -86,7 +86,7 @@ public final class Constants {
 	}
 	
 	public static final class IntakeConstants {
-		public static final double INTAKE_SPEED = 0.5;
+		public static final double INTAKE_SPEED = 0.35;
 	}
 
     public static final class HangConstants {
@@ -117,7 +117,7 @@ public final class Constants {
          */
         public static final int kTimeoutMs = 30;
 
-        public static final double LIMELIGHT_MOUNT_ANGLE_DEGREES = 24;
+        public static final double LIMELIGHT_MOUNT_ANGLE_DEGREES = 26;
 
         public static final double LIMELIGHT_LENS_HEIGHT_INCHES = 38;
 
@@ -134,7 +134,7 @@ public final class Constants {
 
         public final static class TopFlywheelConstants {
             public final static class kGains_Velocit_Top_Flywheel {
-                public final static double kP = 0.1;
+                public final static double kP = 0.03;
                 public final static double kI = 0.001;
                 public final static double kD = 5;
                 public final static double kF = 0; // 1023.0 / 20660.0
@@ -148,7 +148,7 @@ public final class Constants {
         
         public final static class BottomFlywheelConstants {
             public final static class kGains_Velocit_Bottom_Flywheel {
-                public final static double kP = 0.1;
+                public final static double kP = 0.03;
                 public final static double kI = 0.001;
                 public final static double kD = 5;
                 public final static double kF = 0; // 1023.0 / 20660.0
@@ -162,13 +162,15 @@ public final class Constants {
 
     }
     public static final class StorageConstants {
-        public static final double INDEXER_SPEED = 0.5;
-        public static final double FEEDER_SPEED = 0.5;
+        public static final double INDEXER_SPEED = 0.6;
+        public static final double FEEDER_SPEED = 0.6;
 
     }
 
 	public static final class TurretConstants{
-		public static final double TURRET_SPEED = 0.1;
+		public static final double TURRET_SPEED = 0.08;
+		public static final double kP = 0.015;
+		public static final double MIN_COMMAND = 0.015;
 
         
 	}

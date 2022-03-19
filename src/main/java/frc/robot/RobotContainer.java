@@ -9,6 +9,8 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.PrintCommand;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.ExtendIntakeCmdGroup;
 import frc.robot.commands.DriveWithJoysticksCmd;
@@ -108,10 +110,15 @@ public class RobotContainer {
 
     // Manual Mode Off
     new JoystickButton(gunnerJoystick, 7)
-      .whenPressed(new InstantCommand(() -> shooter.setManualMode(false)));
+      .whenPressed(new SequentialCommandGroup(
+        new PrintCommand("Set Manual Mode: false"), 
+        new InstantCommand(() -> shooter.setManualMode(false))));
+      
     // Manual Mode On
     new JoystickButton(gunnerJoystick, 8)
-      .whenPressed(new InstantCommand(() -> shooter.setManualMode(true)));
+      .whenPressed(new SequentialCommandGroup(
+        new PrintCommand("Set Manual Mode: true"), 
+        new InstantCommand(() -> shooter.setManualMode(true))));
 
     // Extend Intake
     final JoystickButton deployIntake = new JoystickButton(gunnerJoystick, XboxController.Button.kB.value);

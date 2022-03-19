@@ -111,7 +111,6 @@ public class ShooterSubsystem extends SubsystemBase {
 
     // To always know the velocity of the flywheels
     printEncoderVelocity();
-
     // To always know the distance of the goal
     getLimelightDistanceInches();
     // To always know if there is a goal 
@@ -122,6 +121,9 @@ public class ShooterSubsystem extends SubsystemBase {
     bottomFlywheelAtSetpoint();
     // To know if the Shooter is on
     SmartDashboard.putBoolean("Shooter On/Off", shooterOnOff);
+    // to know the manual mode 
+    SmartDashboard.putBoolean("Manual mode", manualMode);
+
   }
 
   public void enable() {

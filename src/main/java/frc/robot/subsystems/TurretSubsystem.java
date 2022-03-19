@@ -12,6 +12,7 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.PWM;
+import frc.robot.Constants.TurretConstants;
 
 public class TurretSubsystem extends SubsystemBase {
   /** Creates a new TurretSubsystem. */
@@ -40,10 +41,10 @@ public class TurretSubsystem extends SubsystemBase {
     double steering_adjust = 0.0;
 
     if (x > 1.0) {
-      steering_adjust = -0.015 * heading_error - 0.08;
+      steering_adjust = -TurretConstants.kP * heading_error - TurretConstants.MIN_COMMAND; // -0.015 and 0.08
     }
     else if (x < 1.0) {
-      steering_adjust = -0.015 * heading_error + 0.08;
+      steering_adjust = -TurretConstants.kP * heading_error + TurretConstants.MIN_COMMAND;
     }
     
     turret.set(steering_adjust);
