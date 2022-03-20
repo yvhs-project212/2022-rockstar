@@ -171,6 +171,12 @@ public final class Constants {
         public static final double INDEXER_SPEED = 0.6;
         public static final double FEEDER_SPEED = 0.6;
 
+        /**
+         *  when an object is close the value of the proximity will be large (max 2047 with default
+         * settings) and will approach zero when the object is far away
+         */
+        public static final double MIDDLE_PROXIMITY = 1000;
+        public static final double TOP_PROXIMITY = 1000;
     }
 
 	public static final class TurretConstants{

@@ -5,7 +5,6 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.RobotContainer;
 import frc.robot.Constants.StorageConstants;
 import frc.robot.subsystems.StorageSubsystem;
 
@@ -28,6 +27,8 @@ public class StorageCmd extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    /* Old
+
     if (RobotContainer.gunnerJoystick.getRightTriggerAxis() > 0.15) {
       storage.setMotors(StorageSubsystem.MotorSelection.REVERSE_ALL, StorageConstants.INDEXER_SPEED, StorageConstants.FEEDER_SPEED);
       storage.runMotors();
@@ -38,7 +39,23 @@ public class StorageCmd extends CommandBase {
       storage.setMotors(StorageSubsystem.MotorSelection.NONE, 0, 0);
       storage.runMotors();
     }
+    */
+
+    // Autonomous storage
     
+    if (storage.getTopColorSensorBoolean() && storage.getMiddleColorSensorBoolean()) {
+      // Stop
+      storage.setMotors(StorageSubsystem.MotorSelection.NONE, 0, 0);
+    } else if (storage.getMiddleColorSensorBoolean()) {
+      // Go
+      storage.setMotors(StorageSubsystem.MotorSelection.INDEXER, StorageConstants.INDEXER_SPEED, StorageConstants.FEEDER_SPEED);
+    } else if (storage.getBottomSensorBoolean()) {
+      // Go
+      storage.setMotors(StorageSubsystem.MotorSelection.INDEXER, StorageConstants.INDEXER_SPEED, StorageConstants.FEEDER_SPEED);
+    } else {
+      // Stop
+      storage.setMotors(StorageSubsystem.MotorSelection.NONE, 0, 0);
+    }
     storage.runMotors();
   }
 

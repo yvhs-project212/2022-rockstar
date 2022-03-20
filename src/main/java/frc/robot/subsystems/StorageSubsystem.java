@@ -9,8 +9,11 @@ import com.revrobotics.ColorSensorV3;
 
 import edu.wpi.first.wpilibj.AnalogTrigger;
 import edu.wpi.first.wpilibj.I2C;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.RobotContainer;
 import frc.robot.Constants.PWM;
+import frc.robot.Constants.StorageConstants;
 
 public class StorageSubsystem extends SubsystemBase {
   /** Creates a new StorageSubsystem. */
@@ -56,17 +59,22 @@ public class StorageSubsystem extends SubsystemBase {
     middleColorSensor = new ColorSensorV3(i2cPort_OnBoard);
 
     i2cPort_External= I2C.Port.kMXP;
-    middleColorSensor = new ColorSensorV3(i2cPort_External);
+    topColorSensor = new ColorSensorV3(i2cPort_External);
 
     setMotorSelection = MotorSelection.NONE;
     runMotorSelection = MotorSelection.NONE;
     indexerSpeed = 0;
     feederSpeed = 0;
+
+    SmartDashboard.putBoolean("Top Sensor", false);
+    SmartDashboard.putBoolean("Middle Sensor", false);
+    SmartDashboard.putBoolean("Bottom Sensor", false);
   }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    SmartDashboard.putData(RobotContainer.storage);
   }
 
   public void setMotors(final StorageSubsystem.MotorSelection setMotorSelection, double userSelectedIndexerSpeed, double userSelectedFeederSpeed) {
@@ -127,6 +135,31 @@ public class StorageSubsystem extends SubsystemBase {
   public void reverseFeeder(double feederSpeed) {
     this.indexer.set(0);
     this.feeder.set(-feederSpeed);
+  }
+
+  public boolean getBottomSensorBoolean() {
+    SmartDashboard.putBoolean("Bottom Sensor", bottomTrigger.getTriggerState());
+    return bottomTrigger.getTriggerState();
+  }
+
+  public boolean getMiddleColorSensorBoolean() {
+    if (middleColorSensor.getProximity() > StorageConstants.MIDDLE_PROXIMITY) {
+      SmartDashboard.putBoolean("Middle Sensor", true);
+      return true;
+    } else {
+      SmartDashboard.putBoolean("Middle Sensor", false);
+      return false;
+    }
+  }
+
+  public boolean getTopColorSensorBoolean() {
+    if (topColorSensor.getProximity() > StorageConstants.TOP_PROXIMITY) {
+      SmartDashboard.putBoolean("Top Sensor", true);
+      return true;
+    } else {
+      SmartDashboard.putBoolean("Top Sensor", false);
+      return false;
+    }
   }
 
   public void stopMotors() {
