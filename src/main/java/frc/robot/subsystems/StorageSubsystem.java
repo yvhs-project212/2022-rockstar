@@ -5,7 +5,10 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import com.revrobotics.ColorSensorV3;
 
+import edu.wpi.first.wpilibj.AnalogTrigger;
+import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.PWM;
 
@@ -18,6 +21,14 @@ public class StorageSubsystem extends SubsystemBase {
   public MotorSelection runMotorSelection;
   public double indexerSpeed;
   public double feederSpeed;
+
+  public AnalogTrigger bottomTrigger;
+
+  public I2C.Port i2cPort_OnBoard;
+  public ColorSensorV3 middleColorSensor;
+
+  public I2C.Port i2cPort_External;
+  public ColorSensorV3 topColorSensor;
 
   public enum MotorSelection {
     NONE, 
@@ -38,10 +49,19 @@ public class StorageSubsystem extends SubsystemBase {
     feeder = new WPI_TalonSRX(PWM.Storage.FEEDER);
     feeder.setInverted(false);
 
-  setMotorSelection = MotorSelection.NONE;
-  runMotorSelection = MotorSelection.NONE;
-  indexerSpeed = 0;
-  feederSpeed = 0;
+    bottomTrigger = new AnalogTrigger(PWM.Storage.BOTTOM_TRIGGER);
+    bottomTrigger.setLimitsVoltage(1.5, 4);
+
+    i2cPort_OnBoard = I2C.Port.kOnboard;
+    middleColorSensor = new ColorSensorV3(i2cPort_OnBoard);
+
+    i2cPort_External= I2C.Port.kMXP;
+    middleColorSensor = new ColorSensorV3(i2cPort_External);
+
+    setMotorSelection = MotorSelection.NONE;
+    runMotorSelection = MotorSelection.NONE;
+    indexerSpeed = 0;
+    feederSpeed = 0;
   }
 
   @Override

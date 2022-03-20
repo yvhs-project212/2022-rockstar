@@ -39,6 +39,12 @@ public final class Constants {
         public static final class Storage {
             public static final int INDEXER = 11;
             public static final int FEEDER = 4;
+            
+            
+            //public static final int FEEDER = 4;
+            //public static final int FEEDER = 4;
+            public static final int BOTTOM_TRIGGER = 0;
+
         } 
         public static final class Turret {
             public static final int TURRET = 10;
@@ -61,11 +67,11 @@ public final class Constants {
         public static final int GUNNER_NUMBER = 1;
 
         public static final int XBOX_Y_AXIS = 1;
-        public static final int XBOX_X_AXIS = 4; 
+        public static final int XBOX_X_AXIS = 0; 
     }
 
     public static final class DriveConstants {
-		public static final double FORWARD_SPEED = 0.65;
+		public static final double FORWARD_SPEED = 0.8;
 		public static final double TURN_SPEED = 0.8;
         public static final double MIN_PRESSURE = 30;       //This should be in PSI's - LL
         public static final double MAX_PRESSURE = 60;
@@ -86,7 +92,7 @@ public final class Constants {
 	}
 	
 	public static final class IntakeConstants {
-		public static final double INTAKE_SPEED = 0.35;
+		public static final double INTAKE_SPEED = 0.50;
 	}
 
     public static final class HangConstants {
@@ -134,7 +140,7 @@ public final class Constants {
 
         public final static class TopFlywheelConstants {
             public final static class kGains_Velocit_Top_Flywheel {
-                public final static double kP = 0.03;
+                public final static double kP = 0.02;
                 public final static double kI = 0.001;
                 public final static double kD = 5;
                 public final static double kF = 0; // 1023.0 / 20660.0
@@ -148,7 +154,7 @@ public final class Constants {
         
         public final static class BottomFlywheelConstants {
             public final static class kGains_Velocit_Bottom_Flywheel {
-                public final static double kP = 0.03;
+                public final static double kP = 0.02;
                 public final static double kI = 0.001;
                 public final static double kD = 5;
                 public final static double kF = 0; // 1023.0 / 20660.0

@@ -99,7 +99,7 @@ public class RobotContainer {
     new JoystickButton(driverJoystick, XboxController.Button.kA.value)
       .whenPressed(new InstantCommand(() -> driveTrain.setGear(Value.kForward)));
     // High gear
-    new JoystickButton(driverJoystick, XboxController.Button.kA.value)
+    new JoystickButton(driverJoystick, XboxController.Button.kB.value)
       .whenPressed(new InstantCommand(() -> driveTrain.setGear(Value.kReverse)));
 
     // Gunner Joystick buttons  -----------------------------------------------------------------
