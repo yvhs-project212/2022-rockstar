@@ -5,12 +5,15 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.RobotContainer;
 import frc.robot.Constants.StorageConstants;
 import frc.robot.subsystems.StorageSubsystem;
+import frc.robot.subsystems.StorageSubsystem.MotorSelection;
 
 public class StorageCmd extends CommandBase {
   /** Creates a new StorageCmd. */
   StorageSubsystem storage;
+  boolean flag = false;
 
   public StorageCmd(StorageSubsystem storage) {
     this.storage = storage;
@@ -42,20 +45,39 @@ public class StorageCmd extends CommandBase {
     */
 
     // Autonomous storage
-    
-    if (storage.getTopColorSensorBoolean() && storage.getMiddleColorSensorBoolean()) {
-      // Stop
-      storage.setMotors(StorageSubsystem.MotorSelection.NONE, 0, 0);
-    } else if (storage.getMiddleColorSensorBoolean()) {
-      // Go
-      storage.setMotors(StorageSubsystem.MotorSelection.INDEXER, StorageConstants.INDEXER_SPEED, StorageConstants.FEEDER_SPEED);
-    } else if (storage.getBottomSensorBoolean()) {
-      // Go
-      storage.setMotors(StorageSubsystem.MotorSelection.INDEXER, StorageConstants.INDEXER_SPEED, StorageConstants.FEEDER_SPEED);
+
+    // Finding out how many balls are in storage
+    if (storage.getBottomSensorBoolean()) {
+      storage.setFirstBall(true);
+    } 
+
+    // Running motors
+    if (RobotContainer.gunnerJoystick.getRightTriggerAxis() > 0.15) {
+      storage.setMotors(StorageSubsystem.MotorSelection.REVERSE_ALL, StorageConstants.INDEXER_SPEED, StorageConstants.FEEDER_SPEED);
     } else {
-      // Stop
-      storage.setMotors(StorageSubsystem.MotorSelection.NONE, 0, 0);
+
+      // Autonomous Storage 
+      if ((storage.getTopColorSensorBoolean()) == false) {
+        // if you DO NOT see ball at top
+        if (storage.getBottomSensorBoolean() || 
+        storage.getMiddleColorSensorBoolean() || storage.getFirstBall()) {
+          storage.setMotors(MotorSelection.INDEXER, StorageConstants.INDEXER_SPEED_AUTO, StorageConstants.FEEDER_SPEED);  
+        } else {
+          storage.setMotors(MotorSelection.NONE, 0, 0);
+        }
+      } else if ((storage.getMiddleColorSensorBoolean()) == false) {
+        // if you DO NOT see ball in the middle
+        if (storage.getBottomSensorBoolean()) {
+          storage.setMotors(MotorSelection.INDEXER, StorageConstants.INDEXER_SPEED_AUTO, StorageConstants.FEEDER_SPEED);  
+        } else {
+          storage.setMotors(MotorSelection.NONE, 0, 0);
+        }
+      } else {
+        // if you DO NOT see ball anywhere
+        storage.setMotors(MotorSelection.NONE, 0, 0);
+      }
     }
+
     storage.runMotors();
   }
 

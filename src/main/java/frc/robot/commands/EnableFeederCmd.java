@@ -31,7 +31,7 @@ public class EnableFeederCmd extends CommandBase {
   public void execute() {
     if (RobotContainer.shooter.bottomFlywheelAtSetpoint() 
     && RobotContainer.shooter.topFlywheelAtSetpoint()) {
-       storage.setMotors(MotorSelection.ALL, 0.7, 0.7);
+       storage.setMotors(MotorSelection.ALL, 0.5, 0.5);
        storage.runMotors();
        System.out.println("Indexer and Feeder begun!");
     } else {
@@ -45,6 +45,8 @@ public class EnableFeederCmd extends CommandBase {
   public void end(boolean interrupted) {
     System.out.println("Indexer and Feeder ended!");
     System.out.println("EnableFeederCmd Ended!");
+    storage.setFirstBall(false);
+    storage.setSecondBall(false);
   }
 
   // Returns true when the command should end.

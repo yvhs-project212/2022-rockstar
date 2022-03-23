@@ -139,8 +139,8 @@ public final class Constants {
         */
 
         public final static class TopFlywheelConstants {
-            public final static class kGains_Velocit_Top_Flywheel {
-                public final static double kP = 0.02;
+            public final static class kGains {
+                public final static double kP = 0.015;
                 public final static double kI = 0.001;
                 public final static double kD = 5;
                 public final static double kF = 0; // 1023.0 / 20660.0
@@ -153,9 +153,9 @@ public final class Constants {
         }
         
         public final static class BottomFlywheelConstants {
-            public final static class kGains_Velocit_Bottom_Flywheel {
-                public final static double kP = 0.02;
-                public final static double kI = 0.001;
+            public final static class kGains {
+                public final static double kP = 0.015; // 0.015 default
+                public final static double kI = 0.00075;
                 public final static double kD = 5;
                 public final static double kF = 0; // 1023.0 / 20660.0
                 public final static double Iz = 300;
@@ -169,20 +169,22 @@ public final class Constants {
     }
     public static final class StorageConstants {
         public static final double INDEXER_SPEED = 0.6;
+        public static final double INDEXER_SPEED_AUTO = 0.55;
         public static final double FEEDER_SPEED = 0.6;
+        public static final double FEEDER_SPEED_AUTO = 0.45;
 
         /**
          *  when an object is close the value of the proximity will be large (max 2047 with default
          * settings) and will approach zero when the object is far away
          */
-        public static final double MIDDLE_PROXIMITY = 1000;
-        public static final double TOP_PROXIMITY = 1000;
+        public static final double MIDDLE_PROXIMITY = 100;
+        public static final double TOP_PROXIMITY = 300;
     }
 
 	public static final class TurretConstants{
-		public static final double TURRET_SPEED = 0.08;
+		public static final double TURRET_SPEED = 0.15;
 		public static final double kP = 0.015;
-		public static final double MIN_COMMAND = 0.015;
+		public static final double MIN_COMMAND = 0.02;
 
         
 	}

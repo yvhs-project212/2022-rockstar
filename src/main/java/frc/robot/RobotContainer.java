@@ -76,7 +76,7 @@ public class RobotContainer {
     //INITALIZE all the things we made - LL
 
     driveTrain.setDefaultCommand(driveWithJoysticksCmd);   //Drive is always looking to read this command - LL
-    hang.setDefaultCommand(hangCmd);
+    //hang.setDefaultCommand(hangCmd);
     intake.setDefaultCommand(intakeWithPaddlesCmd);
     shooter.setDefaultCommand(shooterCmd);
     storage.setDefaultCommand(storageCmd);

@@ -28,11 +28,15 @@ public class TurretCmd extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    
     if (RobotContainer.gunnerJoystick.getXButton()) {
       turret.turretWithLimelight();
     } else {
       turret.turretWithJoysticks(RobotContainer.gunnerJoystick, TurretConstants.TURRET_SPEED);
     }
+    
+
+    //turret.turretWithJoysticks(RobotContainer.gunnerJoystick, TurretConstants.TURRET_SPEED);
   }
 
   // Called once the command ends or is interrupted.

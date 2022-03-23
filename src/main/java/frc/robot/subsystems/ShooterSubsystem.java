@@ -60,6 +60,15 @@ public class ShooterSubsystem extends SubsystemBase {
     SmartDashboard.putBoolean("Bottom Flywheel at Setpoint ", false);
     SmartDashboard.putBoolean("Top Flywheel at Setpoint ", false);
 
+    SmartDashboard.putNumber("Top Flywheel kP", 0);
+    SmartDashboard.putNumber("Top Flywheel kI", 0);
+    SmartDashboard.putNumber("Top Flywheel kD", 0);
+    SmartDashboard.putNumber("Top Flywheel kF", 0);
+
+    SmartDashboard.putNumber("Bottom Flywheel kP", 0);
+    SmartDashboard.putNumber("Bottom Flywheel kI", 0);
+    SmartDashboard.putNumber("Bottom Flywheel kD", 0);
+    SmartDashboard.putNumber("Bottom Flywheel kF", 0);
 
     
     /* Factory Default all hardware to prevent unexpected behaviour */
@@ -85,16 +94,17 @@ public class ShooterSubsystem extends SubsystemBase {
 		topFlywheel.configPeakOutputForward(1, ShooterConstants.kTimeoutMs);
 		topFlywheel.configPeakOutputReverse(-1, ShooterConstants.kTimeoutMs);
 
-		/* Config the Velocity closed loop gains in slot0 */
-		bottomFlywheel.config_kF(ShooterConstants.kPIDLoopIdx, ShooterConstants.BottomFlywheelConstants.kGains_Velocit_Bottom_Flywheel.kF, ShooterConstants.kTimeoutMs);
-		bottomFlywheel.config_kP(ShooterConstants.kPIDLoopIdx, ShooterConstants.BottomFlywheelConstants.kGains_Velocit_Bottom_Flywheel.kP, ShooterConstants.kTimeoutMs);
-		bottomFlywheel.config_kI(ShooterConstants.kPIDLoopIdx, ShooterConstants.BottomFlywheelConstants.kGains_Velocit_Bottom_Flywheel.kI, ShooterConstants.kTimeoutMs);
-		bottomFlywheel.config_kD(ShooterConstants.kPIDLoopIdx, ShooterConstants.BottomFlywheelConstants.kGains_Velocit_Bottom_Flywheel.kD, ShooterConstants.kTimeoutMs);
+    bottomFlywheel.config_kF(ShooterConstants.kPIDLoopIdx, ShooterConstants.BottomFlywheelConstants.kGains.kF, ShooterConstants.kTimeoutMs);
+    bottomFlywheel.config_kP(ShooterConstants.kPIDLoopIdx, ShooterConstants.BottomFlywheelConstants.kGains.kP, ShooterConstants.kTimeoutMs);
+    bottomFlywheel.config_kI(ShooterConstants.kPIDLoopIdx, ShooterConstants.BottomFlywheelConstants.kGains.kI, ShooterConstants.kTimeoutMs);
+    bottomFlywheel.config_kD(ShooterConstants.kPIDLoopIdx, ShooterConstants.BottomFlywheelConstants.kGains.kD, ShooterConstants.kTimeoutMs);
 
-    topFlywheel.config_kF(ShooterConstants.kPIDLoopIdx, ShooterConstants.TopFlywheelConstants.kGains_Velocit_Top_Flywheel.kF, ShooterConstants.kTimeoutMs);
-		topFlywheel.config_kP(ShooterConstants.kPIDLoopIdx, ShooterConstants.TopFlywheelConstants.kGains_Velocit_Top_Flywheel.kP, ShooterConstants.kTimeoutMs);
-		topFlywheel.config_kI(ShooterConstants.kPIDLoopIdx, ShooterConstants.TopFlywheelConstants.kGains_Velocit_Top_Flywheel.kI, ShooterConstants.kTimeoutMs);
-		topFlywheel.config_kD(ShooterConstants.kPIDLoopIdx, ShooterConstants.TopFlywheelConstants.kGains_Velocit_Top_Flywheel.kD, ShooterConstants.kTimeoutMs);
+    topFlywheel.config_kF(ShooterConstants.kPIDLoopIdx, ShooterConstants.TopFlywheelConstants.kGains.kF, ShooterConstants.kTimeoutMs);
+    topFlywheel.config_kP(ShooterConstants.kPIDLoopIdx, ShooterConstants.TopFlywheelConstants.kGains.kP, ShooterConstants.kTimeoutMs);
+    topFlywheel.config_kI(ShooterConstants.kPIDLoopIdx, ShooterConstants.TopFlywheelConstants.kGains.kI, ShooterConstants.kTimeoutMs);
+    topFlywheel.config_kD(ShooterConstants.kPIDLoopIdx, ShooterConstants.TopFlywheelConstants.kGains.kD, ShooterConstants.kTimeoutMs);
+    
+
 		/*
 		 * Talon FX does not need sensor phase set for its integrated sensor
 		 * This is because it will always be correct if the selected feedback device is integrated sensor (default value)
@@ -127,6 +137,62 @@ public class ShooterSubsystem extends SubsystemBase {
   }
 
   public void enable() {
+    /*
+
+    double topFF = SmartDashboard.getNumber("Top Flywheel kF", 0);
+    double topP = SmartDashboard.getNumber("Top Flywheel kP", 0);
+    double topI = SmartDashboard.getNumber("Top Flywheel kI", 0);
+    double topD = SmartDashboard.getNumber("Top Flywheel kD", 0);
+
+    double bottomFF = SmartDashboard.getNumber("Top Flywheel kF", 0);
+    double bottomP = SmartDashboard.getNumber("Top Flywheel kP", 0);
+    double bottomI = SmartDashboard.getNumber("Top Flywheel kI", 0);
+    double bottomD = SmartDashboard.getNumber("Top Flywheel kD", 0);
+
+    
+
+    if (manualMode) {
+      // Top flywheel
+      if (topFF != ShooterConstants.TopFlywheelConstants.kGains.kF) {
+        topFlywheel.config_kF(ShooterConstants.kPIDLoopIdx, topFF, ShooterConstants.kTimeoutMs);
+      }
+      if (topP != ShooterConstants.TopFlywheelConstants.kGains.kP) {
+        topFlywheel.config_kP(ShooterConstants.kPIDLoopIdx, topP, ShooterConstants.kTimeoutMs);
+      }
+      if (topI != ShooterConstants.TopFlywheelConstants.kGains.kI) {
+        topFlywheel.config_kI(ShooterConstants.kPIDLoopIdx, topI, ShooterConstants.kTimeoutMs);
+      }
+      if (topD != ShooterConstants.TopFlywheelConstants.kGains.kD) {
+        topFlywheel.config_kD(ShooterConstants.kPIDLoopIdx, topD, ShooterConstants.kTimeoutMs);
+      }
+
+      // Bottom flywheel
+      if (bottomFF != ShooterConstants.BottomFlywheelConstants.kGains.kF) {
+        bottomFlywheel.config_kD(ShooterConstants.kPIDLoopIdx, bottomFF, ShooterConstants.kTimeoutMs);
+      }
+      if (bottomP != ShooterConstants.BottomFlywheelConstants.kGains.kP) {
+        bottomFlywheel.config_kP(ShooterConstants.kPIDLoopIdx, bottomP, ShooterConstants.kTimeoutMs);
+      }
+      if (bottomI != ShooterConstants.BottomFlywheelConstants.kGains.kI) {
+        bottomFlywheel.config_kI(ShooterConstants.kPIDLoopIdx, bottomI, ShooterConstants.kTimeoutMs);
+      }
+      if (bottomD != ShooterConstants.BottomFlywheelConstants.kGains.kD) {
+        bottomFlywheel.config_kD(ShooterConstants.kPIDLoopIdx, bottomD, ShooterConstants.kTimeoutMs);
+      }
+      
+    } else {
+      // Config the Velocity closed loop gains in slot0 
+      bottomFlywheel.config_kF(ShooterConstants.kPIDLoopIdx, ShooterConstants.BottomFlywheelConstants.kGains.kF, ShooterConstants.kTimeoutMs);
+      bottomFlywheel.config_kP(ShooterConstants.kPIDLoopIdx, ShooterConstants.BottomFlywheelConstants.kGains.kP, ShooterConstants.kTimeoutMs);
+      bottomFlywheel.config_kI(ShooterConstants.kPIDLoopIdx, ShooterConstants.BottomFlywheelConstants.kGains.kI, ShooterConstants.kTimeoutMs);
+      bottomFlywheel.config_kD(ShooterConstants.kPIDLoopIdx, ShooterConstants.BottomFlywheelConstants.kGains.kD, ShooterConstants.kTimeoutMs);
+
+      topFlywheel.config_kF(ShooterConstants.kPIDLoopIdx, ShooterConstants.TopFlywheelConstants.kGains.kF, ShooterConstants.kTimeoutMs);
+      topFlywheel.config_kP(ShooterConstants.kPIDLoopIdx, ShooterConstants.TopFlywheelConstants.kGains.kP, ShooterConstants.kTimeoutMs);
+      topFlywheel.config_kI(ShooterConstants.kPIDLoopIdx, ShooterConstants.TopFlywheelConstants.kGains.kI, ShooterConstants.kTimeoutMs);
+      topFlywheel.config_kD(ShooterConstants.kPIDLoopIdx, ShooterConstants.TopFlywheelConstants.kGains.kD, ShooterConstants.kTimeoutMs);
+    }
+    */
     /* Velocity Closed Loop */
 
     /**
