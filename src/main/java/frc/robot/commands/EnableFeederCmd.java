@@ -33,7 +33,7 @@ public class EnableFeederCmd extends CommandBase {
     && RobotContainer.shooter.topFlywheelAtSetpoint()) {
        storage.setMotors(MotorSelection.ALL, 0.5, 0.5);
        storage.runMotors();
-       
+
        System.out.println("Indexer and Feeder begun!");
     } else {
       storage.stopMotors();

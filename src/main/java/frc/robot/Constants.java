@@ -173,6 +173,8 @@ public final class Constants {
         public static final double FEEDER_SPEED = 0.6;
         public static final double FEEDER_SPEED_AUTO = 0.45;
 
+        public static final double TIME_BETWEEN_SHOTS = 0.5; // seconds
+
         /**
          *  when an object is close the value of the proximity will be large (max 2047 with default
          * settings) and will approach zero when the object is far away

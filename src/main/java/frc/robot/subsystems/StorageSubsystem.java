@@ -187,6 +187,29 @@ public class StorageSubsystem extends SubsystemBase {
     return secondBall;
   }
 
+  public boolean getOneBallPassedThrough() {
+
+    if (getSecondBall()) {
+      // if there is two balls
+      if (getTopColorSensorBoolean() && (getMiddleColorSensorBoolean() == false)) {
+        return true;
+      } else {
+        return false;
+      }
+
+    } else if (getFirstBall()) {
+      // if there is one ball
+      if ((getTopColorSensorBoolean() == false)&&(getMiddleColorSensorBoolean() == false)&&
+      (getBottomSensorBoolean() == false)) {
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      return false;
+    }
+  }
+
   public void stopMotors() {
     indexer.stopMotor();
     feeder.stopMotor();

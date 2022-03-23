@@ -319,9 +319,16 @@ public class ShooterSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("Bottom Flywheel Velocity Output", bottomFlywheel.getSelectedSensorVelocity());
   }
 
+  public Boolean bothFlywheelsAtSetpoint() {
+    if (bottomFlywheelAtSetpoint() && topFlywheelAtSetpoint()) {
+      return true;
+    } else {
+      return false;
+    }
+  }
   public Boolean bottomFlywheelAtSetpoint() {
-    if (getBottomFlywheelVelocity() < getBottomFlywheelVelocity() + ShooterConstants.velocityTolerance 
-    && getBottomFlywheelVelocity() > getBottomFlywheelVelocity() - ShooterConstants.velocityTolerance) {
+    if (getBottomFlywheelVelocity() < getTargetBottomFlyWheelVelocity() + ShooterConstants.velocityTolerance 
+    && getBottomFlywheelVelocity() > getTargetBottomFlyWheelVelocity() - ShooterConstants.velocityTolerance) {
       SmartDashboard.putBoolean("Bottom Flywheel at Setpoint ", true);
       return true;
     } else {
@@ -331,8 +338,8 @@ public class ShooterSubsystem extends SubsystemBase {
   }
 
   public Boolean topFlywheelAtSetpoint() {
-    if (getTopFlywheelVelocity() < getTopFlywheelVelocity() + ShooterConstants.velocityTolerance 
-    && getTopFlywheelVelocity() > getTopFlywheelVelocity() - ShooterConstants.velocityTolerance) {
+    if (getTopFlywheelVelocity() < getTargetTopFlyWheelVelocity() + ShooterConstants.velocityTolerance 
+    && getTopFlywheelVelocity() > getTargetTopFlyWheelVelocity() - ShooterConstants.velocityTolerance) {
       SmartDashboard.putBoolean("Bottom Flywheel at Setpoint ", true);
       return true;
     } else {
