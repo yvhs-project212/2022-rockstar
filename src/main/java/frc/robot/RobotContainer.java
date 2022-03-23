@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.ExtendIntakeCmdGroup;
 import frc.robot.commands.DriveWithJoysticksCmd;
 import frc.robot.commands.EnableFeederCmd;
+import frc.robot.commands.EnableFeederCmdGroup;
 import frc.robot.commands.EnableShooterCmd;
 import frc.robot.commands.HangCmd;
 import frc.robot.commands.IntakeWithPaddlesCmd;
@@ -54,6 +55,7 @@ public class RobotContainer {
   public static StorageSubsystem storage = new StorageSubsystem();
   private final EnableFeederCmd enableFeederCmd = new EnableFeederCmd(storage);
   private final StorageCmd storageCmd = new StorageCmd(storage);
+  private final EnableFeederCmdGroup enableFeederCmdGroup = new EnableFeederCmdGroup(storage);
 
   // Intake files - LL
   public static IntakeSubsystem intake = new IntakeSubsystem();
@@ -128,10 +130,15 @@ public class RobotContainer {
     new JoystickButton(gunnerJoystick, XboxController.Button.kA.value)
       .whenPressed(new InstantCommand(() -> intake.setPiston(Value.kReverse)));
 
+    /*
     // Enable Feeder
     final JoystickButton enableFeeder = new JoystickButton(gunnerJoystick, XboxController.Button.kRightBumper.value);
     enableFeeder.whileHeld(enableFeederCmd);
-  
+    */
+
+    // Enable feeder Cmd Group (AUTO)
+    final JoystickButton enableFeeder = new JoystickButton(gunnerJoystick, XboxController.Button.kRightBumper.value);
+    enableFeeder.whileActiveOnce(enableFeederCmdGroup);
 
   
   }
