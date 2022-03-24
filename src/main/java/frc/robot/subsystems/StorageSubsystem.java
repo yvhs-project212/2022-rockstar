@@ -11,7 +11,6 @@ import edu.wpi.first.wpilibj.AnalogTrigger;
 import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.RobotContainer;
 import frc.robot.Constants.PWM;
 import frc.robot.Constants.StorageConstants;
 
@@ -35,6 +34,10 @@ public class StorageSubsystem extends SubsystemBase {
 
   public boolean firstBall;
   public boolean secondBall;
+
+  public boolean middleCache;
+  public boolean topCache;
+
   public enum MotorSelection {
     NONE,
     ALL, 
@@ -71,6 +74,9 @@ public class StorageSubsystem extends SubsystemBase {
     firstBall = false;
     secondBall = false;
 
+    middleCache = false;
+    topCache = false;
+
     SmartDashboard.putBoolean("Top Sensor", false);
     SmartDashboard.putBoolean("Middle Sensor", false);
     SmartDashboard.putBoolean("Bottom Sensor", false);
@@ -79,7 +85,8 @@ public class StorageSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    SmartDashboard.putData(RobotContainer.storage);
+    //SmartDashboard.putData(RobotContainer.storage);
+    getBottomSensorBoolean();
     getMiddleColorSensorBoolean();
     getTopColorSensorBoolean();
   }
@@ -117,56 +124,76 @@ public class StorageSubsystem extends SubsystemBase {
   }
   
   public void indexer(double indexerSpeed) {
-    this.indexer.set(indexerSpeed);
-    this.feeder.set(0.0);
+    indexer.set(indexerSpeed);
+    feeder.set(0.0);
   }
 
   public void feeder(double feederSpeed) {
-    this.indexer.set(0.0);
-    this.feeder.set(feederSpeed);
+    indexer.set(0.0);
+    feeder.set(feederSpeed);
   }
 
   public void all(double indexerSpeed, double feederSpeed) {
-    this.indexer.set(indexerSpeed);
-    this.feeder.set(feederSpeed);
+    indexer.set(indexerSpeed);
+    feeder.set(feederSpeed);
   }
 
   public void reverseAll(double indexerSpeed, double feederSpeed) {
-    this.indexer.set(-indexerSpeed);
-    this.feeder.set(-feederSpeed);
+    indexer.set(-indexerSpeed);
+    feeder.set(-feederSpeed);
   }
   public void reverseIndexer(double indexerSpeed) {
-    this.indexer.set(-indexerSpeed);
-    this.feeder.set(0);
+    indexer.set(-indexerSpeed);
+    feeder.set(0);
   }
   public void reverseFeeder(double feederSpeed) {
-    this.indexer.set(0);
-    this.feeder.set(-feederSpeed);
+    indexer.set(0);
+    feeder.set(-feederSpeed);
   }
 
   public boolean getBottomSensorBoolean() {
-    SmartDashboard.putBoolean("Bottom Sensor", bottomTrigger.getTriggerState());
+    boolean cache = bottomTrigger.getTriggerState();
+
+    if (cache != SmartDashboard.getBoolean("Bottom Sensor", false)) {
+      SmartDashboard.putBoolean("Bottom Sensor", bottomTrigger.getTriggerState());
+    }
+
     return bottomTrigger.getTriggerState();
   }
 
   public boolean getMiddleColorSensorBoolean() {
-    SmartDashboard.putNumber("Middle Sensor Proximity", middleColorSensor.getProximity());
+    if (middleCache != SmartDashboard.getBoolean("Middle Sensor", false)) {
+      SmartDashboard.putBoolean("Middle Sensor", middleCache);
+    }
+
+    //SmartDashboard.putNumber("Middle Sensor Proximity", middleColorSensor.getProximity());
     if (middleColorSensor.getProximity() > StorageConstants.MIDDLE_PROXIMITY) {
-      SmartDashboard.putBoolean("Middle Sensor", true);
+      //SmartDashboard.putBoolean("Middle Sensor", true);
+      middleCache = true;
       return true;
     } else {
-      SmartDashboard.putBoolean("Middle Sensor", false);
+      //SmartDashboard.putBoolean("Middle Sensor", false);
+      middleCache = false;
       return false;
     }
+
+
   }
 
   public boolean getTopColorSensorBoolean() {
-    SmartDashboard.putNumber("Top Sensor Proximity", topColorSensor.getProximity());
+
+    if (topCache != SmartDashboard.getBoolean("Top Sensor", false)) {
+      SmartDashboard.putBoolean("Top Sensor", topCache);
+    }
+
+    //SmartDashboard.putNumber("Top Sensor Proximity", topColorSensor.getProximity());
     if (topColorSensor.getProximity() > StorageConstants.TOP_PROXIMITY) {
-      SmartDashboard.putBoolean("Top Sensor", true);
+      //SmartDashboard.putBoolean("Top Sensor", true);
+      topCache = true;
       return true;
     } else {
-      SmartDashboard.putBoolean("Top Sensor", false);
+      //SmartDashboard.putBoolean("Top Sensor", false);
+      topCache = false;
       return false;
     }
   }
@@ -191,7 +218,7 @@ public class StorageSubsystem extends SubsystemBase {
 
     if (getSecondBall()) {
       // if there is two balls
-      if (getTopColorSensorBoolean() && (getMiddleColorSensorBoolean() == false)) {
+      if (getTopColorSensorBoolean() && (getMiddleColorSensorBoolean() == false) && (getTopColorSensorBoolean() == false)) {
         return true;
       } else {
         return false;

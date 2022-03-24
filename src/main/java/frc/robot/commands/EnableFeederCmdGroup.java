@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj2.command.ConditionalCommand;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Constants.StorageConstants;
 import frc.robot.subsystems.StorageSubsystem;
 
@@ -26,7 +26,7 @@ public class EnableFeederCmdGroup extends SequentialCommandGroup {
         new SequentialCommandGroup(
           new ShootOneBallCmdGroup(storage),
           new InstantCommand(() -> storage.setSecondBall(false)),
-          new WaitUntilCommand(StorageConstants.TIME_BETWEEN_SHOTS),
+          new WaitCommand(StorageConstants.TIME_BETWEEN_SHOTS),
           new ShootOneBallCmdGroup(storage),
           new InstantCommand(() -> storage.setFirstBall(false))
         ),

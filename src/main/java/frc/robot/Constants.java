@@ -60,6 +60,10 @@ public final class Constants {
             public static final int LEFT = 2;
             public static final int RIGHT = 3;
         } 
+        public static final class Hang {
+            public static final int LEFT = 4;
+            public static final int RIGHT = 5;
+        }
     }
 
     public static final class OI {
@@ -102,7 +106,7 @@ public final class Constants {
 	}
 
     public static final class ShooterConstants {
-        public static final double velocityTolerance = 10; // native sensor units per 100ms??? --> https://docs.ctre-phoenix.com/en/stable/ch16_ClosedLoop.html#velocity-closed-loop-control-mode 
+        public static final double velocityTolerance = 500; // native sensor units per 100ms??? --> https://docs.ctre-phoenix.com/en/stable/ch16_ClosedLoop.html#velocity-closed-loop-control-mode 
 
         /**
          * Which PID slot to pull gains from. Starting 2018, you can choose from
@@ -169,9 +173,9 @@ public final class Constants {
     }
     public static final class StorageConstants {
         public static final double INDEXER_SPEED = 0.6;
-        public static final double INDEXER_SPEED_AUTO = 0.55;
+        public static final double INDEXER_SPEED_AUTO = 0.5;
         public static final double FEEDER_SPEED = 0.6;
-        public static final double FEEDER_SPEED_AUTO = 0.45;
+        public static final double FEEDER_SPEED_AUTO = 0.5;
 
         public static final double TIME_BETWEEN_SHOTS = 0.5; // seconds
 
@@ -186,7 +190,7 @@ public final class Constants {
 	public static final class TurretConstants{
 		public static final double TURRET_SPEED = 0.15;
 		public static final double kP = 0.015;
-		public static final double MIN_COMMAND = 0.02;
+		public static final double MIN_COMMAND = 0.03;
 
         
 	}

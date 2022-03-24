@@ -12,7 +12,6 @@ import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -52,7 +51,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    SmartDashboard.putNumber("Air Tank Presusre", getPressure());
+    //SmartDashboard.putNumber("Air Tank Presusre", getPressure());
   }
   public void driveWithJoysticks(XboxController controller, double forwardSpeed, double turnSpeed) {
     double forward = ((controller.getRightTriggerAxis() - 

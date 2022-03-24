@@ -34,7 +34,9 @@ public class ShootOneBallCmdGroup extends SequentialCommandGroup {
       new PrintCommand("ShootOneBallCmdGroup started!"),
       new WaitUntilCommand(RobotContainer.shooter::bothFlywheelsAtSetpoint),
       new InstantCommand(() -> storage.setMotors(MotorSelection.ALL, StorageConstants.INDEXER_SPEED_AUTO, StorageConstants.FEEDER_SPEED_AUTO)), 
-      new RunCommand(() -> storage.runMotors()),
+      new PrintCommand("Storage set to All!"),
+      new RunCommand(() -> storage.runMotors(), storage),
+      //new WaitCommand(0.5),
       new WaitUntilCommand(storage::getOneBallPassedThrough),
       new PrintCommand("ShootOneBallCmdGroup ended!")
     );

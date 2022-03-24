@@ -44,10 +44,10 @@ public class ShooterSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("Target Top Flywheel Velocity", 0);
     SmartDashboard.putNumber("Target Bottom Flywheel Velocity", 0);
 
-    SmartDashboard.putNumber("User-inputed Top Flywheel Velocity", 0);
-    SmartDashboard.putNumber("User-inputed Bottom Flywheel Velocity", 0);
+    //SmartDashboard.putNumber("User-inputed Top Flywheel Velocity", 0);
+    //SmartDashboard.putNumber("User-inputed Bottom Flywheel Velocity", 0);
 
-    SmartDashboard.putBoolean("Manual mode", false);
+    //SmartDashboard.putBoolean("Manual mode", false);
 
     SmartDashboard.putNumber("Top Flywheel Velocity Output", 0);
     SmartDashboard.putNumber("Bottom Flywheel Velocity Output", 0);
@@ -60,6 +60,7 @@ public class ShooterSubsystem extends SubsystemBase {
     SmartDashboard.putBoolean("Bottom Flywheel at Setpoint ", false);
     SmartDashboard.putBoolean("Top Flywheel at Setpoint ", false);
 
+    /*
     SmartDashboard.putNumber("Top Flywheel kP", 0);
     SmartDashboard.putNumber("Top Flywheel kI", 0);
     SmartDashboard.putNumber("Top Flywheel kD", 0);
@@ -69,7 +70,7 @@ public class ShooterSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("Bottom Flywheel kI", 0);
     SmartDashboard.putNumber("Bottom Flywheel kD", 0);
     SmartDashboard.putNumber("Bottom Flywheel kF", 0);
-
+    */
     
     /* Factory Default all hardware to prevent unexpected behaviour */
 		bottomFlywheel.configFactoryDefault();
@@ -132,7 +133,11 @@ public class ShooterSubsystem extends SubsystemBase {
     // To know if the Shooter is on
     SmartDashboard.putBoolean("Shooter On/Off", shooterOnOff);
     // to know the manual mode 
-    SmartDashboard.putBoolean("Manual mode", manualMode);
+    //SmartDashboard.putBoolean("Manual mode", manualMode);
+
+    // to know the target velocity
+    SmartDashboard.putNumber("Target Top Flywheel Velocity", getTargetTopFlyWheelVelocity() );
+    SmartDashboard.putNumber("Target Bottom Flywheel Velocity", getTargetBottomFlyWheelVelocity());
 
   }
 
@@ -238,6 +243,11 @@ public class ShooterSubsystem extends SubsystemBase {
     double m = ShooterConstants.BottomFlywheelConstants.BOTTOM_SLOPE;
     double b = ShooterConstants.BottomFlywheelConstants.BOTTOM_Y_INT;
 
+    double bottomFlywheel_targetVelocity_UnitsPer100ms = 
+      (m * (getLimelightDistanceInches() / 12.0)) + (b);
+      return bottomFlywheel_targetVelocity_UnitsPer100ms;
+
+    /*
     if (manualMode) {
       double bottomFlywheel_targetVelocity_UnitsPer100ms = 
       SmartDashboard.getNumber("User-inputed Bottom Flywheel Velocity", 0);
@@ -247,6 +257,7 @@ public class ShooterSubsystem extends SubsystemBase {
       (m * (getLimelightDistanceInches() / 12.0)) + (b);
       return bottomFlywheel_targetVelocity_UnitsPer100ms;
     }
+    */
     
   }
 
@@ -254,6 +265,11 @@ public class ShooterSubsystem extends SubsystemBase {
     double m = ShooterConstants.TopFlywheelConstants.TOP_SLOPE;
     double b = ShooterConstants.TopFlywheelConstants.TOP_Y_INT;
 
+    double topFlywheel_targetVelocity_UnitsPer100ms = 
+      (m * (getLimelightDistanceInches() / 12.0)) + (b);
+      return topFlywheel_targetVelocity_UnitsPer100ms;
+
+    /*
     if (manualMode) {
       double topFlywheel_targetVelocity_UnitsPer100ms = 
       SmartDashboard.getNumber("User-inputed Top Flywheel Velocity", 0);
@@ -263,24 +279,32 @@ public class ShooterSubsystem extends SubsystemBase {
       (m * (getLimelightDistanceInches() / 12.0)) + (b);
       return topFlywheel_targetVelocity_UnitsPer100ms;
     }
+    */
   }
 
   public void disable() {
     shooterOnOff = false;
     bottomFlywheel.stopMotor();
     topFlywheel.stopMotor();
-    SmartDashboard.putNumber("Target Top Flywheel Velocity", getTargetTopFlyWheelVelocity() );
-    SmartDashboard.putNumber("Target Bottom Flywheel Velocity", getTargetBottomFlyWheelVelocity());
   }
 
   public boolean goalDetected () {
     NetworkTableEntry tv = table.getEntry("tv");
     double validTargets = tv.getDouble(0.0);
+
+    boolean cache;
+
     if (validTargets == 1.0) {
-      SmartDashboard.putBoolean("Goal Detected", true);
+      cache = true;
+      if (cache != SmartDashboard.getBoolean("Goal Detected", false)) {
+        SmartDashboard.putBoolean("Goal Detected", cache);
+      }
       return true;
     } else {
-      SmartDashboard.putBoolean("Goal Detected", false);
+      cache = false;
+      if (cache != SmartDashboard.getBoolean("Goal Detected", false)) {
+        SmartDashboard.putBoolean("Goal Detected", cache);
+      }
       return false;
     }
   }
@@ -327,26 +351,44 @@ public class ShooterSubsystem extends SubsystemBase {
     }
   }
   public Boolean bottomFlywheelAtSetpoint() {
+    boolean cache;
+
     if (getBottomFlywheelVelocity() < getTargetBottomFlyWheelVelocity() + ShooterConstants.velocityTolerance 
     && getBottomFlywheelVelocity() > getTargetBottomFlyWheelVelocity() - ShooterConstants.velocityTolerance) {
-      SmartDashboard.putBoolean("Bottom Flywheel at Setpoint ", true);
+      cache = true;
+      if (cache != SmartDashboard.getBoolean("Bottom Flywheel at Setpoint", false)) {
+        SmartDashboard.putBoolean("Bottom Flywheel at Setpoint", cache);
+      }
       return true;
     } else {
-      SmartDashboard.putBoolean("Bottom Flywheel at Setpoint ", false);
+      cache = false;
+      if (cache != SmartDashboard.getBoolean("Bottom Flywheel at Setpoint", false)) {
+        SmartDashboard.putBoolean("Bottom Flywheel at Setpoint", cache);
+      }
       return false;
     }
   }
 
+  // Make this quicker
   public Boolean topFlywheelAtSetpoint() {
+    boolean cache;
+
     if (getTopFlywheelVelocity() < getTargetTopFlyWheelVelocity() + ShooterConstants.velocityTolerance 
     && getTopFlywheelVelocity() > getTargetTopFlyWheelVelocity() - ShooterConstants.velocityTolerance) {
-      SmartDashboard.putBoolean("Bottom Flywheel at Setpoint ", true);
+      cache = true;
+      if (cache != SmartDashboard.getBoolean("Top Flywheel at Setpoint", false)) {
+        SmartDashboard.putBoolean("Top Flywheel at Setpoint ", cache);
+      }
       return true;
     } else {
-      SmartDashboard.putBoolean("Bottom Flywheel at Setpoint ", false);
+      cache = false;
+      if (cache != SmartDashboard.getBoolean("Top Flywheel at Setpoint", false)) {
+        SmartDashboard.putBoolean("Top Flywheel at Setpoint ", cache);
+      }
       return false;
     }
   }
+  /*
 
   public void setManualMode(boolean manualMode) {
     this.manualMode = manualMode;
@@ -360,6 +402,7 @@ public class ShooterSubsystem extends SubsystemBase {
       return false;
     }
   }
+  */
 
   public void stopMotors() {
     topFlywheel.stopMotor();

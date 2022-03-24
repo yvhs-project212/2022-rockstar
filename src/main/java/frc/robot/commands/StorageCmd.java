@@ -46,15 +46,19 @@ public class StorageCmd extends CommandBase {
 
     // Autonomous storage
 
-    // Finding out how many balls are in storage
-    if (storage.getBottomSensorBoolean()) {
-      storage.setFirstBall(true);
-    } 
+    
 
     // Running motors
     if (RobotContainer.gunnerJoystick.getRightTriggerAxis() > 0.15) {
       storage.setMotors(StorageSubsystem.MotorSelection.REVERSE_ALL, StorageConstants.INDEXER_SPEED, StorageConstants.FEEDER_SPEED);
+      storage.setFirstBall(false);
+      storage.setSecondBall(false);
     } else {
+
+      // Finding out how many balls are in storage
+      if (storage.getBottomSensorBoolean()) {
+        storage.setFirstBall(true);
+      } 
 
       // Autonomous Storage 
       if ((storage.getTopColorSensorBoolean()) == false) {

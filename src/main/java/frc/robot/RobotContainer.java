@@ -4,18 +4,16 @@
 
 package frc.robot;
 
-import edu.wpi.first.wpilibj.GenericHID; 
+import edu.wpi.first.wpilibj.GenericHID;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.PrintCommand;
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.ExtendIntakeCmdGroup;
 import frc.robot.commands.DriveWithJoysticksCmd;
 import frc.robot.commands.EnableFeederCmd;
-import frc.robot.commands.EnableFeederCmdGroup;
 import frc.robot.commands.EnableShooterCmd;
 import frc.robot.commands.HangCmd;
 import frc.robot.commands.IntakeWithPaddlesCmd;
@@ -55,7 +53,7 @@ public class RobotContainer {
   public static StorageSubsystem storage = new StorageSubsystem();
   private final EnableFeederCmd enableFeederCmd = new EnableFeederCmd(storage);
   private final StorageCmd storageCmd = new StorageCmd(storage);
-  private final EnableFeederCmdGroup enableFeederCmdGroup = new EnableFeederCmdGroup(storage);
+  //private final EnableFeederCmdGroup enableFeederCmdGroup = new EnableFeederCmdGroup(storage);
 
   // Intake files - LL
   public static IntakeSubsystem intake = new IntakeSubsystem();
@@ -78,7 +76,7 @@ public class RobotContainer {
     //INITALIZE all the things we made - LL
 
     driveTrain.setDefaultCommand(driveWithJoysticksCmd);   //Drive is always looking to read this command - LL
-    //hang.setDefaultCommand(hangCmd);
+    hang.setDefaultCommand(hangCmd);
     intake.setDefaultCommand(intakeWithPaddlesCmd);
     shooter.setDefaultCommand(shooterCmd);
     storage.setDefaultCommand(storageCmd);
@@ -104,23 +102,35 @@ public class RobotContainer {
     new JoystickButton(driverJoystick, XboxController.Button.kB.value)
       .whenPressed(new InstantCommand(() -> driveTrain.setGear(Value.kReverse)));
 
+    // Transerval forward
+    new JoystickButton(driverJoystick, XboxController.Button.kLeftBumper.value)
+      .whenPressed(new InstantCommand(() -> hang.setTransveral(Value.kForward)));
+
+    // Transversal reverse
+    new JoystickButton(driverJoystick, XboxController.Button.kRightBumper.value)
+      .whenPressed(new InstantCommand(() -> hang.setTransveral(Value.kReverse)));
+
+
+
     // Gunner Joystick buttons  -----------------------------------------------------------------
 
     // Toggle Shooter
     final JoystickButton toggleShooter = new JoystickButton(gunnerJoystick, XboxController.Button.kLeftBumper.value);
     toggleShooter.whenHeld(enableShooterCmd);
 
+    /*
     // Manual Mode Off
     new JoystickButton(gunnerJoystick, 7)
       .whenPressed(new SequentialCommandGroup(
-        new PrintCommand("Set Manual Mode: false"), 
+        //new PrintCommand("Set Manual Mode: false"), 
         new InstantCommand(() -> shooter.setManualMode(false))));
       
     // Manual Mode On
     new JoystickButton(gunnerJoystick, 8)
       .whenPressed(new SequentialCommandGroup(
-        new PrintCommand("Set Manual Mode: true"), 
+        //new PrintCommand("Set Manual Mode: true"), 
         new InstantCommand(() -> shooter.setManualMode(true))));
+    */
 
     // Extend Intake
     final JoystickButton deployIntake = new JoystickButton(gunnerJoystick, XboxController.Button.kB.value);
@@ -130,16 +140,16 @@ public class RobotContainer {
     new JoystickButton(gunnerJoystick, XboxController.Button.kA.value)
       .whenPressed(new InstantCommand(() -> intake.setPiston(Value.kReverse)));
 
-    /*
+    
     // Enable Feeder
     final JoystickButton enableFeeder = new JoystickButton(gunnerJoystick, XboxController.Button.kRightBumper.value);
     enableFeeder.whileHeld(enableFeederCmd);
-    */
-
+    
+    /*
     // Enable feeder Cmd Group (AUTO)
     final JoystickButton enableFeeder = new JoystickButton(gunnerJoystick, XboxController.Button.kRightBumper.value);
     enableFeeder.whileActiveOnce(enableFeederCmdGroup);
-
+    */
   
   }
 
