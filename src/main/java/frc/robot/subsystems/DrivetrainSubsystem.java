@@ -87,6 +87,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
     rightBottomFollower.setNeutralMode(neutralMode);
     rightTopLeader.setNeutralMode(neutralMode);   
   }
+  
   public void resetEncoders() {
     RobotContainer.storage.resetEncoder();
     RobotContainer.hang.resetEncoder();
