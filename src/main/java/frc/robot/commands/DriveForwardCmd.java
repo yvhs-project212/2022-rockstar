@@ -18,7 +18,7 @@ public class DriveForwardCmd extends CommandBase {
     this.drivetrainSubsystem = drivetrainSubsystem;
     addRequirements(drivetrainSubsystem);
 
-    encoderSetpoint = drivetrainSubsystem.getEncoderMeters() + distanceMeters;
+    encoderSetpoint = drivetrainSubsystem.getEncoderMeters(0,0) + distanceMeters;
 
   }
 
@@ -44,7 +44,7 @@ public class DriveForwardCmd extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if (drivetrainSubsystem.getEncoderMeters() > encoderSetpoint) {
+    if (drivetrainSubsystem.getEncoderMeters(0,0) > encoderSetpoint) {
       return true;
     } else {
       return false;

@@ -28,8 +28,6 @@ public class DrivetrainSubsystem extends SubsystemBase {
   
   private final DoubleSolenoid gearbox;
 
-  private final StorageSubsystem storageSubsystem; 
-  private final HangSubsystem hangSubsystem; 
 
   // gyro
   
@@ -51,9 +49,6 @@ public class DrivetrainSubsystem extends SubsystemBase {
     gearbox = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, Constants.Solenoid.Drive.GEARBOX_LOW, Constants.Solenoid.Drive.GEARBOX_HIGH);
 
     gearbox.set(Value.kForward);
-
-    storageSubsystem = RobotContainer.storage;
-    hangSubsystem = RobotContainer.hang;
   }
 
   @Override
@@ -74,8 +69,8 @@ public class DrivetrainSubsystem extends SubsystemBase {
     rightTopLeader.set(right);
   }
 
-  public double getEncoderMeters() {
-    return (getLeftEncoder() + -getRightEncoder()) / 2 * DriveConstants.kEncoderTick2Meter;
+  public double getEncoderMeters(double leftEncoder, double rightEncoder) {
+    return (leftEncoder + -rightEncoder) / 2 * DriveConstants.kEncoderTick2Meter;
   }
 
   public void setGear(DoubleSolenoid.Value value) {
@@ -93,16 +88,8 @@ public class DrivetrainSubsystem extends SubsystemBase {
     rightTopLeader.setNeutralMode(neutralMode);   
   }
   public void resetEncoders() {
-    storageSubsystem.resetEncoder();
-    hangSubsystem.resetEncoder();
-  }
-
-  public double getLeftEncoder() {
-    return storageSubsystem.getFeederSensorPosition();
-  }
-
-  public double getRightEncoder() {
-    return hangSubsystem.getHangLeftSelectedSensorPosition();
+    RobotContainer.storage.resetEncoder();
+    RobotContainer.hang.resetEncoder();
   }
 
   public double getPressure() {
