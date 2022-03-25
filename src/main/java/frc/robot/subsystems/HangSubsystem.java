@@ -40,9 +40,10 @@ public class HangSubsystem extends SubsystemBase {
     hangLeft = new WPI_TalonSRX(Constants.PWM.Hang.LEFT);
     hangLeft.setInverted(false);
 
-    resetEncoder();
     hangRight = new WPI_TalonSRX(Constants.PWM.Hang.RIGHT);
     hangRight.setInverted(true);
+    
+    resetEncoders();
 
     transveral = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, Solenoid.Hang.LEFT, Solenoid.Hang.RIGHT);
     transveral.set(Value.kReverse);
@@ -82,12 +83,17 @@ public class HangSubsystem extends SubsystemBase {
     transveral.set(value);
   }
 
-  public void resetEncoder() {
+  public void resetEncoders() {
     hangLeft.setSelectedSensorPosition(0);
+    hangRight.setSelectedSensorPosition(0);
   }
 
   public double getHangLeftSelectedSensorPosition() {
     return hangLeft.getSelectedSensorPosition();
+  }
+  
+  public double getHangRightSelectedSensorPosition() {
+    return hangRight.getSelectedSensorPosition();
   }
 
   public void stop() {
