@@ -28,8 +28,8 @@ public class DrivetrainSubsystem extends SubsystemBase {
   
   private final DoubleSolenoid gearbox;
 
-  private final StorageSubsystem storageSubsystem; 
-  private final HangSubsystem hangSubsystem; 
+  //private final StorageSubsystem storageSubsystem; 
+  //private final HangSubsystem hangSubsystem; 
 
   // gyro
   
@@ -52,8 +52,8 @@ public class DrivetrainSubsystem extends SubsystemBase {
 
     gearbox.set(Value.kForward);
 
-    storageSubsystem = RobotContainer.storage;
-    hangSubsystem = RobotContainer.hang;
+    //storageSubsystem = RobotContainer.storage;
+    //hangSubsystem = RobotContainer.hang;
   }
 
   @Override
@@ -74,8 +74,8 @@ public class DrivetrainSubsystem extends SubsystemBase {
     rightTopLeader.set(right);
   }
 
-  public double getEncoderMeters() {
-    return (getLeftEncoder() + -getRightEncoder()) / 2 * DriveConstants.kEncoderTick2Meter;
+  public double getEncoderMeters(double leftEncoder, double rightEncoder) {
+    return (leftEncoder + -rightEncoder) / 2 * DriveConstants.kEncoderTick2Meter;
   }
 
   public void setGear(DoubleSolenoid.Value value) {
