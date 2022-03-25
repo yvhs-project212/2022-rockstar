@@ -92,10 +92,6 @@ public class DrivetrainSubsystem extends SubsystemBase {
     rightBottomFollower.setNeutralMode(neutralMode);
     rightTopLeader.setNeutralMode(neutralMode);   
   }
-  public void resetEncoders() {
-    storageSubsystem.resetEncoder();
-    hangSubsystem.resetEncoder();
-  }
 
 
   public double getPressure() {
