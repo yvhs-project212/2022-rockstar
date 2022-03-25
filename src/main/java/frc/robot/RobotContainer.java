@@ -66,7 +66,7 @@ public class RobotContainer {
   private final TurretCmd turretCmd = new TurretCmd(turret);
   
   // Autonomous - LL
-  private final AutonomousCmdGroup autonomousCmdGroup = new AutonomousCmdGroup();
+  //private final AutonomousCmdGroup autonomousCmdGroup = new AutonomousCmdGroup();
 
   // Controller files - LL
   public static XboxController driverJoystick = new XboxController(Constants.OI.DRIVER_NUMBER);
@@ -164,6 +164,7 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    return autonomousCmdGroup;
+    //return autonomousCmdGroup;
+    return null;
   }
 }

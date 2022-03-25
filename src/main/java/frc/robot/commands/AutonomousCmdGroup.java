@@ -18,6 +18,7 @@ public class AutonomousCmdGroup extends SequentialCommandGroup {
   public AutonomousCmdGroup() {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
+    addRequirements(drivetrainSubsystem);
     addCommands(
       new PrintCommand("AutonomousCmdGroup started!"),
       new DriveForwardCmd(drivetrainSubsystem, 1),
