@@ -40,6 +40,7 @@ public class RobotContainer {
   // DriveTrain files - LL
   public static DrivetrainSubsystem driveTrain = new DrivetrainSubsystem();
   private final DriveWithJoysticksCmd driveWithJoysticksCmd = new DriveWithJoysticksCmd(driveTrain);
+  private final DriveForwardCmd driveForwardCmd = new DriveForwardCmd(driveTrain);
 
   // Hang files - LL
   public static HangSubsystem hang = new HangSubsystem();
@@ -164,6 +165,6 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    return autonomousCmdGroup;
+    return AutonomousCmdGroup;
   }
 }
