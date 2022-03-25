@@ -85,6 +85,10 @@ public class HangSubsystem extends SubsystemBase {
   public double getHangLeftSelectedSensorPosition() {
     return hangLeft.getSelectedSensorPosition();
   }
+  
+  public double getHangRightSelectedSensorPosition() {
+    return hangRight.getSelectedSensorPosition();
+  }
 
   public void stop() {
     hangLeft.stopMotor();
