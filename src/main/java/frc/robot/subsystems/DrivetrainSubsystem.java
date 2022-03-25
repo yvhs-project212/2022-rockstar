@@ -59,7 +59,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    //SmartDashboard.putNumber("Air Tank Presusre", getPressure());
+    //SmartDashboard.putNumber("Air Tank Pressure", getPressure());
   }
   public void driveWithJoysticks(XboxController controller, double forwardSpeed, double turnSpeed) {
     double forward = ((controller.getRightTriggerAxis() - 
@@ -97,13 +97,6 @@ public class DrivetrainSubsystem extends SubsystemBase {
     hangSubsystem.resetEncoder();
   }
 
-  public double getLeftEncoder() {
-    return storageSubsystem.getFeederSensorPosition();
-  }
-
-  public double getRightEncoder() {
-    return hangSubsystem.getHangLeftSelectedSensorPosition();
-  }
 
   public double getPressure() {
     return Constants.pcmCompressor.getPressure();
