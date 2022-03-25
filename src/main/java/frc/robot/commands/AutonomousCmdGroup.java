@@ -6,17 +6,21 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import frc.robot.subsystems.DrivetrainSubsystem;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class AutonomousCmdGroup extends SequentialCommandGroup {
   /** Creates a new AutonomousCmdGroup. */
+  DrivetrainSubsystem drivetrainSubsystem;
+
   public AutonomousCmdGroup() {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
       new PrintCommand("AutonomousCmdGroup started!"),
+      new DriveForwardCmd(drivetrainSubsystem, 1),
       
       new PrintCommand("AutonomousCmdGroup ended!")
     );

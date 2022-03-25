@@ -5,6 +5,8 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.RobotContainer;
+import frc.robot.Constants.ShooterConstants;
 import frc.robot.subsystems.ShooterSubsystem;
 
 public class EnableShooterCmd extends CommandBase {
@@ -42,7 +44,37 @@ public class EnableShooterCmd extends CommandBase {
       }
     }
     */
-    shooter.enable();
+
+    if (RobotContainer.gunnerJoystick.getPOV() > 135 &&
+      RobotContainer.gunnerJoystick.getPOV() < 225) {
+      // 180 POV
+      // 7 FEET --> LINE 
+      shooter.setStaticMode(true);
+      shooter.setTargetTopFlyWheelVelocity(ShooterConstants.SEVEN_VELOCITY_TOP);
+      shooter.setTargetBottomFlyWheelVelocity(ShooterConstants.SEVEN_VELOCITY_BOTTOM);
+      shooter.enable();
+    } else if (RobotContainer.gunnerJoystick.getPOV() > 45 &&
+    RobotContainer.gunnerJoystick.getPOV() < 135) {
+      // 90 POV
+      // 10 FEET
+      shooter.setStaticMode(true);
+      shooter.setTargetTopFlyWheelVelocity(ShooterConstants.TEN_VELOCITY_TOP);
+      shooter.setTargetBottomFlyWheelVelocity(ShooterConstants.TEN_VELOCITY_BOTTOM);
+      shooter.enable();
+    } else if (RobotContainer.gunnerJoystick.getPOV() == 0) {
+      // 0 POV
+      // 12 FEET
+      shooter.setStaticMode(true);
+      shooter.setTargetTopFlyWheelVelocity(ShooterConstants.TWELVE_VELOCITY_TOP);
+      shooter.setTargetBottomFlyWheelVelocity(ShooterConstants.TWELVE_VELOCITY_BOTTOM);
+      shooter.enable();
+    } else {
+      shooter.setStaticMode(false);
+      shooter.setTargetTopFlyWheelVelocity(0);
+      shooter.setTargetBottomFlyWheelVelocity(0);
+      shooter.enable();
+    }
+    
   }
 
   // Called once the command ends or is interrupted.

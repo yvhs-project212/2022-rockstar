@@ -5,13 +5,14 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.ExtendIntakeCmdGroup;
+import frc.robot.commands.AutonomousCmdGroup;
 import frc.robot.commands.DriveWithJoysticksCmd;
 import frc.robot.commands.EnableFeederCmd;
 import frc.robot.commands.EnableShooterCmd;
@@ -64,6 +65,9 @@ public class RobotContainer {
   public static TurretSubsystem turret = new TurretSubsystem();
   private final TurretCmd turretCmd = new TurretCmd(turret);
   
+  // Autonomous - LL
+  private final AutonomousCmdGroup autonomousCmdGroup = new AutonomousCmdGroup();
+
   // Controller files - LL
   public static XboxController driverJoystick = new XboxController(Constants.OI.DRIVER_NUMBER);
   public static XboxController gunnerJoystick = new XboxController(Constants.OI.GUNNER_NUMBER);
@@ -118,7 +122,7 @@ public class RobotContainer {
     final JoystickButton toggleShooter = new JoystickButton(gunnerJoystick, XboxController.Button.kLeftBumper.value);
     toggleShooter.whenHeld(enableShooterCmd);
 
-    /*
+    
     // Manual Mode Off
     new JoystickButton(gunnerJoystick, 7)
       .whenPressed(new SequentialCommandGroup(
@@ -130,7 +134,7 @@ public class RobotContainer {
       .whenPressed(new SequentialCommandGroup(
         //new PrintCommand("Set Manual Mode: true"), 
         new InstantCommand(() -> shooter.setManualMode(true))));
-    */
+    
 
     // Extend Intake
     final JoystickButton deployIntake = new JoystickButton(gunnerJoystick, XboxController.Button.kB.value);
@@ -160,6 +164,6 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    return null;
+    return autonomousCmdGroup;
   }
 }

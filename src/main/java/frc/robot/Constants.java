@@ -81,6 +81,12 @@ public final class Constants {
         public static final double MAX_PRESSURE = 60;
 
         public static final double WHEEL_DIAMETER = 6; // 6 Inches
+
+        public static final double AUTO_LEFT_DRIVE_FORWARD_SPEED = -0.4;
+        public static final double AUTO_RIGHT_DRIVE_FORWARD_SPEED = -0.4;
+        
+        
+
         /*
         public static final double ENCODER_RESOLUTION = 4096;
 
@@ -127,7 +133,7 @@ public final class Constants {
          */
         public static final int kTimeoutMs = 30;
 
-        public static final double LIMELIGHT_MOUNT_ANGLE_DEGREES = 26;
+        public static final double LIMELIGHT_MOUNT_ANGLE_DEGREES = 22;
 
         public static final double LIMELIGHT_LENS_HEIGHT_INCHES = 38;
 
@@ -152,8 +158,8 @@ public final class Constants {
                 public final static double PeakOut = 1.00;
             }
             
-            public final static double TOP_SLOPE = 48.23;
-            public final static double TOP_Y_INT = 6000;
+            public final static double TOP_SLOPE = 13.92368;
+            public final static double TOP_Y_INT = 9248.12105;
         }
         
         public final static class BottomFlywheelConstants {
@@ -165,17 +171,26 @@ public final class Constants {
                 public final static double Iz = 300;
                 public final static double PeakOut = 1.00;
             }
-            public final static double BOTTOM_SLOPE = 320.58824;
-            public final static double BOTTOM_Y_INT = -900;   
+            public final static double BOTTOM_SLOPE = 1627.79212;
+            public final static double BOTTOM_Y_INT = -11036.20505;   
         }
         //public static final double kShooterRPM2Velocity = 1; // Per encoder tick to flywheel velocity (ft/min)
+
+        public static final double SEVEN_VELOCITY_TOP = 9100.53;
+        public static final double SEVEN_VELOCITY_BOTTOM = 6000;
+
+        public static final double TEN_VELOCITY_TOP = 10000;
+        public static final double TEN_VELOCITY_BOTTOM = 6000;
+        
+        public static final double TWELVE_VELOCITY_TOP = 9074.62;
+        public static final double TWELVE_VELOCITY_BOTTOM = 8042.33;
 
     }
     public static final class StorageConstants {
         public static final double INDEXER_SPEED = 0.6;
-        public static final double INDEXER_SPEED_AUTO = 0.5;
+        public static final double INDEXER_SPEED_AUTO = 0.6;
         public static final double FEEDER_SPEED = 0.6;
-        public static final double FEEDER_SPEED_AUTO = 0.5;
+        public static final double FEEDER_SPEED_AUTO = 0.6;
 
         public static final double TIME_BETWEEN_SHOTS = 0.5; // seconds
 

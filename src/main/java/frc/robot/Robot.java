@@ -35,6 +35,7 @@ public class Robot extends TimedRobot {
     //Constants.pcmCompressor.disable();
 
     // USB Camera
+    
     CameraServer.startAutomaticCapture();
 
   }

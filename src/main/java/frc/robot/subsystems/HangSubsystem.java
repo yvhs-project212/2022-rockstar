@@ -78,6 +78,14 @@ public class HangSubsystem extends SubsystemBase {
     transveral.set(value);
   }
 
+  public void resetEncoder() {
+    hangLeft.setSelectedSensorPosition(0);
+  }
+
+  public double getHangLeftSelectedSensorPosition() {
+    return hangLeft.getSelectedSensorPosition();
+  }
+
   public void stop() {
     hangLeft.stopMotor();
     hangRight.stopMotor();

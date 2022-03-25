@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.RobotContainer;
 
 public class DrivetrainSubsystem extends SubsystemBase {
   /** Creates a new DrivetrainSubsystem. */
@@ -25,6 +26,9 @@ public class DrivetrainSubsystem extends SubsystemBase {
   private final DifferentialDrive drive;
   
   private final DoubleSolenoid gearbox;
+
+  private final StorageSubsystem storageSubsystem; 
+  private final HangSubsystem hangSubsystem; 
 
   // gyro
   
@@ -46,6 +50,9 @@ public class DrivetrainSubsystem extends SubsystemBase {
     gearbox = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, Constants.Solenoid.Drive.GEARBOX_LOW, Constants.Solenoid.Drive.GEARBOX_HIGH);
 
     gearbox.set(Value.kForward);
+
+    storageSubsystem = RobotContainer.storage;
+    hangSubsystem = RobotContainer.hang;
   }
 
   @Override
@@ -59,6 +66,15 @@ public class DrivetrainSubsystem extends SubsystemBase {
 
     drive.arcadeDrive(forward, controller.getRawAxis(Constants.OI.XBOX_X_AXIS)*turnSpeed);
     //drive.arcadeDrive(controller.getRawAxis(Constants.OI.XBOX_Y_AXIS)*-(forwardSpeed), controller.getRawAxis(Constants.OI.XBOX_X_AXIS)*turnSpeed);
+  }
+
+  public void setMotors(double left, double right) {
+    leftTopLeader.set(left);
+    rightTopLeader.set(right);
+  }
+
+  public double getEncoderMeters() {
+    
   }
 
   public void setGear(DoubleSolenoid.Value value) {
@@ -75,13 +91,17 @@ public class DrivetrainSubsystem extends SubsystemBase {
     rightBottomFollower.setNeutralMode(neutralMode);
     rightTopLeader.setNeutralMode(neutralMode);   
   }
+  public void resetEncoders() {
+    storageSubsystem.resetEncoder();
+    hangSubsystem.resetEncoder();
+  }
 
   public double getLeftEncoder() {
-    return 0;
+    return storageSubsystem.getFeederSensorPosition();
   }
 
   public double getRightEncoder() {
-    return 0;
+    return hangSubsystem.getHangLeftSelectedSensorPosition();
   }
 
   public double getPressure() {

@@ -5,7 +5,6 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.RobotContainer;
 import frc.robot.Constants.StorageConstants;
 import frc.robot.subsystems.StorageSubsystem;
 import frc.robot.subsystems.StorageSubsystem.MotorSelection;
@@ -30,6 +29,7 @@ public class EnableFeederCmd extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    /*
     if (RobotContainer.shooter.bothFlywheelsAtSetpoint()) {
        storage.setMotors(MotorSelection.ALL, StorageConstants.INDEXER_SPEED_AUTO, StorageConstants.FEEDER_SPEED_AUTO);
        storage.runMotors();
@@ -39,6 +39,10 @@ public class EnableFeederCmd extends CommandBase {
       storage.stopMotors();
       //System.out.println("Shooter is not at target velocity!");
     }
+    */
+    storage.setMotors(MotorSelection.ALL, StorageConstants.INDEXER_SPEED_AUTO, StorageConstants.FEEDER_SPEED_AUTO);
+    storage.runMotors();
+
   }
 
   // Called once the command ends or is interrupted.
