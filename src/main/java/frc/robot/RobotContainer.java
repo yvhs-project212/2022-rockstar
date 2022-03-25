@@ -68,7 +68,7 @@ public class RobotContainer {
   private final TurretCmd turretCmd = new TurretCmd(turret);
   
   // Autonomous - LL
-  //private final AutonomousCmdGroup autonomousCmdGroup = new AutonomousCmdGroup();
+  private final AutonomousCmdGroup autonomousCmdGroup = new AutonomousCmdGroup();
 
   // Controller files - LL
   public static XboxController driverJoystick = new XboxController(Constants.OI.DRIVER_NUMBER);
