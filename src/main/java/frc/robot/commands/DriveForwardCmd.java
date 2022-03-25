@@ -12,14 +12,11 @@ public class DriveForwardCmd extends CommandBase {
   /** Creates a new DriveForwardCmd. */
   private final DrivetrainSubsystem drivetrainSubsystem;
   private final double encoderSetpoint;
-  private final double distanceMeters;
 
   public DriveForwardCmd(DrivetrainSubsystem drivetrainSubsystem, double distanceMeters) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.drivetrainSubsystem = drivetrainSubsystem;
     addRequirements(drivetrainSubsystem);
-    
-    this.distanceMeters = distanceMeters;
 
     encoderSetpoint = drivetrainSubsystem.getEncoderMeters() + distanceMeters;
 

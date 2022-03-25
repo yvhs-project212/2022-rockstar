@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.RobotContainer;
+import frc.robot.Constants.DriveConstants;
 
 public class DrivetrainSubsystem extends SubsystemBase {
   /** Creates a new DrivetrainSubsystem. */
@@ -74,7 +75,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
   }
 
   public double getEncoderMeters() {
-    
+    return (getLeftEncoder() + -getRightEncoder()) / 2 * DriveConstants.kEncoderTick2Meter;
   }
 
   public void setGear(DoubleSolenoid.Value value) {
