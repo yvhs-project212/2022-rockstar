@@ -11,14 +11,19 @@ import frc.robot.subsystems.DrivetrainSubsystem;
 public class DriveForwardCmd extends CommandBase {
   /** Creates a new DriveForwardCmd. */
   private final DrivetrainSubsystem drivetrainSubsystem;
+  private final HangSubsystem hangSubsystem;
   private final double encoderSetpoint;
 
-  public DriveForwardCmd(DrivetrainSubsystem drivetrainSubsystem, double distanceMeters) {
+  public DriveForwardCmd(DrivetrainSubsystem drivetrainSubsystem, HangSubsystem hangSubsystem, double distanceMeters) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.drivetrainSubsystem = drivetrainSubsystem;
+    this.hangSubsystem = hangSubsystem;
+    
     addRequirements(drivetrainSubsystem);
-
-    encoderSetpoint = drivetrainSubsystem.getEncoderMeters() + distanceMeters;
+    addRequirements(hangSubsystem)
+    
+    encoderSetpoint = drivetrainSubsystem.getEncoderMeters(hangSubsystem.getHangLeftSelectedSensorPosition, hangSubsystem.getHangRightSelectedSensorPosition) 
+      + distanceMeters;
 
   }
 
@@ -31,7 +36,8 @@ public class DriveForwardCmd extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    drivetrainSubsystem.setMotors(DriveConstants.AUTO_LEFT_DRIVE_FORWARD_SPEED, DriveConstants.AUTO_RIGHT_DRIVE_FORWARD_SPEED);
+    drivetrainSubsystem.setMotors(DriveConstants.AUTO_LEFT_DRIVE_FORWARD_SPEED, 
+                                  DriveConstants.AUTO_RIGHT_DRIVE_FORWARD_SPEED);
   }
 
   // Called once the command ends or is interrupted.
@@ -44,10 +50,12 @@ public class DriveForwardCmd extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if (drivetrainSubsystem.getEncoderMeters() > encoderSetpoint) {
+    if (drivetrainSubsystem.getEncoderMeters(hangSubsystem.getHangLeftSelectedSensorPosition, hangSubsystem.getHangRightSelectedSensorPosition) 
+        > encoderSetpoint) {
       return true;
     } else {
       return false;
     }
   }
 }
+dd
