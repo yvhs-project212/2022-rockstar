@@ -13,15 +13,15 @@ import frc.robot.subsystems.DrivetrainSubsystem;
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class AutonomousCmdGroup extends SequentialCommandGroup {
   /** Creates a new AutonomousCmdGroup. */
-  DrivetrainSubsystem drivetrainSubsystem;
+  //DrivetrainSubsystem drivetrainSubsystem;
 
-  public AutonomousCmdGroup() {
+  public AutonomousCmdGroup(DrivetrainSubsystem drivetrainSubsystem, HangSubsystem hangSubsystem) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
-    addRequirements(drivetrainSubsystem);
+    //addRequirements(drivetrainSubsystem);
     addCommands(
       new PrintCommand("AutonomousCmdGroup started!"),
-      new DriveForwardCmd(drivetrainSubsystem, 1),
+      new DriveForwardCmd(drivetrainSubsystem, hangSubsystem, 1),
       
       new PrintCommand("AutonomousCmdGroup ended!")
     );
