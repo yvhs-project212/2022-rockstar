@@ -56,6 +56,7 @@ public class StorageSubsystem extends SubsystemBase {
 
     feeder = new WPI_TalonSRX(PWM.Storage.FEEDER);
     feeder.setInverted(false);
+    resetEncoder();
 
     bottomTrigger = new AnalogTrigger(PWM.Storage.BOTTOM_TRIGGER);
     bottomTrigger.setLimitsVoltage(1.5, 4);
@@ -89,6 +90,8 @@ public class StorageSubsystem extends SubsystemBase {
     getBottomSensorBoolean();
     getMiddleColorSensorBoolean();
     getTopColorSensorBoolean();
+    
+    SmartDashboard.putNumber("Right Drivetrain Encoder", feeder.getSelectedSensorPosition());
   }
 
   public void setMotors(final StorageSubsystem.MotorSelection setMotorSelection, double userSelectedIndexerSpeed, double userSelectedFeederSpeed) {

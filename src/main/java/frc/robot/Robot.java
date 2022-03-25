@@ -36,7 +36,7 @@ public class Robot extends TimedRobot {
 
     // USB Camera
     
-    CameraServer.startAutomaticCapture();
+    //CameraServer.startAutomaticCapture();
 
   }
 

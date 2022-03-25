@@ -31,7 +31,7 @@ public class TurretSubsystem extends SubsystemBase {
   }
 
   public void turretWithJoysticks(XboxController controller, double speed) {
-    turret.set(controller.getRawAxis(0) * speed);
+    turret.set(controller.getRawAxis(4) * speed);
   }
 
   public void turretWithLimelight() {

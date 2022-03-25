@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.Constants.HangConstants;
@@ -38,16 +39,19 @@ public class HangSubsystem extends SubsystemBase {
   public HangSubsystem() {  
     hangLeft = new WPI_TalonSRX(Constants.PWM.Hang.LEFT);
     hangLeft.setInverted(false);
+
+    resetEncoder();
     hangRight = new WPI_TalonSRX(Constants.PWM.Hang.RIGHT);
     hangRight.setInverted(true);
 
     transveral = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, Solenoid.Hang.LEFT, Solenoid.Hang.RIGHT);
-    transveral.set(Value.kForward);
+    transveral.set(Value.kReverse);
   }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    SmartDashboard.putNumber("Left Drivetrain Encoder", hangLeft.getSelectedSensorPosition());
   }
   public void hangWithPOV(XboxController controller) {
     if ((controller.getPOV() == 0)) {               // Both Up

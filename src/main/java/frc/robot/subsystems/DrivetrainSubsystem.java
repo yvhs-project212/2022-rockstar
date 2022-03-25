@@ -14,7 +14,6 @@ import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-import frc.robot.RobotContainer;
 import frc.robot.Constants.DriveConstants;
 
 public class DrivetrainSubsystem extends SubsystemBase {
@@ -55,6 +54,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
     //SmartDashboard.putNumber("Air Tank Presusre", getPressure());
+    
   }
   public void driveWithJoysticks(XboxController controller, double forwardSpeed, double turnSpeed) {
     double forward = ((controller.getRightTriggerAxis() - 
@@ -65,8 +65,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
   }
 
   public void setMotors(double left, double right) {
-    leftTopLeader.set(left);
-    rightTopLeader.set(right);
+    drive.tankDrive(left, right);
   }
 
   public double getEncoderMeters(double leftEncoder, double rightEncoder) {
@@ -87,11 +86,13 @@ public class DrivetrainSubsystem extends SubsystemBase {
     rightBottomFollower.setNeutralMode(neutralMode);
     rightTopLeader.setNeutralMode(neutralMode);   
   }
-  
+
+  /*
   public void resetEncoders() {
     RobotContainer.storage.resetEncoder();
     RobotContainer.hang.resetEncoder();
   }
+  */
 
   public double getPressure() {
     return Constants.pcmCompressor.getPressure();

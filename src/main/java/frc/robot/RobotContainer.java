@@ -41,7 +41,7 @@ public class RobotContainer {
   // DriveTrain files - LL
   public static DrivetrainSubsystem driveTrain = new DrivetrainSubsystem();
   private final DriveWithJoysticksCmd driveWithJoysticksCmd = new DriveWithJoysticksCmd(driveTrain);
-  private final DriveForwardCmd driveForwardCmd = new DriveForwardCmd(driveTrain, 0);
+  private final DriveForwardCmd driveForwardCmd = new DriveForwardCmd(driveTrain, storage, hang, 0);
 
   // Hang files - LL
   public static HangSubsystem hang = new HangSubsystem();
@@ -68,7 +68,7 @@ public class RobotContainer {
   private final TurretCmd turretCmd = new TurretCmd(turret);
   
   // Autonomous - LL
-  private final AutonomousCmdGroup autonomousCmdGroup = new AutonomousCmdGroup();
+  private final AutonomousCmdGroup autonomousCmdGroup = new AutonomousCmdGroup(driveTrain, storage, hang);
 
   // Controller files - LL
   public static XboxController driverJoystick = new XboxController(Constants.OI.DRIVER_NUMBER);
