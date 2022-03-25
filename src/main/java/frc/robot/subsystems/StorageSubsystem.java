@@ -239,6 +239,7 @@ public class StorageSubsystem extends SubsystemBase {
       return false;
     }
   }
+  
   public void resetEncoder() {
     feeder.setSelectedSensorPosition(0);
   }
@@ -246,6 +247,7 @@ public class StorageSubsystem extends SubsystemBase {
   public double getFeederSensorPosition() {
     return feeder.getSelectedSensorPosition();
   }
+  
 
 
   public void stopMotors() {
