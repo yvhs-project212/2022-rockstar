@@ -82,8 +82,8 @@ public final class Constants {
 
         public static final double WHEEL_DIAMETER = 6; // 6 Inches
 
-        public static final double AUTO_LEFT_DRIVE_FORWARD_SPEED = -0.4;
-        public static final double AUTO_RIGHT_DRIVE_FORWARD_SPEED = -0.4;
+        public static final double AUTO_LEFT_DRIVE_FORWARD_SPEED = 0.4;
+        public static final double AUTO_RIGHT_DRIVE_FORWARD_SPEED = 0.4;
 
         public static final double kEncoderTick2Meter = 1.0 / 4096.0 * 0.1524 * Math.PI;
         
