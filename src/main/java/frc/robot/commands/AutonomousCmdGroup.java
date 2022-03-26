@@ -5,6 +5,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
@@ -29,8 +30,22 @@ public class AutonomousCmdGroup extends SequentialCommandGroup {
     addCommands(
       new PrintCommand("AutonomousCmdGroup started!"),
       
+      /**
+       * Fix "DriveForwardCmd":
+       * 
+       * You cannot go backwards
+       * 
+       */
       new DriveForwardCmd(drivetrainSubsystem, storageSubsystem, hangSubsystem, 4),
       
+      /**
+       * Figure out how to do a ParallelDeadlineCommandGroup
+       * 
+       * So I can get out of shooting a ball once
+       */
+      new ParallelDeadlineGroup(
+        deadline
+      , commands),
       
       new ParallelCommandGroup(
         new DriveWithLimelightCmd(drivetrainSubsystem),

@@ -25,6 +25,8 @@ public class StorageCmd extends CommandBase {
   @Override
   public void initialize() {
     System.out.println("StorageCmd started!");
+    storage.setFirstBall(false);
+    storage.setSecondBall(false);
   }
 
   // Called every time the scheduler runs while the command is scheduled.

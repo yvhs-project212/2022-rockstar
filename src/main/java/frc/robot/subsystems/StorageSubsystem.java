@@ -226,7 +226,6 @@ public class StorageSubsystem extends SubsystemBase {
       } else {
         return false;
       }
-
     } else if (getFirstBall()) {
       // if there is one ball
       if ((getTopColorSensorBoolean() == false)&&(getMiddleColorSensorBoolean() == false)&&

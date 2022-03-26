@@ -23,6 +23,8 @@ public class EnableFeederCmd extends CommandBase {
   @Override
   public void initialize() {
     System.out.println("EnableFeederCmd started!");
+    storage.setFirstBall(false);
+    storage.setSecondBall(false);
     
   }
 
