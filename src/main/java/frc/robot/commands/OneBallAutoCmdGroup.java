@@ -40,6 +40,8 @@ public class OneBallAutoCmdGroup extends SequentialCommandGroup {
        * You cannot go backwards
        * 
        */
+      
+      new PrintCommand("DriveForwardCmd started!"),
       new DriveForwardCmd(drive, storage, hang, -4),
       
       /**
@@ -48,6 +50,7 @@ public class OneBallAutoCmdGroup extends SequentialCommandGroup {
        * So I can get out of shooting a ball once
        */
       
+      new PrintCommand("ShootOneBall started!"),
       new ParallelCommandGroup(
         new RunCommand(turret::turretWithLimelight, turret),
         new RunCommand(shooter::setTargetBottomFlyWheelVelocity),
