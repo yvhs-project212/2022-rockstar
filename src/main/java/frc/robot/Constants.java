@@ -202,8 +202,8 @@ public final class Constants {
                 public final static double PeakOut = 1.00;
             }
             
-            public final static double TOP_SLOPE = 13.92368;
-            public final static double TOP_Y_INT = 9248.12105;
+            public final static double TOP_SLOPE = 226.48484; 	// 1678 Help
+            public final static double TOP_Y_INT = 3419.94093;	// 1678 Help
         }
         
         public final static class BottomFlywheelConstants {
@@ -215,8 +215,8 @@ public final class Constants {
                 public final static double Iz = 300;
                 public final static double PeakOut = 1.00;
             }
-            public final static double BOTTOM_SLOPE = 1627.79212;
-            public final static double BOTTOM_Y_INT = -11036.20505;   
+            public final static double BOTTOM_SLOPE = 226.48484;	// 1678 Help
+            public final static double BOTTOM_Y_INT = 3976.78068;   	// 1678 Help
         }
         //public static final double kShooterRPM2Velocity = 1; // Per encoder tick to flywheel velocity (ft/min)
     }
