@@ -87,8 +87,8 @@ public final class Constants {
 
         public static final double kEncoderTick2Meter = 1.0 / 4096.0 * 0.1524 * Math.PI;
         
-        public static final double kP = 0.03;
-        public static final double MIN_COMMAND = 0.3;
+        public static final double kP = 0.29;
+        public static final double MIN_COMMAND = 0.25;
         /*
         public static final double ENCODER_RESOLUTION = 4096;
 
