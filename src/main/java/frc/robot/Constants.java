@@ -87,8 +87,8 @@ public final class Constants {
 
         public static final double kEncoderTick2Meter = 1.0 / 4096.0 * 0.1524 * Math.PI;
         
-        
-
+        public static final double kP = 0.03;
+        public static final double MIN_COMMAND = 0.3;
         /*
         public static final double ENCODER_RESOLUTION = 4096;
 
@@ -150,12 +150,54 @@ public final class Constants {
         public final static Gains kGains_Velocit  = new Gains( 0.1, 0.001, 5, 1023.0/20660.0,  300,  1.00);
         */
 
+        public final static class ShooterVelocities {
+            public final static double AUTO_BOTTOM = 5500;
+            public final static double AUTO_TOP = 8300;
+
+            /**
+             * soscistatistics.com/tests/regression/default.aspx
+             * 
+             * Bottom Line of best Fit
+             * 
+             * y = mx + b
+             * m = 145.76638
+             * b = 3976.78068
+             * 
+             * (6.97, 5000)
+             * (9.2, 5300)
+             * (10.72, 5550) 
+             *
+             * 
+             * Top Line of Best Fit
+             * 
+             * y = mx + b
+             * m = 226.48484
+             * b = 3419.94093
+             * 
+             * (6.97, 5000)
+             * (9.2, 5500)
+             * (10.72, 5850) 
+             * 
+             */
+            
+            public final static double BOTTOM = 5000;   // 6.97 feet
+            public final static double TOP = 5000;      // 6.97 feet
+
+            //public final static double BOTTOM = 5300; //9.2 feet
+            //public final static double TOP = 5500; // 9.2 feet
+            
+            //public final static double BOTTOM = 5550;   // 10.72 feet
+            //public final static double TOP = 5850;      // 10.72 feet
+
+        
+        }
+
         public final static class TopFlywheelConstants {
             public final static class kGains {
-                public final static double kP = 0.015;
-                public final static double kI = 0.001;
-                public final static double kD = 5;
-                public final static double kF = 0; // 1023.0 / 20660.0
+                public final static double kP = 0.01;   // 9.2 feet
+                public final static double kI = 0;      // 9.2 feet
+                public final static double kD = 0;      // 9.2 feet
+                public final static double kF = 0.1;    // 9.2 feet
                 public final static double Iz = 300;
                 public final static double PeakOut = 1.00;
             }
@@ -189,9 +231,9 @@ public final class Constants {
 
     }
     public static final class StorageConstants {
-        public static final double INDEXER_SPEED = 0.6;
+        public static final double INDEXER_SPEED = 0.7;
         public static final double INDEXER_SPEED_AUTO = 0.6;
-        public static final double FEEDER_SPEED = 0.6;
+        public static final double FEEDER_SPEED = 0.7;
         public static final double FEEDER_SPEED_AUTO = 0.6;
 
         public static final double TIME_BETWEEN_SHOTS = 0.5; // seconds

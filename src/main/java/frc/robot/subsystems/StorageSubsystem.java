@@ -91,7 +91,7 @@ public class StorageSubsystem extends SubsystemBase {
     getMiddleColorSensorBoolean();
     getTopColorSensorBoolean();
     
-    SmartDashboard.putNumber("Right Drivetrain Encoder", feeder.getSelectedSensorPosition());
+    //SmartDashboard.putNumber("Right Drivetrain Encoder", feeder.getSelectedSensorPosition());
   }
 
   public void setMotors(final StorageSubsystem.MotorSelection setMotorSelection, double userSelectedIndexerSpeed, double userSelectedFeederSpeed) {

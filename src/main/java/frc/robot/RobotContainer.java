@@ -15,6 +15,7 @@ import frc.robot.commands.ExtendIntakeCmdGroup;
 import frc.robot.commands.AutonomousCmdGroup;
 import frc.robot.commands.DriveForwardCmd;
 import frc.robot.commands.DriveWithJoysticksCmd;
+import frc.robot.commands.DriveWithLimelightCmd;
 import frc.robot.commands.EnableFeederCmd;
 import frc.robot.commands.EnableShooterCmd;
 import frc.robot.commands.HangCmd;
@@ -42,6 +43,7 @@ public class RobotContainer {
   public static DrivetrainSubsystem driveTrain = new DrivetrainSubsystem();
   private final DriveWithJoysticksCmd driveWithJoysticksCmd = new DriveWithJoysticksCmd(driveTrain);
   private final DriveForwardCmd driveForwardCmd = new DriveForwardCmd(driveTrain, storage, hang, 0);
+  private final DriveWithLimelightCmd driveWithLimelightCmd = new DriveWithLimelightCmd(driveTrain);
 
   // Hang files - LL
   public static HangSubsystem hang = new HangSubsystem();
@@ -68,7 +70,7 @@ public class RobotContainer {
   private final TurretCmd turretCmd = new TurretCmd(turret);
   
   // Autonomous - LL
-  private final AutonomousCmdGroup autonomousCmdGroup = new AutonomousCmdGroup(driveTrain, storage, hang);
+  private final AutonomousCmdGroup autonomousCmdGroup = new AutonomousCmdGroup(driveTrain, storage, hang, intake, shooter);
 
   // Controller files - LL
   public static XboxController driverJoystick = new XboxController(Constants.OI.DRIVER_NUMBER);
@@ -86,7 +88,7 @@ public class RobotContainer {
     intake.setDefaultCommand(intakeWithPaddlesCmd);
     shooter.setDefaultCommand(shooterCmd);
     storage.setDefaultCommand(storageCmd);
-    turret.setDefaultCommand(turretCmd);
+    //turret.setDefaultCommand(turretCmd);
 
     // Configure the button bindings
     configureButtonBindings();
@@ -151,6 +153,9 @@ public class RobotContainer {
     final JoystickButton enableFeeder = new JoystickButton(gunnerJoystick, XboxController.Button.kRightBumper.value);
     enableFeeder.whileHeld(enableFeederCmd);
     
+    // Enable DriveWithLimelight
+    new JoystickButton(gunnerJoystick, XboxController.Button.kX.value)
+      .whenHeld(driveWithLimelightCmd);
     /*
     // Enable feeder Cmd Group (AUTO)
     final JoystickButton enableFeeder = new JoystickButton(gunnerJoystick, XboxController.Button.kRightBumper.value);

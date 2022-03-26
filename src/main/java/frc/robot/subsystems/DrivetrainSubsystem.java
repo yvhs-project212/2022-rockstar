@@ -7,6 +7,9 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.XboxController;
@@ -27,6 +30,8 @@ public class DrivetrainSubsystem extends SubsystemBase {
   private final DifferentialDrive drive;
   
   private final DoubleSolenoid gearbox;
+
+  public NetworkTable table;
 
 
   // gyro
@@ -49,6 +54,8 @@ public class DrivetrainSubsystem extends SubsystemBase {
     gearbox = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, Constants.Solenoid.Drive.GEARBOX_LOW, Constants.Solenoid.Drive.GEARBOX_HIGH);
 
     gearbox.set(Value.kForward);
+
+    table = NetworkTableInstance.getDefault().getTable("limelight");
   }
 
   @Override
@@ -101,5 +108,22 @@ public class DrivetrainSubsystem extends SubsystemBase {
 
   public double getCurrent() {
     return Constants.pcmCompressor.getCurrent();
+  }
+
+  public void driveWithLimelight() {
+    
+    NetworkTableEntry tx = table.getEntry("tx");
+    double x = tx.getDouble(0.0);
+    double heading_error = -x;
+    double steering_adjust = 0.0;
+
+    if (x > 1.0) {
+      steering_adjust = -DriveConstants.kP * heading_error - DriveConstants.MIN_COMMAND; // -0.015 and 0.08
+    }
+    else if (x < 1.0) {
+      steering_adjust = -DriveConstants.kP * heading_error + DriveConstants.MIN_COMMAND;
+    }
+    
+    drive.arcadeDrive(0, steering_adjust);
   }
 }

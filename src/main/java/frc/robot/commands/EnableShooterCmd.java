@@ -4,6 +4,7 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
 import frc.robot.Constants.ShooterConstants;
@@ -45,6 +46,7 @@ public class EnableShooterCmd extends CommandBase {
     }
     */
 
+    /*
     if (RobotContainer.gunnerJoystick.getPOV() > 135 &&
       RobotContainer.gunnerJoystick.getPOV() < 225) {
       // 180 POV
@@ -74,7 +76,13 @@ public class EnableShooterCmd extends CommandBase {
       shooter.setTargetBottomFlyWheelVelocity(0);
       shooter.enable();
     }
-    
+    */
+    if (shooter.getManualMode()) {
+      shooter.enable(SmartDashboard.getNumber("User-inputed Bottom Flywheel Velocity", 0)
+      , SmartDashboard.getNumber("User-inputed Top Flywheel Velocity", 0));
+    } else {
+      shooter.enable(ShooterConstants.ShooterVelocities.TOP, ShooterConstants.ShooterVelocities.TOP);
+    }
   }
 
   // Called once the command ends or is interrupted.

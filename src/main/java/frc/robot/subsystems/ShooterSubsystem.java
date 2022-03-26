@@ -159,7 +159,7 @@ public class ShooterSubsystem extends SubsystemBase {
   }
   */
 
-  public void enable() {
+  public void enable(double bottomTargetVelocity, double topTargetVelocity) {
     /*
 
     double topFF = SmartDashboard.getNumber("Top Flywheel kF", 0);
@@ -253,8 +253,11 @@ public class ShooterSubsystem extends SubsystemBase {
     //bottomFlywheel.set(ControlMode.Velocity, bottomFlywheel_targetVelocity_UnitsPer100ms);
     //topFlywheel.set(ControlMode.Velocity, topFlywheel_targetVelocity_UnitsPer100ms);
 
-    bottomFlywheel.set(ControlMode.Velocity, getTargetBottomFlyWheelVelocity());
-    topFlywheel.set(ControlMode.Velocity, getTargetTopFlyWheelVelocity());
+    //bottomFlywheel.set(ControlMode.Velocity, getTargetBottomFlyWheelVelocity());
+    //topFlywheel.set(ControlMode.Velocity, getTargetTopFlyWheelVelocity());
+  
+    bottomFlywheel.set(ControlMode.Velocity, bottomTargetVelocity); // 5000
+    topFlywheel.set(ControlMode.Velocity, topTargetVelocity); // 7000
   }
 
   public void setTargetBottomFlyWheelVelocity(double staticModeVelocity) {

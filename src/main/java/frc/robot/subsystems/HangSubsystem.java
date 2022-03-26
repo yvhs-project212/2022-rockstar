@@ -52,7 +52,7 @@ public class HangSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    SmartDashboard.putNumber("Left Drivetrain Encoder", hangLeft.getSelectedSensorPosition());
+    //SmartDashboard.putNumber("Left Drivetrain Encoder", hangLeft.getSelectedSensorPosition());
   }
   public void hangWithPOV(XboxController controller) {
     if ((controller.getPOV() == 0)) {               // Both Up
