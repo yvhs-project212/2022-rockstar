@@ -29,7 +29,6 @@ public class EnableShooterCmd extends CommandBase {
   public void initialize() {
     System.out.println("EnableShooterCmd started!");
     shooter.setVelocityControlMode(mode);
-    shooter.setVelocityControlMode(mode);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
