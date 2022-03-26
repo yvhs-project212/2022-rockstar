@@ -30,7 +30,7 @@ public class DriveForwardCmd extends CommandBase {
     hangSubsystem = hang;
     addRequirements(drive, storage, hang);
   
-    encoderSetpoint = 0;
+    //encoderSetpoint = 0;
 
     this.distanceMeters = distanceMeters;
     
@@ -63,7 +63,7 @@ public class DriveForwardCmd extends CommandBase {
     // Left Gearbox Encoder
     SmartDashboard.putNumber("Left Gearbox Encoder", hangSubsystem.getHangLeftSelectedSensorPosition());
     // Right Gearbox Encoder
-    SmartDashboard.putNumber("Right Gearbox Encoder", storageSubsystem.getFeederSensorPosition()));
+    SmartDashboard.putNumber("Right Gearbox Encoder", storageSubsystem.getFeederSensorPosition());
 
     drivetrainSubsystem.setMotors(negative * DriveConstants.AUTO_LEFT_DRIVE_FORWARD_SPEED, negative * DriveConstants.AUTO_RIGHT_DRIVE_FORWARD_SPEED);
   }
