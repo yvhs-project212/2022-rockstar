@@ -55,6 +55,14 @@ public class DrivetrainSubsystem extends SubsystemBase {
     gearbox.set(Value.kForward);
 
     table = NetworkTableInstance.getDefault().getTable("limelight");
+    
+    // Drivetrain Meters
+    SmartDashboard.putNumber("Drivetrain Meters", 0);
+    // Left Gearbox Encoder
+    SmartDashboard.putNumber("Left Gearbox Encoder", 0);
+    // Right Gearbox Encoder
+    SmartDashboard.putNumber("Right Gearbox Encoder", 0);
+    
   }
 
   @Override
