@@ -208,10 +208,10 @@ public final class Constants {
         
         public final static class BottomFlywheelConstants {
             public final static class kGains {
-                public final static double kP = 0.01;  // 0.015 default
-                public final static double kI = 0;      // 0.00075 
-                public final static double kD = 0;      // 0
-                public final static double kF = 0.1;      // 0
+                public final static double kP = 0.015;  // 0.015 default
+                public final static double kI = 0.00075;      // 0.00075 
+                public final static double kD = 5;      // 5
+                public final static double kF = 0;      // 0
                 public final static double Iz = 300;
                 public final static double PeakOut = 1.00;
             }

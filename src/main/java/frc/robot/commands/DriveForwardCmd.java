@@ -19,6 +19,8 @@ public class DriveForwardCmd extends CommandBase {
 
   private final double encoderSetpoint;
   private final double negative;
+  
+  private final double distanceMeters;
 
   public DriveForwardCmd(DrivetrainSubsystem drive, StorageSubsystem storage, 
   HangSubsystem hang, double distanceMeters) {
@@ -27,9 +29,10 @@ public class DriveForwardCmd extends CommandBase {
     storageSubsystem = storage;
     hangSubsystem = hang;
     addRequirements(drive, storage, hang);
+  
+    encoderSetpoint = 0;
 
-    encoderSetpoint = drivetrainSubsystem.getEncoderMeters(hangSubsystem.getHangLeftSelectedSensorPosition(),
-    storageSubsystem.getFeederSensorPosition()) + distanceMeters;
+    this.distanceMeters = distanceMeters;
 
     if (distanceMeters < 0) {
       negative = -1;
@@ -42,6 +45,8 @@ public class DriveForwardCmd extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    //encoderSetpoint = drivetrainSubsystem.getEncoderMeters(hangSubsystem.getHangLeftSelectedSensorPosition(),
+    //storageSubsystem.getFeederSensorPosition()) + distanceMeters;
     System.out.println("DriveForwardCmd started!");
 
   }

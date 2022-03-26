@@ -54,8 +54,7 @@ public class ShooterSubsystem extends SubsystemBase {
 
     topFlywheel_targetVelocity_UnitsPer100ms = 0;
     bottomFlywheel_targetVelocity_UnitsPer100ms = 0;
-    
-    velocityControlMode = velocityControlMode.LIMELIGHT;
+
 
     SmartDashboard.putNumber("Target Top Flywheel Velocity", 0);
     SmartDashboard.putNumber("Target Bottom Flywheel Velocity", 0);
@@ -200,6 +199,7 @@ public class ShooterSubsystem extends SubsystemBase {
   }
 
   public double getTargetBottomFlyWheelVelocity() {
+    
     return bottomFlywheel_targetVelocity_UnitsPer100ms;
   }
   

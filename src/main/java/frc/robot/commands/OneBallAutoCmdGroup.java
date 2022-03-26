@@ -40,7 +40,7 @@ public class OneBallAutoCmdGroup extends SequentialCommandGroup {
        * You cannot go backwards
        * 
        */
-      new DriveForwardCmd(drive, storage, hang, -4),
+      new DriveForwardCmd(drive, storage, hang, 4),
       
       /**
        * Figure out how to do a ParallelDeadlineCommandGroup
