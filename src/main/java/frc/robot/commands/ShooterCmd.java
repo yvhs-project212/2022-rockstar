@@ -27,7 +27,7 @@ public class ShooterCmd extends CommandBase {
   @Override
   public void execute() {
     //shooter.printEncoderVelocity();
-    shooter.stopMotors();
+    shooter.disable();
   }
 
   // Called once the command ends or is interrupted.
