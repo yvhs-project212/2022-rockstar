@@ -33,6 +33,10 @@ public class DriveForwardCmd extends CommandBase {
     encoderSetpoint = 0;
 
     this.distanceMeters = distanceMeters;
+    
+    encoderSetpoint = drivetrainSubsystem.getEncoderMeters(hangSubsystem.getHangLeftSelectedSensorPosition(),
+    storageSubsystem.getFeederSensorPosition()) + distanceMeters;
+    
 
     if (distanceMeters < 0) {
       negative = -1;
@@ -45,8 +49,6 @@ public class DriveForwardCmd extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    //encoderSetpoint = drivetrainSubsystem.getEncoderMeters(hangSubsystem.getHangLeftSelectedSensorPosition(),
-    //storageSubsystem.getFeederSensorPosition()) + distanceMeters;
     System.out.println("DriveForwardCmd started!");
 
   }
@@ -54,8 +56,14 @@ public class DriveForwardCmd extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    SmartDashboard.putNumber("Meters Driven", drivetrainSubsystem.getEncoderMeters(hangSubsystem.getHangLeftSelectedSensorPosition(),
+    
+    // Drivetrain Meters
+    SmartDashboard.putNumber("Drivetrain Meters", drivetrainSubsystem.getEncoderMeters(hangSubsystem.getHangLeftSelectedSensorPosition(),
     storageSubsystem.getFeederSensorPosition()));
+    // Left Gearbox Encoder
+    SmartDashboard.putNumber("Left Gearbox Encoder", hangSubsystem.getHangLeftSelectedSensorPosition());
+    // Right Gearbox Encoder
+    SmartDashboard.putNumber("Right Gearbox Encoder", storageSubsystem.getFeederSensorPosition()));
 
     drivetrainSubsystem.setMotors(negative * DriveConstants.AUTO_LEFT_DRIVE_FORWARD_SPEED, negative * DriveConstants.AUTO_RIGHT_DRIVE_FORWARD_SPEED);
   }
