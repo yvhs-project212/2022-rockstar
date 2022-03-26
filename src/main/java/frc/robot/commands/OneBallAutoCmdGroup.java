@@ -24,7 +24,7 @@ import frc.robot.subsystems.StorageSubsystem.MotorSelection;
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class OneBallAutoCmdGroup extends SequentialCommandGroup {
-  /** Creates a new AutonomousCmdGroup. */
+  /** Creates a new OneBallAutoCmdGroup. */
 
   public OneBallAutoCmdGroup(DrivetrainSubsystem drive, StorageSubsystem storage, 
   HangSubsystem hang, IntakeSubsystem intake, ShooterSubsystem shooter, TurretSubsystem turret) {
@@ -32,7 +32,7 @@ public class OneBallAutoCmdGroup extends SequentialCommandGroup {
     // addCommands(new FooCommand(), new BarCommand());
     //addRequirements(drivetrainSubsystem);
     addCommands(
-      new PrintCommand("AutonomousCmdGroup started!"),
+      new PrintCommand("OneBallAutoCmdGroup started!"),
       
       /**
        * Fix "DriveForwardCmd":
@@ -51,7 +51,7 @@ public class OneBallAutoCmdGroup extends SequentialCommandGroup {
       
       new ParallelCommandGroup(
         new RunCommand(turret::turretWithLimelight, turret),
-        new EnableShooterCmd(shooter, null),
+        new EnableShooterCmd(shooter),
         new WaitCommand(AutonomousConstants.FLYWHEEL_REV_TIME_SECONDS),
         new EnableFeederCmd(storage))
       .withTimeout(AutonomousConstants.TIMEOUT_SECONDS)
@@ -60,7 +60,7 @@ public class OneBallAutoCmdGroup extends SequentialCommandGroup {
         new InstantCommand(() -> storage.setMotors(MotorSelection.NONE, 0, 0))
       ),
     
-      new PrintCommand("AutonomousCmdGroup ended!")
+      new PrintCommand("OneBallAutoCmdGroup ended!")
       
     );
   }
