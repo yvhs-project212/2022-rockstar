@@ -82,8 +82,8 @@ public final class Constants {
 
         public static final double WHEEL_DIAMETER = 6; // 6 Inches
 
-        public static final double AUTO_LEFT_DRIVE_FORWARD_SPEED = 0.45;
-        public static final double AUTO_RIGHT_DRIVE_FORWARD_SPEED = 0.45;
+        public static final double AUTO_LEFT_DRIVE_FORWARD_SPEED = -0.4;
+        public static final double AUTO_RIGHT_DRIVE_FORWARD_SPEED = -0.4;
 
         public static final double kEncoderTick2Meter = 1.0 / 4096.0 * 0.1524 * Math.PI;
         
@@ -189,7 +189,6 @@ public final class Constants {
             //public final static double BOTTOM = 5550;   // 10.72 feet
             //public final static double TOP = 5850;      // 10.72 feet
 
-
         
         }
 
@@ -203,8 +202,8 @@ public final class Constants {
                 public final static double PeakOut = 1.00;
             }
             
-            public final static double TOP_SLOPE = 226.48484;
-            public final static double TOP_Y_INT = 3419.94093;
+            public final static double TOP_SLOPE = 13.92368;
+            public final static double TOP_Y_INT = 9248.12105;
         }
         
         public final static class BottomFlywheelConstants {
@@ -216,8 +215,8 @@ public final class Constants {
                 public final static double Iz = 300;
                 public final static double PeakOut = 1.00;
             }
-            public final static double BOTTOM_SLOPE = 145.76638;
-            public final static double BOTTOM_Y_INT = 3976.78068;   
+            public final static double BOTTOM_SLOPE = 1627.79212;
+            public final static double BOTTOM_Y_INT = -11036.20505;   
         }
         //public static final double kShooterRPM2Velocity = 1; // Per encoder tick to flywheel velocity (ft/min)
     }
@@ -248,6 +247,9 @@ public final class Constants {
     public static final class AutonomousConstants{
 		public static final double DRIVE_FORWARD_TIME = 3.0;
 		public static final double AUTONOMOUS_SPEED = 0.6;
+
+        public static final double FLYWHEEL_REV_TIME_SECONDS = 2;
+        public static final double TIMEOUT_SECONDS = 10; 
 
         
 	}
