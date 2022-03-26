@@ -172,7 +172,7 @@ public class RobotContainer {
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
     //return autonomousCmdGroup;
-    //return null;
-    return autonomousCmdGroup;
+    return null;
+    //return autonomousCmdGroup;
   }
 }
