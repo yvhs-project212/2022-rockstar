@@ -89,7 +89,7 @@ public class RobotContainer {
     intake.setDefaultCommand(intakeWithPaddlesCmd);
     shooter.setDefaultCommand(shooterCmd);
     storage.setDefaultCommand(storageCmd);
-    //turret.setDefaultCommand(turretCmd);
+    turret.setDefaultCommand(turretCmd);
 
     // Configure the button bindings
     configureButtonBindings();
@@ -154,6 +154,7 @@ public class RobotContainer {
     final JoystickButton enableFeeder = new JoystickButton(gunnerJoystick, XboxController.Button.kRightBumper.value);
     enableFeeder.whileHeld(enableFeederCmd);
     
+    /*
     // Enable DriveWithLimelight
     new JoystickButton(gunnerJoystick, XboxController.Button.kX.value)
       .whenHeld(driveWithLimelightCmd);
