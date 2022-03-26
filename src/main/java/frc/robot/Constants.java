@@ -219,16 +219,6 @@ public final class Constants {
             public final static double BOTTOM_Y_INT = -11036.20505;   
         }
         //public static final double kShooterRPM2Velocity = 1; // Per encoder tick to flywheel velocity (ft/min)
-
-        public static final double SEVEN_VELOCITY_TOP = 9100.53;
-        public static final double SEVEN_VELOCITY_BOTTOM = 6000;
-
-        public static final double TEN_VELOCITY_TOP = 10000;
-        public static final double TEN_VELOCITY_BOTTOM = 6000;
-        
-        public static final double TWELVE_VELOCITY_TOP = 9074.62;
-        public static final double TWELVE_VELOCITY_BOTTOM = 8042.33;
-
     }
     public static final class StorageConstants {
         public static final double INDEXER_SPEED = 0.7;

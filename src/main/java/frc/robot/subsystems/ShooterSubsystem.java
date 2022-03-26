@@ -12,6 +12,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -29,6 +30,12 @@ public class ShooterSubsystem extends SubsystemBase {
 
   public double topFlywheel_targetVelocity_UnitsPer100ms;
   public double bottomFlywheel_targetVelocity_UnitsPer100ms;
+
+  public enum VelocityControlMode {
+    STATIC,
+    MANUAL,
+    LIMELIGHT
+  }
 
   public ShooterSubsystem() {
     bottomFlywheel = new WPI_TalonFX(Constants.PWM.Shooter.BOTTOM_FLYWHEEL);
@@ -160,127 +167,43 @@ public class ShooterSubsystem extends SubsystemBase {
   */
 
   public void enable(double bottomTargetVelocity, double topTargetVelocity) {
-    /*
-
-    double topFF = SmartDashboard.getNumber("Top Flywheel kF", 0);
-    double topP = SmartDashboard.getNumber("Top Flywheel kP", 0);
-    double topI = SmartDashboard.getNumber("Top Flywheel kI", 0);
-    double topD = SmartDashboard.getNumber("Top Flywheel kD", 0);
-
-    double bottomFF = SmartDashboard.getNumber("Top Flywheel kF", 0);
-    double bottomP = SmartDashboard.getNumber("Top Flywheel kP", 0);
-    double bottomI = SmartDashboard.getNumber("Top Flywheel kI", 0);
-    double bottomD = SmartDashboard.getNumber("Top Flywheel kD", 0);
-
     
-
-    if (manualMode) {
-      // Top flywheel
-      if (topFF != ShooterConstants.TopFlywheelConstants.kGains.kF) {
-        topFlywheel.config_kF(ShooterConstants.kPIDLoopIdx, topFF, ShooterConstants.kTimeoutMs);
-      }
-      if (topP != ShooterConstants.TopFlywheelConstants.kGains.kP) {
-        topFlywheel.config_kP(ShooterConstants.kPIDLoopIdx, topP, ShooterConstants.kTimeoutMs);
-      }
-      if (topI != ShooterConstants.TopFlywheelConstants.kGains.kI) {
-        topFlywheel.config_kI(ShooterConstants.kPIDLoopIdx, topI, ShooterConstants.kTimeoutMs);
-      }
-      if (topD != ShooterConstants.TopFlywheelConstants.kGains.kD) {
-        topFlywheel.config_kD(ShooterConstants.kPIDLoopIdx, topD, ShooterConstants.kTimeoutMs);
-      }
-
-      // Bottom flywheel
-      if (bottomFF != ShooterConstants.BottomFlywheelConstants.kGains.kF) {
-        bottomFlywheel.config_kD(ShooterConstants.kPIDLoopIdx, bottomFF, ShooterConstants.kTimeoutMs);
-      }
-      if (bottomP != ShooterConstants.BottomFlywheelConstants.kGains.kP) {
-        bottomFlywheel.config_kP(ShooterConstants.kPIDLoopIdx, bottomP, ShooterConstants.kTimeoutMs);
-      }
-      if (bottomI != ShooterConstants.BottomFlywheelConstants.kGains.kI) {
-        bottomFlywheel.config_kI(ShooterConstants.kPIDLoopIdx, bottomI, ShooterConstants.kTimeoutMs);
-      }
-      if (bottomD != ShooterConstants.BottomFlywheelConstants.kGains.kD) {
-        bottomFlywheel.config_kD(ShooterConstants.kPIDLoopIdx, bottomD, ShooterConstants.kTimeoutMs);
-      }
-      
-    } else {
-      // Config the Velocity closed loop gains in slot0 
-      bottomFlywheel.config_kF(ShooterConstants.kPIDLoopIdx, ShooterConstants.BottomFlywheelConstants.kGains.kF, ShooterConstants.kTimeoutMs);
-      bottomFlywheel.config_kP(ShooterConstants.kPIDLoopIdx, ShooterConstants.BottomFlywheelConstants.kGains.kP, ShooterConstants.kTimeoutMs);
-      bottomFlywheel.config_kI(ShooterConstants.kPIDLoopIdx, ShooterConstants.BottomFlywheelConstants.kGains.kI, ShooterConstants.kTimeoutMs);
-      bottomFlywheel.config_kD(ShooterConstants.kPIDLoopIdx, ShooterConstants.BottomFlywheelConstants.kGains.kD, ShooterConstants.kTimeoutMs);
-
-      topFlywheel.config_kF(ShooterConstants.kPIDLoopIdx, ShooterConstants.TopFlywheelConstants.kGains.kF, ShooterConstants.kTimeoutMs);
-      topFlywheel.config_kP(ShooterConstants.kPIDLoopIdx, ShooterConstants.TopFlywheelConstants.kGains.kP, ShooterConstants.kTimeoutMs);
-      topFlywheel.config_kI(ShooterConstants.kPIDLoopIdx, ShooterConstants.TopFlywheelConstants.kGains.kI, ShooterConstants.kTimeoutMs);
-      topFlywheel.config_kD(ShooterConstants.kPIDLoopIdx, ShooterConstants.TopFlywheelConstants.kGains.kD, ShooterConstants.kTimeoutMs);
-    }
-    */
-    /* Velocity Closed Loop */
-
-    /**
-     * Convert 2000 RPM to units / 100ms.
-     * 2048 Units/Rev * 2000 RPM / 600 100ms/min in either direction:
-     * velocity setpoint is in units/100ms
-     */
-
-    /** How to calculate the RPM of a flywheel for a specific velocity
-     *  "It’s not too much physics. If we ignore slippage, 
-     * the ball moves at the same linear speed as the surface of your wheels 
-     * (assuming by 2 flywheels you mean the ball is between them). 
-     * So if your wheels have a circumference of 12.5” and 
-     * are spinning at 5000 rpms:"
-     * 
-     * 5000 rpms * 12.5 in / 12 in/ft / 60 sec/min = 87.27 ft/sec
-     * 
-     *  "You can rearrange to get rpms out for a given ft/sec desired"
-     * 
-     * X ft/sec * 60 sec/min * 12 in/ft / circum inches = rpms
-     * 
-     * https://www.reddit.com/r/FRC/comments/s7hn82/help_with_velocity_to_rpm_calculations/
-     */
+     
     shooterOnOff = true;
-
-    //double targetVelocity_UnitsPer100ms = leftYstick * 2000.0 * 2048.0 / 600.0;
-    //double bottomFlywheel_targetVelocity_UnitsPer100ms = SmartDashboard.getNumber("Top Flywheel Velocity Input", 0);
-    //double topFlywheel_targetVelocity_UnitsPer100ms = SmartDashboard.getNumber("Top Flywheel Velocity Input", 0);
-    
-    //double bottomFlywheel_targetVelocity_UnitsPer100ms = 88.23 * (getLimelightDistance() / 12.0) + 6000.0;
-    //double topFlywheel_targetVelocity_UnitsPer100ms = 720.58824 * (getLimelightDistance() / 12.0) - 900.0;
-
-    /* 2000 RPM in either direction */
-
-    //bottomFlywheel.set(ControlMode.Velocity, bottomFlywheel_targetVelocity_UnitsPer100ms);
-    //topFlywheel.set(ControlMode.Velocity, topFlywheel_targetVelocity_UnitsPer100ms);
-
-    //bottomFlywheel.set(ControlMode.Velocity, getTargetBottomFlyWheelVelocity());
-    //topFlywheel.set(ControlMode.Velocity, getTargetTopFlyWheelVelocity());
   
     bottomFlywheel.set(ControlMode.Velocity, bottomTargetVelocity); // 5000
     topFlywheel.set(ControlMode.Velocity, topTargetVelocity); // 7000
   }
 
-  public void setTargetBottomFlyWheelVelocity(double staticModeVelocity) {
+  public double getStaticModeVelocity (XboxController controller) {
+    if (controller.getPOV() == 0) {
+      return 
+    } else if (controller.getPOV() == 90) {
+
+    } else if (controller.getPOV() == 180) {
+
+    } else {
+      return 0;
+    }
+  }
+
+  public void setTargetBottomFlyWheelVelocity(VelocityControlMode mode) {
     double m = ShooterConstants.BottomFlywheelConstants.BOTTOM_SLOPE;
     double b = ShooterConstants.BottomFlywheelConstants.BOTTOM_Y_INT;
-    /*
-    double bottomFlywheel_targetVelocity_UnitsPer100ms = 
-      (m * (getLimelightDistanceInches() / 12.0)) + (b);
-      return bottomFlywheel_targetVelocity_UnitsPer100ms;
-    */
-
-    /*
     
     
-    if (getStaticMode()) {
+    
+    if (mode == VelocityControlMode.STATIC) {
       bottomFlywheel_targetVelocity_UnitsPer100ms = 
-      staticModeVelocity;
-    } else if (getManualMode()) {
+      getStaticModeVelocity();
+    } else if (mode == VelocityControlMode.MANUAL) {
       bottomFlywheel_targetVelocity_UnitsPer100ms = 
       SmartDashboard.getNumber("User-inputed Bottom Flywheel Velocity", 0);
-    } else {
+    } else if (mode == VelocityControlMode.LIMELIGHT) {
       bottomFlywheel_targetVelocity_UnitsPer100ms = 
       (m * (getLimelightDistanceInches() / 12.0)) + (b);
+    } else {
+      bottomFlywheel_targetVelocity_UnitsPer100ms = 0;
     }
     */
     

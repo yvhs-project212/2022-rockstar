@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.ExtendIntakeCmdGroup;
-import frc.robot.commands.AutonomousCmdGroup;
+import frc.robot.commands.OneBallAutoCmdGroup;
 import frc.robot.commands.DriveForwardCmd;
 import frc.robot.commands.DriveWithJoysticksCmd;
 import frc.robot.commands.DriveWithLimelightCmd;
@@ -70,7 +70,7 @@ public class RobotContainer {
   private final TurretCmd turretCmd = new TurretCmd(turret);
   
   // Autonomous - LL
-  private final AutonomousCmdGroup autonomousCmdGroup = new AutonomousCmdGroup(driveTrain, storage, hang, intake, shooter);
+  private final OneBallAutoCmdGroup autonomousCmdGroup = new OneBallAutoCmdGroup(driveTrain, storage, hang, intake, shooter, turret);
 
   // Controller files - LL
   public static XboxController driverJoystick = new XboxController(Constants.OI.DRIVER_NUMBER);
