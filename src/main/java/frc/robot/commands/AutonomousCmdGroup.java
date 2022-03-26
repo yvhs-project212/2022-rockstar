@@ -28,7 +28,7 @@ public class AutonomousCmdGroup extends SequentialCommandGroup {
     //addRequirements(drivetrainSubsystem);
     addCommands(
       new PrintCommand("AutonomousCmdGroup started!"),
-      /*
+      
       new DriveForwardCmd(drivetrainSubsystem, storageSubsystem, hangSubsystem, 4),
       
       
@@ -46,7 +46,7 @@ public class AutonomousCmdGroup extends SequentialCommandGroup {
         new RunCommand(storageSubsystem::stopMotors , storageSubsystem)
       ),
       new RunCommand(shooterSubsystem::stopMotors),
-      */
+      
       new PrintCommand("AutonomousCmdGroup ended!")
     );
   }
