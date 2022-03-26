@@ -18,6 +18,7 @@ public class DriveForwardCmd extends CommandBase {
   private final HangSubsystem hangSubsystem;
 
   private final double encoderSetpoint;
+  private final double negative;
 
   public DriveForwardCmd(DrivetrainSubsystem drive, StorageSubsystem storage, 
   HangSubsystem hang, double distanceMeters) {
@@ -30,12 +31,19 @@ public class DriveForwardCmd extends CommandBase {
     encoderSetpoint = drivetrainSubsystem.getEncoderMeters(hangSubsystem.getHangLeftSelectedSensorPosition(),
     storageSubsystem.getFeederSensorPosition()) + distanceMeters;
 
+    if (distanceMeters < 0) {
+      negative = -1;
+    } else {
+      negative = 1;
+    }
+
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
     System.out.println("DriveForwardCmd started!");
+
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -43,7 +51,8 @@ public class DriveForwardCmd extends CommandBase {
   public void execute() {
     SmartDashboard.putNumber("Meters Driven", drivetrainSubsystem.getEncoderMeters(hangSubsystem.getHangLeftSelectedSensorPosition(),
     storageSubsystem.getFeederSensorPosition()));
-    drivetrainSubsystem.setMotors(DriveConstants.AUTO_LEFT_DRIVE_FORWARD_SPEED, DriveConstants.AUTO_RIGHT_DRIVE_FORWARD_SPEED);
+
+    drivetrainSubsystem.setMotors(negative * DriveConstants.AUTO_LEFT_DRIVE_FORWARD_SPEED, negative * DriveConstants.AUTO_RIGHT_DRIVE_FORWARD_SPEED);
   }
 
   // Called once the command ends or is interrupted.
