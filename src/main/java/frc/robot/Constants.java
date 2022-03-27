@@ -239,7 +239,7 @@ public final class Constants {
 	public static final class TurretConstants{
 		public static final double TURRET_SPEED = 0.15;
 		public static final double kP = 0.015;
-		public static final double MIN_COMMAND = 0.03;
+		public static final double MIN_COMMAND = 0.035;
 
         
 	}
