@@ -199,7 +199,6 @@ public class ShooterSubsystem extends SubsystemBase {
   }
 
   public double getTargetBottomFlyWheelVelocity() {
-    
     return bottomFlywheel_targetVelocity_UnitsPer100ms;
   }
   
