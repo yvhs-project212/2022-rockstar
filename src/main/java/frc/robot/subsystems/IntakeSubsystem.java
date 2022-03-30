@@ -37,6 +37,7 @@ public class IntakeSubsystem extends SubsystemBase {
     intake.set((controller.getRightTriggerAxis() - controller.getLeftTriggerAxis()) * speed);
   }
 
+  //public 
   public void setPiston(DoubleSolenoid.Value value) {
     piston.set(value);
   }
