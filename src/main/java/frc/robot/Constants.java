@@ -104,7 +104,8 @@ public final class Constants {
 	}
 	
 	public static final class IntakeConstants {
-		public static final double INTAKE_SPEED = 0.50;
+		public static final double INTAKE_SPEED = 0.50; 
+        public static final double INTAKE_DEPLOY_TIME = 0.3; // seconds
 	}
 
     public static final class HangConstants {
