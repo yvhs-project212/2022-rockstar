@@ -53,7 +53,7 @@ public class RobotContainer {
   // Shooter files - LL
   public static ShooterSubsystem shooter = new ShooterSubsystem();
   private final ShooterCmd shooterCmd = new ShooterCmd(shooter);
-  private final EnableShooterCmd enableShooterCmd = new EnableShooterCmd(shooter, VelocityControlMode.LIMELIGHT);
+  private final EnableShooterCmd enableShooterCmd = new EnableShooterCmd(shooter);
 
   // Storage files - LL
   public static StorageSubsystem storage = new StorageSubsystem();

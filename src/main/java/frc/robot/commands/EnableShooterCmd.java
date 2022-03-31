@@ -12,15 +12,13 @@ public class EnableShooterCmd extends CommandBase {
   /** Creates a new EnableShooterCmd. */
   private final ShooterSubsystem shooter;
 
-  private final VelocityControlMode mode;
 
 
-  public EnableShooterCmd(ShooterSubsystem shooter, VelocityControlMode mode) {
+  public EnableShooterCmd(ShooterSubsystem shooter) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.shooter = shooter;
     addRequirements(shooter);
 
-    this.mode = mode;
 
   }
 
@@ -28,7 +26,11 @@ public class EnableShooterCmd extends CommandBase {
   @Override
   public void initialize() {
     System.out.println("EnableShooterCmd started!");
-    shooter.setVelocityControlMode(VelocityControlMode.LIMELIGHT);
+    if (shooter.getManualMode()) {
+      shooter.setVelocityControlMode(VelocityControlMode.MANUAL);
+    } else {
+      shooter.setVelocityControlMode(VelocityControlMode.LIMELIGHT);
+    }
   }
   
 

@@ -55,7 +55,7 @@ public class OneBallAutoCmdGroup extends SequentialCommandGroup {
         new RunCommand(turret::turretWithLimelight, turret),
         new RunCommand(shooter::setTargetBottomFlyWheelVelocity),
         new RunCommand(shooter::setTargetBottomFlyWheelVelocity),
-        new EnableShooterCmd(shooter, VelocityControlMode.LIMELIGHT),
+        new EnableShooterCmd(shooter),
         new WaitCommand(AutonomousConstants.FLYWHEEL_REV_TIME_SECONDS),
         new EnableFeederCmd(storage))
       .withTimeout(AutonomousConstants.TIMEOUT_SECONDS)

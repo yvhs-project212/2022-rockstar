@@ -62,6 +62,10 @@ public class StorageCmd extends CommandBase {
         storage.setFirstBall(true);
       } 
 
+      if (storage.getTopColorSensorBoolean() && storage.getBottomSensorBoolean()) {
+        storage.setSecondBall(true);
+      }
+
       // Autonomous Storage 
       if ((storage.getTopColorSensorBoolean()) == false) {
         // if you DO NOT see ball at top
@@ -73,7 +77,7 @@ public class StorageCmd extends CommandBase {
         }
       } else if ((storage.getMiddleColorSensorBoolean()) == false) {
         // if you DO NOT see ball in the middle
-        if (storage.getBottomSensorBoolean()) {
+        if (storage.getBottomSensorBoolean() || storage.getSecondBall()) {
           storage.setMotors(MotorSelection.INDEXER, StorageConstants.INDEXER_SPEED_AUTO, StorageConstants.FEEDER_SPEED);  
         } else {
           storage.setMotors(MotorSelection.NONE, 0, 0);

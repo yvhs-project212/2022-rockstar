@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
+import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
 import frc.robot.RobotContainer;
 import frc.robot.Constants.IntakeConstants;
 import frc.robot.subsystems.IntakeSubsystem;
@@ -25,7 +26,6 @@ public class IntakeDeployCmdGroup extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new FunctionalCommand(onInit, onExecute, onEnd, isFinished, requirements),
       new PrintCommand("IntakeDeployCmdGroup started!"),
 
       new ParallelCommandGroup(
@@ -39,6 +39,10 @@ public class IntakeDeployCmdGroup extends SequentialCommandGroup {
           new RunCommand(() -> intakeSubsystem.intakeWithTriggers(RobotContainer.gunnerJoystick, IntakeConstants.INTAKE_SPEED), intakeSubsystem)
         )
       ),
+      /*
+      new WaitUntilCommand(condition),
+      new 
+      */
       new PrintCommand("IntakeDeployCmdGroup ended!")
     );
   }

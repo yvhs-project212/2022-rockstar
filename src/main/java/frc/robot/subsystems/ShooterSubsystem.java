@@ -282,8 +282,8 @@ public class ShooterSubsystem extends SubsystemBase {
   }
 
   public void printEncoderVelocity() {
-    SmartDashboard.putNumber("Top Flywheel Velocity Output", topFlywheel.getSelectedSensorVelocity());
-    SmartDashboard.putNumber("Bottom Flywheel Velocity Output", bottomFlywheel.getSelectedSensorVelocity());
+    SmartDashboard.putNumber("Top Flywheel Velocity Output", getTopFlywheelVelocity());
+    SmartDashboard.putNumber("Bottom Flywheel Velocity Output", getBottomFlywheelVelocity());
   }
 
   public Boolean bothFlywheelsAtSetpoint() {
