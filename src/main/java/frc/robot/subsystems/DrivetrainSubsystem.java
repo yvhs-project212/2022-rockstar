@@ -11,6 +11,7 @@ import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
@@ -19,6 +20,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.Constants.DriveConstants;
+import frc.robot.Constants.PWM;
 
 public class DrivetrainSubsystem extends SubsystemBase {
   /** Creates a new DrivetrainSubsystem. */
@@ -33,6 +35,10 @@ public class DrivetrainSubsystem extends SubsystemBase {
 
   public NetworkTable table;
 
+  /*
+  private final Encoder leftEncoder;
+  private final Encoder rightEncoder;
+  */
 
   // gyro
   
@@ -54,6 +60,17 @@ public class DrivetrainSubsystem extends SubsystemBase {
     gearbox = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, Constants.Solenoid.Drive.GEARBOX_LOW, Constants.Solenoid.Drive.GEARBOX_HIGH);
 
     gearbox.set(Value.kForward);
+
+    /*
+    leftEncoder = new Encoder(PWM.Drive.LEFT_ENCODER);
+    // This is set up assuming a 6 inch wheel with a 4096 CPR encoder.
+    leftEncoder.setDistancePerPulse((Math.PI * 6) / 4096.0);
+
+    rightEncoder = new Encoder(PWM.Drive.RIGHT_ENCODER);
+    // This is set up assuming a 6 inch wheel with a 4096 CPR encoder.
+    rightEncoder.setDistancePerPulse((Math.PI * 6) / 4096.0);
+    */
+
 
     table = NetworkTableInstance.getDefault().getTable("limelight");
     

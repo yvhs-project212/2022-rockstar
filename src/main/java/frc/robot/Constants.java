@@ -23,6 +23,9 @@ public final class Constants {
 			public static final int RIGHT_TOP = 12;
 			public static final int LEFT_BOTTOM = 0;
 			public static final int RIGHT_BOTTOM = 15;
+
+            public static final int LEFT_ENCODER = 0;
+            public static final int RIGHT_ENCODER = 1;
         }
         public static final class Shooter {
             public static final int BOTTOM_FLYWHEEL = 13;
@@ -43,7 +46,8 @@ public final class Constants {
             
             //public static final int FEEDER = 4;
             //public static final int FEEDER = 4;
-            public static final int BOTTOM_TRIGGER = 0;
+            public static final int BOTTOM_TRIGGER_LEFT = 0;
+            public static final int BOTTOM_TRIGGER_RIGHT = 1;
 
         } 
         public static final class Turret {
