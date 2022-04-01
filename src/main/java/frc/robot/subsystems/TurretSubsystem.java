@@ -31,22 +31,31 @@ public class TurretSubsystem extends SubsystemBase {
   }
 
   public void turretWithJoysticks(XboxController controller, double speed) {
-    turret.set(controller.getRawAxis(4) * speed);
+    turret.set(controller.getRawAxis(0) * speed);
+
+    // Negative = left/CCW
+    // Positive = right/CW
   }
 
   public void turretWithLimelight() {
-    NetworkTableEntry tx = this.table.getEntry("tx");
+    NetworkTableEntry tx = table.getEntry("tx");
     double x = tx.getDouble(0.0);
-    double heading_error = -x;
+    double heading_error = x;
     double steering_adjust = 0.0;
-
-    if (x > 1.0) {
-      steering_adjust = -TurretConstants.kP * heading_error - TurretConstants.MIN_COMMAND; // -0.015 and 0.08
+    
+    // To the right
+    if (x > 0) {
+      // Turn to the right
+      steering_adjust = TurretConstants.kP * heading_error + TurretConstants.MIN_COMMAND; // -0.015 and 0.08
     }
-    else if (x < 1.0) {
-      steering_adjust = -TurretConstants.kP * heading_error + TurretConstants.MIN_COMMAND;
+    // To the left
+    else if (x < 0) {
+      // Turn to the left
+      steering_adjust = TurretConstants.kP * heading_error + TurretConstants.MIN_COMMAND;
+      
     }
     
+    //turret.set(steering_adjust);
     turret.set(steering_adjust);
   }
 

@@ -32,25 +32,9 @@ public class StorageCmd extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    /* Old
-
-    if (RobotContainer.gunnerJoystick.getRightTriggerAxis() > 0.15) {
-      storage.setMotors(StorageSubsystem.MotorSelection.REVERSE_ALL, StorageConstants.INDEXER_SPEED, StorageConstants.FEEDER_SPEED);
-      storage.runMotors();
-    } else if (RobotContainer.gunnerJoystick.getLeftTriggerAxis() > 0.15) {
-      storage.setMotors(StorageSubsystem.MotorSelection.INDEXER, StorageConstants.INDEXER_SPEED, StorageConstants.FEEDER_SPEED);
-      storage.runMotors();
-    } else {
-      storage.setMotors(StorageSubsystem.MotorSelection.NONE, 0, 0);
-      storage.runMotors();
-    }
-    */
 
     // Autonomous storage
-
     
-
-    // Running motors
     if (RobotContainer.gunnerJoystick.getRightTriggerAxis() > 0.15) {
       storage.setMotors(StorageSubsystem.MotorSelection.REVERSE_ALL, StorageConstants.INDEXER_SPEED, StorageConstants.FEEDER_SPEED);
       storage.setFirstBall(false);

@@ -25,7 +25,7 @@ public class StorageSubsystem extends SubsystemBase {
   public double feederSpeed;
 
   public AnalogTrigger bottomTriggerLeft;
-  public AnalogTrigger bottomTriggerRight;
+  //public AnalogTrigger bottomTriggerRight;
 
   public I2C.Port i2cPort_OnBoard;
   public ColorSensorV3 middleColorSensor;
@@ -60,10 +60,12 @@ public class StorageSubsystem extends SubsystemBase {
     resetEncoder();
 
     bottomTriggerLeft = new AnalogTrigger(PWM.Storage.BOTTOM_TRIGGER_LEFT);
-    bottomTriggerLeft.setLimitsVoltage(1.5, 4);
+    bottomTriggerLeft.setLimitsVoltage(4.3, 4.35);
 
+    /*
     bottomTriggerRight = new AnalogTrigger(PWM.Storage.BOTTOM_TRIGGER_RIGHT);
-    bottomTriggerRight.setLimitsVoltage(1.5, 4);
+    bottomTriggerRight.setLimitsVoltage(4.3, 4.35);
+    */
 
     i2cPort_External= I2C.Port.kMXP;
     middleColorSensor = new ColorSensorV3(i2cPort_External);
@@ -161,14 +163,14 @@ public class StorageSubsystem extends SubsystemBase {
   public boolean getBottomSensorBoolean() {
     boolean cache;
 
-    if (bottomTriggerLeft.getTriggerState() || bottomTriggerRight.getTriggerState()) {
+    if (bottomTriggerLeft.getTriggerState() /*|| bottomTriggerRight.getTriggerState()*/) {
       cache = true;
     } else {
       cache = false;
     }
 
     if (cache != SmartDashboard.getBoolean("Bottom Sensor", false)) {
-      SmartDashboard.putBoolean("Bottom Sensor", bottomTriggerLeft.getTriggerState());
+      SmartDashboard.putBoolean("Bottom Sensor", cache);
     }
 
     return cache;

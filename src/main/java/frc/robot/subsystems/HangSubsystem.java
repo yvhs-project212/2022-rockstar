@@ -53,6 +53,7 @@ public class HangSubsystem extends SubsystemBase {
     // This method will be called once per scheduler run
     //SmartDashboard.putNumber("Left Drivetrain Encoder", hangLeft.getSelectedSensorPosition());
   }
+  
   public void hangWithPOV(XboxController controller) {
     if ((controller.getPOV() == 0)) {               // Both Up
       hangLeft.set(Direction.UP.getDirection());
