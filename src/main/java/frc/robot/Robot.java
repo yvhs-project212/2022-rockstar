@@ -31,8 +31,8 @@ public class Robot extends TimedRobot {
     m_robotContainer = new RobotContainer();
 
     // Compressor
-    Constants.pcmCompressor.enableDigital();
-    //Constants.pcmCompressor.disable();
+    //Constants.pcmCompressor.enableDigital();
+    Constants.pcmCompressor.disable();
 
     // USB Camera
     

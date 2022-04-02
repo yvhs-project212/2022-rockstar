@@ -4,45 +4,31 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.subsystems.DrivetrainSubsystem;
-import frc.robot.subsystems.HangSubsystem;
-import frc.robot.subsystems.StorageSubsystem;
 
 public class DriveForwardCmd extends CommandBase {
   /** Creates a new DriveForwardCmd. */
   private final DrivetrainSubsystem drivetrainSubsystem;
-  private final StorageSubsystem storageSubsystem;
-  private final HangSubsystem hangSubsystem;
 
-  private final double encoderSetpoint;
-  private final double negative;
+  private double encoderSetpoint;
   
-  private final double distanceMeters;
+  private int negative;
+  
+  private final double distanceFeet;
 
-  public DriveForwardCmd(DrivetrainSubsystem drive, StorageSubsystem storage, 
-  HangSubsystem hang, double distanceMeters) {
+  public DriveForwardCmd(DrivetrainSubsystem drive, double distanceFeet) {
     // Use addRequirements() here to declare subsystem dependencies.
     drivetrainSubsystem = drive;
-    storageSubsystem = storage;
-    hangSubsystem = hang;
-    addRequirements(drive, storage, hang);
-  
-    //encoderSetpoint = 0;
+    addRequirements(drive);
 
-    this.distanceMeters = distanceMeters;
+    this.distanceFeet = distanceFeet;
     
-    encoderSetpoint = drivetrainSubsystem.getEncoderMeters(hangSubsystem.getHangLeftSelectedSensorPosition(),
-    storageSubsystem.getFeederSensorPosition()) + distanceMeters;
+    encoderSetpoint = 0;
     
-
-    if (distanceMeters < 0) {
-      negative = -1;
-    } else {
-      negative = 1;
-    }
+    negative = 1;
+    
 
   }
 
@@ -50,22 +36,29 @@ public class DriveForwardCmd extends CommandBase {
   @Override
   public void initialize() {
     System.out.println("DriveForwardCmd started!");
+    drivetrainSubsystem.resetEncoders();
 
+    encoderSetpoint = Math.abs(drivetrainSubsystem.getDrivetrainFeet() + distanceFeet);
+
+    if (distanceFeet < 0) {
+      negative = -1;
+    } else {
+      negative = 1;
+    }
+
+    /**
+     * distanceFeet = -5
+     * 
+     * -5 = 0 + -5
+     */
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    
-    // Drivetrain Meters
-    SmartDashboard.putNumber("Drivetrain Meters", drivetrainSubsystem.getEncoderMeters(hangSubsystem.getHangLeftSelectedSensorPosition(),
-    storageSubsystem.getFeederSensorPosition()));
-    // Left Gearbox Encoder
-    SmartDashboard.putNumber("Left Gearbox Encoder", hangSubsystem.getHangLeftSelectedSensorPosition());
-    // Right Gearbox Encoder
-    SmartDashboard.putNumber("Right Gearbox Encoder", storageSubsystem.getFeederSensorPosition());
 
-    drivetrainSubsystem.setMotors(negative * DriveConstants.AUTO_LEFT_DRIVE_FORWARD_SPEED, negative * DriveConstants.AUTO_RIGHT_DRIVE_FORWARD_SPEED);
+    drivetrainSubsystem.setMotors(negative * DriveConstants.AUTO_LEFT_DRIVE_FORWARD_SPEED, 
+    negative * DriveConstants.AUTO_RIGHT_DRIVE_FORWARD_SPEED);
   }
 
   // Called once the command ends or is interrupted.
@@ -78,12 +71,12 @@ public class DriveForwardCmd extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if (drivetrainSubsystem.getEncoderMeters(hangSubsystem.getHangLeftSelectedSensorPosition(),
-    storageSubsystem.getFeederSensorPosition()) > encoderSetpoint) {
+    if (Math.abs(drivetrainSubsystem.getDrivetrainFeet()) > encoderSetpoint) {
       return true;
     } else {
       return false;
     }
+
   }
 }
 

@@ -24,8 +24,11 @@ public final class Constants {
 			public static final int LEFT_BOTTOM = 0;
 			public static final int RIGHT_BOTTOM = 15;
 
-            public static final int LEFT_ENCODER = 0;
-            public static final int RIGHT_ENCODER = 1;
+            public static final int LEFT_ENCODER_A = 0;
+            public static final int LEFT_ENCODER_B = 1;
+            
+            public static final int RIGHT_ENCODER_A = 2;
+            public static final int RIGHT_ENCODER_B = 3;
         }
         public static final class Shooter {
             public static final int BOTTOM_FLYWHEEL = 13;
@@ -88,6 +91,11 @@ public final class Constants {
 
         public static final double AUTO_LEFT_DRIVE_FORWARD_SPEED = 0.4;
         public static final double AUTO_RIGHT_DRIVE_FORWARD_SPEED = 0.4;
+        /**
+         * 1 / CPR * Diameter Wheel (m) * PI
+         * 
+         * Diameter * PI = Circumpherenece 
+         */
 
         public static final double kEncoderTick2Meter = 1.0 / 4096.0 * 0.1524 * Math.PI;
         
@@ -244,7 +252,7 @@ public final class Constants {
 	public static final class TurretConstants{
 		public static final double TURRET_SPEED = 0.15;
 		public static final double kP = 0.0127;          // 0.015
-		public static final double MIN_COMMAND = 0.025;   // 0.1
+		public static final double MIN_COMMAND = 0.03;   // 0.1
 
         
 	}

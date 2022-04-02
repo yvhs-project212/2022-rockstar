@@ -42,7 +42,7 @@ public class OneBallAutoCmdGroup extends SequentialCommandGroup {
        */
       
       new PrintCommand("DriveForwardCmd started!"),
-      new DriveForwardCmd(drive, storage, hang, -4),
+      new DriveForwardCmd(drive, -4),
       
       /**
        * Figure out how to do a ParallelDeadlineCommandGroup
@@ -54,7 +54,7 @@ public class OneBallAutoCmdGroup extends SequentialCommandGroup {
       new ParallelCommandGroup(
         new RunCommand(turret::turretWithLimelight, turret),
         new RunCommand(shooter::setTargetBottomFlyWheelVelocity),
-        new RunCommand(shooter::setTargetBottomFlyWheelVelocity),
+        new RunCommand(shooter::setTargetTopFlyWheelVelocity),
         new EnableShooterCmd(shooter),
         new WaitCommand(AutonomousConstants.FLYWHEEL_REV_TIME_SECONDS),
         new EnableFeederCmd(storage))
