@@ -5,11 +5,16 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.RelativeEncoder;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
+import edu.wpi.first.wpilibj.motorcontrol.Spark;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.Constants.HangConstants;
@@ -18,8 +23,12 @@ import frc.robot.Constants.Solenoid;
 public class HangSubsystem extends SubsystemBase {
   /** Creates a new HangSubsystem. */
   
-  private final WPI_TalonSRX hangLeft;
-  private final WPI_TalonSRX hangRight;
+  private final CANSparkMax hangLeft;
+  private final RelativeEncoder hangLeftEncoder;
+
+  private final CANSparkMax hangRight;
+  private final RelativeEncoder hangRightEncoder;
+
   private final DoubleSolenoid transveral;
 
   public enum Direction {
@@ -36,13 +45,17 @@ public class HangSubsystem extends SubsystemBase {
   }
   
   public HangSubsystem() {  
-    hangLeft = new WPI_TalonSRX(Constants.PWM.Hang.LEFT);
+    hangLeft = new CANSparkMax(Constants.PWM.Hang.LEFT, MotorType.kBrushless);
+    hangLeft.restoreFactoryDefaults();
     hangLeft.setInverted(false);
 
-    hangRight = new WPI_TalonSRX(Constants.PWM.Hang.RIGHT);
+    hangLeftEncoder = hangLeft.getEncoder();
+
+    hangRight = new CANSparkMax(Constants.PWM.Hang.RIGHT, MotorType.kBrushless);
+    hangRight.restoreFactoryDefaults();
     hangRight.setInverted(true);
-    
-    resetEncoders();
+
+    hangRightEncoder = hangRight.getEncoder();
 
     transveral = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, Solenoid.Hang.LEFT, Solenoid.Hang.RIGHT);
     transveral.set(Value.kReverse);
@@ -51,7 +64,8 @@ public class HangSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    //SmartDashboard.putNumber("Left Drivetrain Encoder", hangLeft.getSelectedSensorPosition());
+    SmartDashboard.putNumber("Left Hang Encoder Position", hangLeftEncoder.getPosition());
+    SmartDashboard.putNumber("Right Hang Encoder Position", hangRightEncoder.getPosition());
   }
   
   public void hangWithPOV(XboxController controller) {
@@ -83,6 +97,7 @@ public class HangSubsystem extends SubsystemBase {
     transveral.set(value);
   }
 
+  /*
   public void resetEncoders() {
     hangLeft.setSelectedSensorPosition(0);
     hangRight.setSelectedSensorPosition(0);
@@ -95,6 +110,7 @@ public class HangSubsystem extends SubsystemBase {
   public double getHangRightSelectedSensorPosition() {
     return hangRight.getSelectedSensorPosition();
   }
+  */
 
   public void stop() {
     hangLeft.stopMotor();

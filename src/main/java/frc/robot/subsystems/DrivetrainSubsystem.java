@@ -63,35 +63,36 @@ public class DrivetrainSubsystem extends SubsystemBase {
     gearbox.set(Value.kForward);
 
     
-    leftEncoder = new Encoder(PWM.Drive.LEFT_ENCODER_A, Drive.LEFT_ENCODER_B, false, EncodingType.k4X);
+    leftEncoder = new Encoder(PWM.Drive.LEFT_ENCODER_A, Drive.LEFT_ENCODER_B, true, EncodingType.k4X);
     // This is set up assuming a 6 inch wheel with a 4096 CPR encoder.
     leftEncoder.setDistancePerPulse((Math.PI * 6) / 4096.0);
+    leftEncoder.reset();
 
     rightEncoder = new Encoder(PWM.Drive.RIGHT_ENCODER_A, Drive.RIGHT_ENCODER_B, false, EncodingType.k4X);
     // This is set up assuming a 6 inch wheel with a 4096 CPR encoder.
     rightEncoder.setDistancePerPulse((Math.PI * 6) / 4096.0);
+    rightEncoder.reset();
     
 
 
     table = NetworkTableInstance.getDefault().getTable("limelight");
     
     // Drivetrain Meters
-    SmartDashboard.putNumber("Drivetrain Meters", 0);
+    SmartDashboard.putNumber("Drivetrain Distance (Feet)", 0);
     // Left Gearbox Encoder
-    SmartDashboard.putNumber("Left Gearbox Encoder", 0);
+    SmartDashboard.putNumber("Left Encoder Distance (Inches)", 0);
     // Right Gearbox Encoder
-    SmartDashboard.putNumber("Right Gearbox Encoder", 0);
+    SmartDashboard.putNumber("Right Encoder Distance (Inches)", 0);
     
   }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    //SmartDashboard.putNumber("Air Tank Presusre", getPressure());
-    SmartDashboard.putNumber("Left Encoder Distance", leftEncoder.getDistance());
-    SmartDashboard.putNumber("Right Encoder Distance", rightEncoder.getDistance());
+    SmartDashboard.putNumber("Left Encoder Distance (Inches)", leftEncoder.getDistance());
+    SmartDashboard.putNumber("Right Encoder Distance (Inches)", rightEncoder.getDistance());
 
-    SmartDashboard.putNumber("Drivetrain Distance", getDrivetrainFeet());
+    SmartDashboard.putNumber("Drivetrain Distance (Feet)", getDrivetrainFeet());
   }
 
   public void driveWithJoysticks(XboxController controller, double forwardSpeed, double turnSpeed) {

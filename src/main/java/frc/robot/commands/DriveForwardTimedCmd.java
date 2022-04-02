@@ -40,8 +40,7 @@ public class DriveForwardTimedCmd extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    SmartDashboard.putNumber("Meters Driven", drivetrainSubsystem.getEncoderMeters(hangSubsystem.getHangLeftSelectedSensorPosition(),
-    storageSubsystem.getFeederSensorPosition()));
+    SmartDashboard.putNumber("Meters Driven", drivetrainSubsystem.getDrivetrainFeet());
     drivetrainSubsystem.setMotors(DriveConstants.AUTO_LEFT_DRIVE_FORWARD_SPEED, DriveConstants.AUTO_RIGHT_DRIVE_FORWARD_SPEED); 
   }
 
