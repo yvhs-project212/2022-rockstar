@@ -26,7 +26,7 @@ public final class Constants {
 
             public static final int LEFT_ENCODER_A = 0;
             public static final int LEFT_ENCODER_B = 1;
-            
+
             public static final int RIGHT_ENCODER_A = 2;
             public static final int RIGHT_ENCODER_B = 3;
         }
@@ -39,8 +39,8 @@ public final class Constants {
             public static final int INTAKE = 8;
         }
         public static final class Hang {
-            public static final int LEFT = 14;
-            public static final int RIGHT = 2;
+            public static final int LEFT = 2;
+            public static final int RIGHT = 14;
         } 
         public static final class Storage {
             public static final int INDEXER = 11;
@@ -97,7 +97,7 @@ public final class Constants {
          * Diameter * PI = Circumpherenece 
          */
 
-        public static final double kEncoderTick2Meter = 1.0 / 4096.0 * 0.1524 * Math.PI;
+        public static final double perEncoderTick2Distance  = (6 * Math.PI) / (12/36) * (30/54) * (4096) ; // distance per turn / ticks per turn
         
         public static final double kP = 0.29;
         public static final double MIN_COMMAND = 0.25;

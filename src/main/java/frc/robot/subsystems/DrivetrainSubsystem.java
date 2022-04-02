@@ -65,13 +65,13 @@ public class DrivetrainSubsystem extends SubsystemBase {
     
     leftEncoder = new Encoder(PWM.Drive.LEFT_ENCODER_A, Drive.LEFT_ENCODER_B, true, EncodingType.k4X);
     // This is set up assuming a 6 inch wheel with a 4096 CPR encoder.
-    leftEncoder.setDistancePerPulse((Math.PI * 6) / 4096.0);
-    leftEncoder.reset();
+    leftEncoder.setDistancePerPulse(DriveConstants.perEncoderTick2Distance); // (Math.PI * 6) / 4096
+    //leftEncoder.reset();
 
     rightEncoder = new Encoder(PWM.Drive.RIGHT_ENCODER_A, Drive.RIGHT_ENCODER_B, false, EncodingType.k4X);
     // This is set up assuming a 6 inch wheel with a 4096 CPR encoder.
-    rightEncoder.setDistancePerPulse((Math.PI * 6) / 4096.0);
-    rightEncoder.reset();
+    rightEncoder.setDistancePerPulse(DriveConstants.perEncoderTick2Distance);
+    //rightEncoder.reset();
     
 
 
