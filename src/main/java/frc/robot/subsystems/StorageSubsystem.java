@@ -60,11 +60,13 @@ public class StorageSubsystem extends SubsystemBase {
     resetEncoder();
 
     bottomTriggerLeft = new AnalogTrigger(PWM.Storage.BOTTOM_TRIGGER_LEFT);
-    bottomTriggerLeft.setLimitsVoltage(4.3, 4.35);
+    bottomTriggerLeft.setLimitsVoltage(4.3, 4.3);
+    bottomTriggerLeft.setAveraged(true);
 
     /*
     bottomTriggerRight = new AnalogTrigger(PWM.Storage.BOTTOM_TRIGGER_RIGHT);
-    bottomTriggerRight.setLimitsVoltage(4.3, 4.35);
+    bottomTriggerRight.setLimitsVoltage(4.3, 4.3);
+    bottomTriggerLeft.setAveraged(true);
     */
 
     i2cPort_External= I2C.Port.kMXP;
