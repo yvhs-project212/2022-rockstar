@@ -17,7 +17,6 @@ import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.StorageSubsystem;
 import frc.robot.subsystems.TurretSubsystem;
-import frc.robot.subsystems.ShooterSubsystem.VelocityControlMode;
 import frc.robot.subsystems.StorageSubsystem.MotorSelection;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more

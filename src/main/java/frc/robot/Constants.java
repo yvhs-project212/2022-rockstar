@@ -46,7 +46,7 @@ public final class Constants {
             public static final int INDEXER = 11;
             public static final int FEEDER = 4;
             
-            public static final int BOTTOM_BEAM_BREAK = 2;
+            public static final int BOTTOM_BEAM_BREAK = 4;
 
         } 
         public static final class Turret {
