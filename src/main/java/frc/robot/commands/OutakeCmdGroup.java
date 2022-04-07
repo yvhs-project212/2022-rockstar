@@ -17,13 +17,13 @@ import frc.robot.subsystems.IntakeSubsystem;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class IntakeCmdGroup extends SequentialCommandGroup {
-  /** Creates a new IntakeDeploy. */
-  public IntakeCmdGroup(IntakeSubsystem intakeSubsystem) {
+public class OutakeCmdGroup extends SequentialCommandGroup {
+  /** Creates a new OutakeCmdGroup. */
+  public OutakeCmdGroup(IntakeSubsystem intakeSubsystem) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new PrintCommand("IntakeDeployCmdGroup started!"),
+      new PrintCommand("OutakeCmdGroup started!"),
 
       new ParallelCommandGroup(
         new SequentialCommandGroup( 
@@ -32,10 +32,10 @@ public class IntakeCmdGroup extends SequentialCommandGroup {
           new InstantCommand(() -> intakeSubsystem.setPiston(Value.kOff))
         ),
         new SequentialCommandGroup(
-          new RunCommand(()-> intakeSubsystem.intakeWithButtons(IntakeConstants.INTAKE_SPEED))
+          new RunCommand(()-> intakeSubsystem.intakeWithButtons(-IntakeConstants.INTAKE_SPEED))
         )
       ),
-      new PrintCommand("IntakeDeployCmdGroup ended!")
+      new PrintCommand("OutakeCmdGroup ended!")
     );
   }
 }

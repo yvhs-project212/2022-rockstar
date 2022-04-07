@@ -11,7 +11,6 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import frc.robot.commands.ExtendIntakeCmdGroup;
 import frc.robot.commands.OneBallAutoCmdGroup;
 import frc.robot.commands.DriveWithJoysticksCmd;
 import frc.robot.commands.EnableFeederCmd;
@@ -59,7 +58,7 @@ public class RobotContainer {
 
   // Intake files - LL
   public static IntakeSubsystem intake = new IntakeSubsystem();
-  private final ExtendIntakeCmdGroup deployIntakeCmdGroup = new ExtendIntakeCmdGroup(intake);
+  //private final ExtendIntakeCmdGroup deployIntakeCmdGroup = new ExtendIntakeCmdGroup(intake);
   private final IntakeCmdGroup intakeCmdGroup = new IntakeCmdGroup(intake);
   private final IntakeRetractCmdGroup intakeRetractCmdGroup = new IntakeRetractCmdGroup(intake);
 
@@ -121,9 +120,9 @@ public class RobotContainer {
     intake.whenReleased(intakeRetractCmdGroup);
 
     // Outake
-    new JoystickButton(driverJoystick, XboxController.Button.kLeftBumper.value)
-      .whenPressed(new InstantCommand(() -> intake.setPiston(Value.kReverse)));
-
+    final JoystickButton outake = new JoystickButton(driverJoystick, XboxController.Button.kLeftBumper.value);
+    outake.whenHeld(intakeCmdGroup);
+    outake.whenReleased(intakeRetractCmdGroup);
 
 
     // Gunner Joystick buttons  -----------------------------------------------------------------
