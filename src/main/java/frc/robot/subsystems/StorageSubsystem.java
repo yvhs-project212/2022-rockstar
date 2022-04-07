@@ -7,7 +7,7 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.revrobotics.ColorSensorV3;
 
-import edu.wpi.first.wpilibj.AnalogTrigger;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -24,8 +24,7 @@ public class StorageSubsystem extends SubsystemBase {
   public double indexerSpeed;
   public double feederSpeed;
 
-  public AnalogTrigger bottomTriggerLeft;
-  //public AnalogTrigger bottomTriggerRight;
+  public DigitalInput bottomBeamBreak;
 
   public I2C.Port i2cPort_OnBoard;
   public ColorSensorV3 middleColorSensor;
@@ -59,9 +58,7 @@ public class StorageSubsystem extends SubsystemBase {
     feeder.setInverted(false);
     resetEncoder();
 
-    bottomTriggerLeft = new AnalogTrigger(PWM.Storage.BOTTOM_TRIGGER_LEFT);
-    bottomTriggerLeft.setLimitsVoltage(4.3, 4.3);
-    bottomTriggerLeft.setAveraged(true);
+    bottomBeamBreak = new DigitalInput(PWM.Storage.BOTTOM_BEAM_BREAK);
 
     /*
     bottomTriggerRight = new AnalogTrigger(PWM.Storage.BOTTOM_TRIGGER_RIGHT);
@@ -165,7 +162,7 @@ public class StorageSubsystem extends SubsystemBase {
   public boolean getBottomSensorBoolean() {
     boolean cache;
 
-    if (bottomTriggerLeft.getTriggerState() /*|| bottomTriggerRight.getTriggerState()*/) {
+    if (bottomBeamBreak.get()) {
       cache = true;
     } else {
       cache = false;
