@@ -121,8 +121,8 @@ public final class Constants {
 	}
 
     public static final class HangConstants {
-		public static final double UP_SPEED = 0.65;
-		public static final double DOWN_SPEED = -0.65;
+		public static final double UP_SPEED = 1;
+		public static final double DOWN_SPEED = -1;
         
 	}
 
