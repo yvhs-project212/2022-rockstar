@@ -17,7 +17,8 @@ import frc.robot.commands.DriveWithJoysticksCmd;
 import frc.robot.commands.EnableFeederCmd;
 import frc.robot.commands.EnableShooterCmd;
 import frc.robot.commands.HangCmd;
-import frc.robot.commands.IntakeWithPaddlesCmd;
+import frc.robot.commands.IntakeCmdGroup;
+import frc.robot.commands.IntakeRetractCmdGroup;
 import frc.robot.commands.ShooterCmd;
 import frc.robot.commands.StorageCmd;
 import frc.robot.commands.TurretCmd;
@@ -58,9 +59,10 @@ public class RobotContainer {
 
   // Intake files - LL
   public static IntakeSubsystem intake = new IntakeSubsystem();
-  private final IntakeWithPaddlesCmd intakeWithPaddlesCmd = new IntakeWithPaddlesCmd(intake);
   private final ExtendIntakeCmdGroup deployIntakeCmdGroup = new ExtendIntakeCmdGroup(intake);
-  
+  private final IntakeCmdGroup intakeCmdGroup = new IntakeCmdGroup(intake);
+  private final IntakeRetractCmdGroup intakeRetractCmdGroup = new IntakeRetractCmdGroup(intake);
+
   // Turret files - LL
   public static TurretSubsystem turret = new TurretSubsystem();
   private final TurretCmd turretCmd = new TurretCmd(turret);
@@ -81,7 +83,6 @@ public class RobotContainer {
 
     driveTrain.setDefaultCommand(driveWithJoysticksCmd);   //Drive is always looking to read this command - LL
     hang.setDefaultCommand(hangCmd);
-    intake.setDefaultCommand(intakeWithPaddlesCmd);
     shooter.setDefaultCommand(shooterCmd);
     storage.setDefaultCommand(storageCmd);
     turret.setDefaultCommand(turretCmd);
@@ -114,6 +115,15 @@ public class RobotContainer {
     new JoystickButton(driverJoystick, XboxController.Button.kRightBumper.value)
       .whenPressed(new InstantCommand(() -> hang.setTransveral(Value.kReverse)));
 
+    // Intake
+    final JoystickButton intake = new JoystickButton(driverJoystick, XboxController.Button.kRightBumper.value);
+    intake.whenHeld(intakeCmdGroup);
+    intake.whenReleased(intakeRetractCmdGroup);
+
+    // Outake
+    new JoystickButton(driverJoystick, XboxController.Button.kLeftBumper.value)
+      .whenPressed(new InstantCommand(() -> intake.setPiston(Value.kReverse)));
+
 
 
     // Gunner Joystick buttons  -----------------------------------------------------------------
@@ -133,32 +143,11 @@ public class RobotContainer {
     new JoystickButton(gunnerJoystick, 8)
       .whenPressed(new SequentialCommandGroup(
         //new PrintCommand("Set Manual Mode: true"), 
-        new InstantCommand(() -> shooter.setManualMode(true))));
-    
-
-    // Extend Intake
-    final JoystickButton deployIntake = new JoystickButton(gunnerJoystick, XboxController.Button.kB.value);
-    deployIntake.whenPressed(deployIntakeCmdGroup);
-
-    // Retract Intake
-    new JoystickButton(gunnerJoystick, XboxController.Button.kA.value)
-      .whenPressed(new InstantCommand(() -> intake.setPiston(Value.kReverse)));
-
+        new InstantCommand(() -> shooter.setManualMode(true))));    
     
     // Enable Feeder
     final JoystickButton enableFeeder = new JoystickButton(gunnerJoystick, XboxController.Button.kRightBumper.value);
     enableFeeder.whileHeld(enableFeederCmd);
-    
-    /*
-    // Enable DriveWithLimelight
-    new JoystickButton(gunnerJoystick, XboxController.Button.kX.value)
-      .whenHeld(driveWithLimelightCmd);
-    /*
-    // Enable feeder Cmd Group (AUTO)
-    final JoystickButton enableFeeder = new JoystickButton(gunnerJoystick, XboxController.Button.kRightBumper.value);
-    enableFeeder.whileActiveOnce(enableFeederCmdGroup);
-    */
-  
   }
 
   /**

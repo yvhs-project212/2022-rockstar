@@ -11,16 +11,15 @@ import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
-import frc.robot.RobotContainer;
 import frc.robot.Constants.IntakeConstants;
 import frc.robot.subsystems.IntakeSubsystem;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class IntakeDeployCmdGroup extends SequentialCommandGroup {
+public class IntakeCmdGroup extends SequentialCommandGroup {
   /** Creates a new IntakeDeploy. */
-  public IntakeDeployCmdGroup(IntakeSubsystem intakeSubsystem) {
+  public IntakeCmdGroup(IntakeSubsystem intakeSubsystem) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
@@ -33,8 +32,7 @@ public class IntakeDeployCmdGroup extends SequentialCommandGroup {
           new InstantCommand(() -> intakeSubsystem.setPiston(Value.kOff))
         ),
         new SequentialCommandGroup(
-          new WaitCommand(IntakeConstants.INTAKE_SPEED),
-          new RunCommand(() -> intakeSubsystem.intakeWithTriggers(RobotContainer.gunnerJoystick, IntakeConstants.INTAKE_SPEED), intakeSubsystem)
+          new RunCommand(()-> intakeSubsystem.intakeWithButtons(IntakeConstants.INTAKE_SPEED))
         )
       ),
       /*
