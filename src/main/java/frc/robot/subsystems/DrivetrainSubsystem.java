@@ -11,18 +11,14 @@ import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
-import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.CounterBase.EncodingType;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.Constants.DriveConstants;
-import frc.robot.Constants.PWM;
-import frc.robot.Constants.PWM.Drive;
 
 public class DrivetrainSubsystem extends SubsystemBase {
   /** Creates a new DrivetrainSubsystem. */
@@ -37,9 +33,10 @@ public class DrivetrainSubsystem extends SubsystemBase {
 
   public NetworkTable table;
 
+  /*
   private final Encoder leftEncoder;
   private final Encoder rightEncoder;
-  
+  */
 
   // gyro
   
@@ -62,7 +59,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
 
     gearbox.set(Value.kForward);
 
-    
+    /*
     leftEncoder = new Encoder(PWM.Drive.LEFT_ENCODER_A, Drive.LEFT_ENCODER_B, true, EncodingType.k4X);
     // This is set up assuming a 6 inch wheel with a 4096 CPR encoder.
     leftEncoder.setDistancePerPulse(DriveConstants.perEncoderTick2Distance); // (Math.PI * 6) / 4096
@@ -72,7 +69,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
     // This is set up assuming a 6 inch wheel with a 4096 CPR encoder.
     rightEncoder.setDistancePerPulse(DriveConstants.perEncoderTick2Distance);
     //rightEncoder.reset();
-    
+    */
 
 
     table = NetworkTableInstance.getDefault().getTable("limelight");
@@ -89,10 +86,12 @@ public class DrivetrainSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    /*
     SmartDashboard.putNumber("Left Encoder Distance (Inches)", leftEncoder.getDistance());
     SmartDashboard.putNumber("Right Encoder Distance (Inches)", rightEncoder.getDistance());
 
     SmartDashboard.putNumber("Drivetrain Distance (Feet)", getDrivetrainFeet());
+    */
   }
 
   public void driveWithJoysticks(XboxController controller, double forwardSpeed, double turnSpeed) {
@@ -106,7 +105,8 @@ public class DrivetrainSubsystem extends SubsystemBase {
   public void setMotors(double left, double right) {
     drive.tankDrive(left, right);
   }
-
+  
+  /*
   public void resetEncoders() {
     leftEncoder.reset();
     rightEncoder.reset();
@@ -124,6 +124,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
     // return the drive distance in feet
     return (getLeftEncoderDistance() + getRightEncoderDistance()) / 12;
   }
+  */
 
   public void setGear(DoubleSolenoid.Value value) {
     gearbox.set(value);

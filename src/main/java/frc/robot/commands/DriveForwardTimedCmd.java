@@ -5,29 +5,27 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.subsystems.DrivetrainSubsystem;
-import frc.robot.subsystems.HangSubsystem;
-import frc.robot.subsystems.StorageSubsystem;
 
 public class DriveForwardTimedCmd extends CommandBase {
   /** Creates a new DriveForwardTimedCmd. */
   private final DrivetrainSubsystem drivetrainSubsystem;
-  private final StorageSubsystem storageSubsystem;
-  private final HangSubsystem hangSubsystem;
 
-  private final double timeSet;
+  private double duration;
+  private int negative;
+
+  private double timeSet;
   
-  public DriveForwardTimedCmd(DrivetrainSubsystem drive, StorageSubsystem storage, 
-  HangSubsystem hang, double duration) {
+  public DriveForwardTimedCmd(DrivetrainSubsystem drive, double duration) {
     drivetrainSubsystem = drive;
-    storageSubsystem = storage;
-    hangSubsystem = hang;
-    addRequirements(drive, storage, hang);
+    addRequirements(drive);
 
-    timeSet = duration + Timer.getFPGATimestamp();
+    this.duration = duration;
+
+    timeSet = 0;
+    
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
@@ -35,13 +33,23 @@ public class DriveForwardTimedCmd extends CommandBase {
   @Override
   public void initialize() {
     System.out.println("DriveForwardTimedCmd started!");
+
+    if (duration < 0) {
+      negative = -1;
+    } else {
+      negative = 1;
+    }
+
+    timeSet = Math.abs(duration) + Timer.getFPGATimestamp();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    SmartDashboard.putNumber("Meters Driven", drivetrainSubsystem.getDrivetrainFeet());
-    drivetrainSubsystem.setMotors(DriveConstants.AUTO_LEFT_DRIVE_FORWARD_SPEED, DriveConstants.AUTO_RIGHT_DRIVE_FORWARD_SPEED); 
+    double leftMotors = negative * DriveConstants.AUTO_LEFT_DRIVE_FORWARD_SPEED;
+    double rightMotors = negative * DriveConstants.AUTO_RIGHT_DRIVE_FORWARD_SPEED;
+    
+    drivetrainSubsystem.setMotors(leftMotors, rightMotors); 
   }
 
   // Called once the command ends or is interrupted.

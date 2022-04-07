@@ -162,7 +162,7 @@ public class StorageSubsystem extends SubsystemBase {
   public boolean getBottomSensorBoolean() {
     boolean cache;
 
-    if (bottomBeamBreak.get()) {
+    if (!bottomBeamBreak.get()) {
       cache = true;
     } else {
       cache = false;

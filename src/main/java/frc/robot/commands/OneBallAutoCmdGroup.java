@@ -41,7 +41,7 @@ public class OneBallAutoCmdGroup extends SequentialCommandGroup {
        */
       
       new PrintCommand("DriveForwardCmd started!"),
-      new DriveForwardCmd(drive, -4),
+      new DriveForwardTimedCmd(drive, -4),
       
       /**
        * Figure out how to do a ParallelDeadlineCommandGroup
