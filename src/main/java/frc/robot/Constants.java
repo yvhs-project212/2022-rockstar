@@ -230,10 +230,10 @@ public final class Constants {
         //public static final double kShooterRPM2Velocity = 1; // Per encoder tick to flywheel velocity (ft/min)
     }
     public static final class StorageConstants {
-        public static final double INDEXER_SPEED = 0.75;
-        public static final double INDEXER_SPEED_AUTO = 0.6;
+        public static final double INDEXER_SPEED = 1;
+        public static final double INDEXER_SPEED_AUTO = 0.7;
         public static final double FEEDER_SPEED = 0.7;
-        public static final double FEEDER_SPEED_AUTO = 0.6;
+        public static final double FEEDER_SPEED_AUTO = 0.7;
 
         public static final double TIME_BETWEEN_SHOTS = 0.5; // seconds
 

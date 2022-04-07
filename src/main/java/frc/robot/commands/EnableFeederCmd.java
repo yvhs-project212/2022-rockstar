@@ -42,7 +42,7 @@ public class EnableFeederCmd extends CommandBase {
       //System.out.println("Shooter is not at target velocity!");
     }
     */
-    storage.setMotors(MotorSelection.ALL, StorageConstants.INDEXER_SPEED_AUTO, StorageConstants.FEEDER_SPEED_AUTO);
+    storage.setMotors(MotorSelection.ALL, StorageConstants.INDEXER_SPEED, StorageConstants.FEEDER_SPEED);
     storage.runMotors();
 
   }

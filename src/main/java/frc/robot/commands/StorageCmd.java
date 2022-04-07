@@ -55,14 +55,14 @@ public class StorageCmd extends CommandBase {
         // if you DO NOT see ball at top
         if (storage.getBottomSensorBoolean() || 
         storage.getMiddleColorSensorBoolean() || storage.getFirstBall()) {
-          storage.setMotors(MotorSelection.INDEXER, StorageConstants.INDEXER_SPEED_AUTO, StorageConstants.FEEDER_SPEED);  
+          storage.setMotors(MotorSelection.INDEXER, StorageConstants.INDEXER_SPEED_AUTO, StorageConstants.FEEDER_SPEED_AUTO);  
         } else {
           storage.setMotors(MotorSelection.NONE, 0, 0);
         }
       } else if ((storage.getMiddleColorSensorBoolean()) == false) {
         // if you DO NOT see ball in the middle
         if (storage.getBottomSensorBoolean() || storage.getSecondBall()) {
-          storage.setMotors(MotorSelection.INDEXER, StorageConstants.INDEXER_SPEED_AUTO, StorageConstants.FEEDER_SPEED);  
+          storage.setMotors(MotorSelection.INDEXER, StorageConstants.INDEXER_SPEED_AUTO, StorageConstants.FEEDER_SPEED_AUTO);  
         } else {
           storage.setMotors(MotorSelection.NONE, 0, 0);
         }
