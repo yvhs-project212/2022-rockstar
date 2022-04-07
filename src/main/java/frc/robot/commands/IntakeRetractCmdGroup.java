@@ -20,7 +20,7 @@ public class IntakeRetractCmdGroup extends SequentialCommandGroup {
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
       new PrintCommand("IntakeRetractCmdGroup started!"),
-      new InstantCommand(() -> intakeSubsystem.setPiston(Value.kReverse)),
+      new InstantCommand(() -> intakeSubsystem.setPiston(Value.kForward)),
       new InstantCommand(() -> intakeSubsystem.intakeWithButtons(0)),
       new PrintCommand("IntakeRetractCmdGroup ended!")
     );

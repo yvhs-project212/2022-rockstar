@@ -4,6 +4,7 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
 import edu.wpi.first.networktables.NetworkTable;
@@ -23,6 +24,8 @@ public class TurretSubsystem extends SubsystemBase {
     turret = new WPI_TalonFX(PWM.Turret.TURRET);
 
     table = NetworkTableInstance.getDefault().getTable("limelight");
+
+    turret.setNeutralMode(NeutralMode.Brake);
   }
 
   @Override

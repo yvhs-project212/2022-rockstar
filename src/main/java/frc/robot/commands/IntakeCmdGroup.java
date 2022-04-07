@@ -23,19 +23,17 @@ public class IntakeCmdGroup extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new PrintCommand("IntakeDeployCmdGroup started!"),
+      new PrintCommand("IntakeCmdGroup started!"),
 
       new ParallelCommandGroup(
         new SequentialCommandGroup( 
-          new InstantCommand(() -> intakeSubsystem.setPiston(Value.kForward)),
+          new InstantCommand(() -> intakeSubsystem.setPiston(Value.kReverse)),
           new WaitCommand(IntakeConstants.INTAKE_DEPLOY_TIME),
           new InstantCommand(() -> intakeSubsystem.setPiston(Value.kOff))
         ),
-        new SequentialCommandGroup(
-          new RunCommand(()-> intakeSubsystem.intakeWithButtons(IntakeConstants.INTAKE_SPEED))
-        )
+        new RunCommand(()-> intakeSubsystem.intakeWithButtons(IntakeConstants.INTAKE_SPEED))
       ),
-      new PrintCommand("IntakeDeployCmdGroup ended!")
+      new PrintCommand("IntakeCmdGroup ended!")
     );
   }
 }

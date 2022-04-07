@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.OneBallAutoCmdGroup;
+import frc.robot.commands.OutakeCmdGroup;
 import frc.robot.commands.DriveWithJoysticksCmd;
 import frc.robot.commands.EnableFeederCmd;
 import frc.robot.commands.EnableShooterCmd;
@@ -60,6 +61,7 @@ public class RobotContainer {
   public static IntakeSubsystem intake = new IntakeSubsystem();
   //private final ExtendIntakeCmdGroup deployIntakeCmdGroup = new ExtendIntakeCmdGroup(intake);
   private final IntakeCmdGroup intakeCmdGroup = new IntakeCmdGroup(intake);
+  private final OutakeCmdGroup outakeCmdGroup = new OutakeCmdGroup(intake);
   private final IntakeRetractCmdGroup intakeRetractCmdGroup = new IntakeRetractCmdGroup(intake);
 
   // Turret files - LL
@@ -107,11 +109,11 @@ public class RobotContainer {
       .whenPressed(new InstantCommand(() -> driveTrain.setGear(Value.kReverse)));
 
     // Transerval forward
-    new JoystickButton(driverJoystick, XboxController.Button.kLeftBumper.value)
+    new JoystickButton(driverJoystick, 7)
       .whenPressed(new InstantCommand(() -> hang.setTransveral(Value.kForward)));
 
     // Transversal reverse
-    new JoystickButton(driverJoystick, XboxController.Button.kRightBumper.value)
+    new JoystickButton(driverJoystick, 8)
       .whenPressed(new InstantCommand(() -> hang.setTransveral(Value.kReverse)));
 
     // Intake
@@ -121,7 +123,7 @@ public class RobotContainer {
 
     // Outake
     final JoystickButton outake = new JoystickButton(driverJoystick, XboxController.Button.kLeftBumper.value);
-    outake.whenHeld(intakeCmdGroup);
+    outake.whenHeld(outakeCmdGroup);
     outake.whenReleased(intakeRetractCmdGroup);
 
 

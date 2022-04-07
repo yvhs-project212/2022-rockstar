@@ -35,7 +35,7 @@ public class StorageCmd extends CommandBase {
 
     // Autonomous storage
     
-    if (RobotContainer.gunnerJoystick.getRightTriggerAxis() > 0.15) {
+    if (RobotContainer.driverJoystick.getLeftBumper()) {
       storage.setMotors(StorageSubsystem.MotorSelection.REVERSE_ALL, StorageConstants.INDEXER_SPEED, StorageConstants.FEEDER_SPEED);
       storage.setFirstBall(false);
       storage.setSecondBall(false);

@@ -21,7 +21,7 @@ public class IntakeSubsystem extends SubsystemBase {
 
   public IntakeSubsystem() {
     intake = new WPI_TalonSRX(Constants.PWM.Intake.INTAKE);
-    intake.setInverted(false);
+    intake.setInverted(true);
 
     intake.setNeutralMode(NeutralMode.Coast);
 

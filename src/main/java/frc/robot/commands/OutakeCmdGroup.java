@@ -27,13 +27,11 @@ public class OutakeCmdGroup extends SequentialCommandGroup {
 
       new ParallelCommandGroup(
         new SequentialCommandGroup( 
-          new InstantCommand(() -> intakeSubsystem.setPiston(Value.kForward)),
+          new InstantCommand(() -> intakeSubsystem.setPiston(Value.kReverse)),
           new WaitCommand(IntakeConstants.INTAKE_DEPLOY_TIME),
           new InstantCommand(() -> intakeSubsystem.setPiston(Value.kOff))
         ),
-        new SequentialCommandGroup(
-          new RunCommand(()-> intakeSubsystem.intakeWithButtons(-IntakeConstants.INTAKE_SPEED))
-        )
+        new RunCommand(()-> intakeSubsystem.intakeWithButtons(-(IntakeConstants.INTAKE_SPEED)))
       ),
       new PrintCommand("OutakeCmdGroup ended!")
     );
