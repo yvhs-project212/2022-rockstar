@@ -27,16 +27,6 @@ public class DriveWithJoysticksCmd extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    /*
-    // Drivetrain Meters
-    SmartDashboard.putNumber("Drivetrain Meters", drivetrainSubsystem.getEncoderMeters(hangSubsystem.getHangLeftSelectedSensorPosition(),
-    storageSubsystem.getFeederSensorPosition()));
-    // Left Gearbox Encoder
-    SmartDashboard.putNumber("Left Gearbox Encoder", hangSubsystem.getHangLeftSelectedSensorPosition());
-    // Right Gearbox Encoder
-    SmartDashboard.putNumber("Right Gearbox Encoder", storageSubsystem.getFeederSensorPosition()));
-    */
-    
     drive.driveWithJoysticks(RobotContainer.driverJoystick, DriveConstants.FORWARD_SPEED, DriveConstants.TURN_SPEED);
   }
 

@@ -34,7 +34,7 @@ public class OneBallAutoCmdGroup extends SequentialCommandGroup {
       new PrintCommand("OneBallAutoCmdGroup started!"),
       new DriveForwardTimedCmd(drive, -4),
       
-
+      new WaitCommand(AutonomousConstants.TIMEOUT_SECONDS),
       new PrintCommand("Shoot Ball started!"),
       new ParallelCommandGroup(
         new RunCommand(turret::turretWithLimelight, turret),

@@ -27,7 +27,11 @@ public class HangCmd extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    hang.hangWithPOV(RobotContainer.driverJoystick);
+    if (RobotContainer.driverJoystick.getPOV() >= 0) {
+      hang.hangWithPOV(RobotContainer.driverJoystick); 
+    } else {
+      hang.stop();
+    }
   }
 
   // Called once the command ends or is interrupted.
