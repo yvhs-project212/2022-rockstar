@@ -4,23 +4,57 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
+import edu.wpi.first.wpilibj2.command.PrintCommand;
+import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
+import frc.robot.Constants.AutonomousConstants;
 import frc.robot.subsystems.DrivetrainSubsystem;
 import frc.robot.subsystems.HangSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.StorageSubsystem;
+import frc.robot.subsystems.TurretSubsystem;
+import frc.robot.subsystems.StorageSubsystem.MotorSelection;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class TwoBallAutoCmdGroup extends SequentialCommandGroup {
   /** Creates a new TwoBallAutoCmdGroup. */
-  public TwoBallAutoCmdGroup(DrivetrainSubsystem drivetrainSubsystem, StorageSubsystem storageSubsystem, 
-  HangSubsystem hangSubsystem, IntakeSubsystem intakeSubsystem, ShooterSubsystem shooterSubsystem) {
+  public TwoBallAutoCmdGroup(DrivetrainSubsystem drive, StorageSubsystem storage, 
+  HangSubsystem hang, IntakeSubsystem intake, ShooterSubsystem shooter, TurretSubsystem turret) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
+      new PrintCommand("TwoBallAutoCmdGroup started!"),  
+
+      new ParallelDeadlineGroup(
+        new DriveForwardTimedCmd(drive, -4), 
+        new IntakeCmdGroup(intake)
+        ),
+      new IntakeRetractCmdGroup(intake),
+
+      new PrintCommand("Shoot Ball started!"),
+      new ParallelCommandGroup(
+        new RunCommand(turret::turretWithLimelight, turret),
+        new RunCommand(shooter::setTargetBottomFlyWheelVelocity),
+        new RunCommand(shooter::setTargetTopFlyWheelVelocity),
+        new EnableShooterCmd(shooter),
+        new SequentialCommandGroup(
+          new WaitCommand(AutonomousConstants.FLYWHEEL_REV_TIME_SECONDS),
+          new EnableFeederCmd(storage))  
+        )
+      .withTimeout(AutonomousConstants.TIMEOUT_SECONDS)
+      .andThen(
+        new InstantCommand(shooter::disable),
+        new InstantCommand(() -> storage.setMotors(MotorSelection.NONE, 0, 0)),
+        new InstantCommand(storage::runMotors)
+      ),
+      new PrintCommand("TwoBallAutoCmdGroup ended!")
       
     );
   }

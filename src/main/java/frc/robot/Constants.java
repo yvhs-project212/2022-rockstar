@@ -211,6 +211,16 @@ public final class Constants {
                 public final static double PeakOut = 1.00;
             }
             
+            // VICTOR P.
+            /**
+             * TOP_SLOPE = 200
+             * TOP_Y_INT = 3419.17
+             * 
+             * y = mx + b
+             * 
+             * Shooter Velocity = (200)Distance + 3419.17
+             * 
+             */
             public final static double TOP_SLOPE = 200; 	// 1678 Help
             public final static double TOP_Y_INT = 3419.17;	// 1678 Help
         }
@@ -224,15 +234,20 @@ public final class Constants {
                 public final static double Iz = 300;
                 public final static double PeakOut = 1.00;
             }
+            // VICTOR
             public final static double BOTTOM_SLOPE = 194.417;	// 1678 Help
             public final static double BOTTOM_Y_INT = 2493.96;   	// 1678 Help
         }
         //public static final double kShooterRPM2Velocity = 1; // Per encoder tick to flywheel velocity (ft/min)
     }
     public static final class StorageConstants {
-        public static final double INDEXER_SPEED = 1;
-        public static final double INDEXER_SPEED_AUTO = 0.7;
+        
+        // When you ARE pressing the FEEDER/SHOOTING
+        public static final double INDEXER_SPEED = 0.75;
         public static final double FEEDER_SPEED = 0.7;
+
+        // When you are NOT pressing the FEEDER/SHOOTING
+        public static final double INDEXER_SPEED_AUTO = 0.7;
         public static final double FEEDER_SPEED_AUTO = 0.7;
 
         public static final double TIME_BETWEEN_SHOTS = 0.5; // seconds

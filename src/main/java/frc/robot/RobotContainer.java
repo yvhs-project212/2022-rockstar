@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.OneBallAutoCmdGroup;
 import frc.robot.commands.OutakeCmdGroup;
+import frc.robot.commands.Autonomous;
 import frc.robot.commands.DriveWithJoysticksCmd;
 import frc.robot.commands.EnableFeederCmd;
 import frc.robot.commands.EnableShooterCmd;
@@ -22,6 +23,8 @@ import frc.robot.commands.IntakeRetractCmdGroup;
 import frc.robot.commands.ShooterCmd;
 import frc.robot.commands.StorageCmd;
 import frc.robot.commands.TurretCmd;
+import frc.robot.commands.TwoBallAutoCmdGroup;
+import frc.robot.subsystems.AutonomousPickerSubsystem;
 import frc.robot.subsystems.DrivetrainSubsystem;
 import frc.robot.subsystems.HangSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
@@ -39,8 +42,8 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   
   // DriveTrain files - LL
-  public static DrivetrainSubsystem driveTrain = new DrivetrainSubsystem();
-  private final DriveWithJoysticksCmd driveWithJoysticksCmd = new DriveWithJoysticksCmd(driveTrain);
+  public static DrivetrainSubsystem drive = new DrivetrainSubsystem();
+  private final DriveWithJoysticksCmd driveWithJoysticksCmd = new DriveWithJoysticksCmd(drive);
   
   // Hang files - LL
   public static HangSubsystem hang = new HangSubsystem();
@@ -69,7 +72,12 @@ public class RobotContainer {
   private final TurretCmd turretCmd = new TurretCmd(turret);
   
   // Autonomous - LL
-  private final OneBallAutoCmdGroup oneBallAutoCmdGroup = new OneBallAutoCmdGroup(driveTrain, storage, hang, intake, shooter, turret);
+  private final AutonomousPickerSubsystem autonomousPicker = new AutonomousPickerSubsystem();
+  private final Autonomous autonomous = new Autonomous(autonomousPicker, drive, storage, hang, intake, shooter, turret);
+
+
+  private final OneBallAutoCmdGroup oneBallAutoCmdGroup = new OneBallAutoCmdGroup(drive, storage, hang, intake, shooter, turret);
+  private final TwoBallAutoCmdGroup twoBallAutoCmdGroup = new TwoBallAutoCmdGroup(drive, storage, hang, intake, shooter, turret);
 
   // Controller files - LL
   public static XboxController driverJoystick = new XboxController(Constants.OI.DRIVER_NUMBER);
@@ -82,7 +90,7 @@ public class RobotContainer {
 
     //INITALIZE all the things we made - LL
 
-    driveTrain.setDefaultCommand(driveWithJoysticksCmd);   //Drive is always looking to read this command - LL
+    drive.setDefaultCommand(driveWithJoysticksCmd);   //Drive is always looking to read this command - LL
     hang.setDefaultCommand(hangCmd);
     shooter.setDefaultCommand(shooterCmd);
     storage.setDefaultCommand(storageCmd);
@@ -103,10 +111,10 @@ public class RobotContainer {
 
     // Low gear
     new JoystickButton(driverJoystick, XboxController.Button.kA.value)
-      .whenPressed(new InstantCommand(() -> driveTrain.setGear(Value.kForward)));
+      .whenPressed(new InstantCommand(() -> drive.setGear(Value.kForward)));
     // High gear
     new JoystickButton(driverJoystick, XboxController.Button.kB.value)
-      .whenPressed(new InstantCommand(() -> driveTrain.setGear(Value.kReverse)));
+      .whenPressed(new InstantCommand(() -> drive.setGear(Value.kReverse)));
 
     // Transerval forward
     new JoystickButton(driverJoystick, 7)
@@ -157,9 +165,10 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    // An ExampleCommand will run in autonomous
-    //return autonomousCmdGroup;
+
     //return null;
-    return oneBallAutoCmdGroup;
+    //return oneBallAutoCmdGroup;
+
+    return autonomous.runAutonomous();
   }
 }

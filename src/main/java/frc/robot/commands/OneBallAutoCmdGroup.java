@@ -32,35 +32,24 @@ public class OneBallAutoCmdGroup extends SequentialCommandGroup {
     //addRequirements(drivetrainSubsystem);
     addCommands(
       new PrintCommand("OneBallAutoCmdGroup started!"),
-      
-      /**
-       * Fix "DriveForwardCmd":
-       * 
-       * You cannot go backwards
-       * 
-       */
-      
-      new PrintCommand("DriveForwardCmd started!"),
       new DriveForwardTimedCmd(drive, -4),
       
-      /**
-       * Figure out how to do a ParallelDeadlineCommandGroup
-       * 
-       * So I can get out of shooting a ball once
-       */
-      
-      new PrintCommand("ShootOneBall started!"),
+
+      new PrintCommand("Shoot Ball started!"),
       new ParallelCommandGroup(
         new RunCommand(turret::turretWithLimelight, turret),
         new RunCommand(shooter::setTargetBottomFlyWheelVelocity),
         new RunCommand(shooter::setTargetTopFlyWheelVelocity),
         new EnableShooterCmd(shooter),
-        new WaitCommand(AutonomousConstants.FLYWHEEL_REV_TIME_SECONDS),
-        new EnableFeederCmd(storage))
+        new SequentialCommandGroup(
+          new WaitCommand(AutonomousConstants.FLYWHEEL_REV_TIME_SECONDS),
+          new EnableFeederCmd(storage))  
+        )
       .withTimeout(AutonomousConstants.TIMEOUT_SECONDS)
       .andThen(
         new InstantCommand(shooter::disable),
-        new InstantCommand(() -> storage.setMotors(MotorSelection.NONE, 0, 0))
+        new InstantCommand(() -> storage.setMotors(MotorSelection.NONE, 0, 0)),
+        new InstantCommand(storage::runMotors)
       ),
     
       new PrintCommand("OneBallAutoCmdGroup ended!")
