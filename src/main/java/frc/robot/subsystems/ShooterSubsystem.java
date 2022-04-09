@@ -30,6 +30,8 @@ public class ShooterSubsystem extends SubsystemBase {
   public double topFlywheel_targetVelocity_UnitsPer100ms;
   public double bottomFlywheel_targetVelocity_UnitsPer100ms;
 
+  public double adjustableFactor;
+
   public enum VelocityControlMode {
     MANUAL,
     LIMELIGHT
@@ -55,6 +57,8 @@ public class ShooterSubsystem extends SubsystemBase {
     topFlywheel_targetVelocity_UnitsPer100ms = 0;
     bottomFlywheel_targetVelocity_UnitsPer100ms = 0;
 
+    adjustableFactor = 0;
+
 
     SmartDashboard.putNumber("Target Top Flywheel Velocity", 0);
     SmartDashboard.putNumber("Target Bottom Flywheel Velocity", 0);
@@ -73,6 +77,8 @@ public class ShooterSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("Distance from Goal (Inches)", 0);
     SmartDashboard.putNumber("Distance from Goal (Feet)", 0);
 
+    
+    SmartDashboard.putNumber("Adjustable Factor", 0);
     //SmartDashboard.putBoolean("Bottom Flywheel at Setpoint ", false);
     //SmartDashboard.putBoolean("Top Flywheel at Setpoint ", false);
 
@@ -154,7 +160,6 @@ public class ShooterSubsystem extends SubsystemBase {
     // to know the target velocity
     SmartDashboard.putNumber("Target Top Flywheel Velocity", getTargetTopFlyWheelVelocity() );
     SmartDashboard.putNumber("Target Bottom Flywheel Velocity", getTargetBottomFlyWheelVelocity());
-
   }
 
   /*
@@ -183,6 +188,18 @@ public class ShooterSubsystem extends SubsystemBase {
     return velocityControlMode;
   }
 
+  public double getAdjustableFactor() {
+    /*
+    if (SmartDashboard.getNumber("Adjustable Factor", 0) != adjustableFactor){
+      adjustableFactor = SmartDashboard.getNumber("Adjustable Factor", 0);
+    }
+    */
+
+    adjustableFactor = SmartDashboard.getNumber("Adjustable Factor", 0);
+    
+    
+    return adjustableFactor;
+  }
   public void setTargetBottomFlyWheelVelocity() {
     double m = ShooterConstants.BottomFlywheelConstants.BOTTOM_SLOPE;
     double b = ShooterConstants.BottomFlywheelConstants.BOTTOM_Y_INT;
@@ -192,7 +209,7 @@ public class ShooterSubsystem extends SubsystemBase {
       SmartDashboard.getNumber("User-inputed Bottom Flywheel Velocity", 0);
     } else if (getVelocityControlMode() == VelocityControlMode.LIMELIGHT) {
       bottomFlywheel_targetVelocity_UnitsPer100ms = 
-      (m * (getLimelightDistanceInches() / 12.0)) + (b);
+      (m * (getLimelightDistanceInches() / 12.0)) + (b) + getAdjustableFactor();
     } else {
       bottomFlywheel_targetVelocity_UnitsPer100ms = 0;
     }   
@@ -212,7 +229,7 @@ public class ShooterSubsystem extends SubsystemBase {
       SmartDashboard.getNumber("User-inputed Top Flywheel Velocity", 0);
     } else if (getVelocityControlMode() == VelocityControlMode.LIMELIGHT) {
       topFlywheel_targetVelocity_UnitsPer100ms = 
-      (m * (getLimelightDistanceInches() / 12.0)) + (b);
+      (m * (getLimelightDistanceInches() / 12.0)) + (b) + getAdjustableFactor();
     } else {
       topFlywheel_targetVelocity_UnitsPer100ms = 0;
     }   

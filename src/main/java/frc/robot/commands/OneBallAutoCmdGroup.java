@@ -4,6 +4,7 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.PrintCommand;
@@ -32,9 +33,10 @@ public class OneBallAutoCmdGroup extends SequentialCommandGroup {
     //addRequirements(drivetrainSubsystem);
     addCommands(
       new PrintCommand("OneBallAutoCmdGroup started!"),
+      new InstantCommand(() -> drive.setGear(Value.kForward)),
       new DriveForwardTimedCmd(drive, -4),
       
-      new WaitCommand(AutonomousConstants.TIMEOUT_SECONDS),
+      new WaitCommand(AutonomousConstants.ONE_BALL_TIMEOUT_SECONDS),
       new PrintCommand("Shoot Ball started!"),
       new ParallelCommandGroup(
         new RunCommand(turret::turretWithLimelight, turret),
@@ -45,7 +47,7 @@ public class OneBallAutoCmdGroup extends SequentialCommandGroup {
           new WaitCommand(AutonomousConstants.FLYWHEEL_REV_TIME_SECONDS),
           new EnableFeederCmd(storage))  
         )
-      .withTimeout(AutonomousConstants.TIMEOUT_SECONDS)
+      .withTimeout(AutonomousConstants.ONE_BALL_TIMEOUT_SECONDS)
       .andThen(
         new InstantCommand(shooter::disable),
         new InstantCommand(() -> storage.setMotors(MotorSelection.NONE, 0, 0)),

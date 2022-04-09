@@ -4,8 +4,10 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.subsystems.AutonomousPickerSubsystem;
 import frc.robot.subsystems.DrivetrainSubsystem;
@@ -59,6 +61,7 @@ public class Autonomous extends CommandBase {
        case NONE: //This is the input of the user and the if of an if statement - LL
         System.out.println("No Balls");
         autoCommands = new SequentialCommandGroup(
+          new InstantCommand(() -> drive.setGear(Value.kForward)),
           new DriveForwardTimedCmd(drive, -4)
         );
         break;

@@ -4,6 +4,7 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
@@ -31,29 +32,31 @@ public class TwoBallAutoCmdGroup extends SequentialCommandGroup {
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
       new PrintCommand("TwoBallAutoCmdGroup started!"),  
+      new InstantCommand(() -> drive.setGear(Value.kForward)),
 
       new ParallelDeadlineGroup(
-        new DriveForwardTimedCmd(drive, -4), 
+        new DriveForwardTimedCmd(drive, 4), 
         new IntakeCmdGroup(intake)
         ),
       new IntakeRetractCmdGroup(intake),
-
+      new DriveTurnTimedCmd(drive, 4),
+      
+      new WaitCommand(AutonomousConstants.TWO_BALL_TIMEOUT_SECONDS),
       new PrintCommand("Shoot Ball started!"),
-      new ParallelCommandGroup(
+      new ParallelDeadlineGroup(
+        new SequentialCommandGroup(
+          new WaitCommand(AutonomousConstants.FLYWHEEL_REV_TIME_SECONDS),
+          new EnableFeederCmd(storage),  
+          new WaitCommand(1)
+        ),
         new RunCommand(turret::turretWithLimelight, turret),
         new RunCommand(shooter::setTargetBottomFlyWheelVelocity),
         new RunCommand(shooter::setTargetTopFlyWheelVelocity),
-        new EnableShooterCmd(shooter),
-        new SequentialCommandGroup(
-          new WaitCommand(AutonomousConstants.FLYWHEEL_REV_TIME_SECONDS),
-          new EnableFeederCmd(storage))  
-        )
-      .withTimeout(AutonomousConstants.TIMEOUT_SECONDS)
-      .andThen(
-        new InstantCommand(shooter::disable),
-        new InstantCommand(() -> storage.setMotors(MotorSelection.NONE, 0, 0)),
-        new InstantCommand(storage::runMotors)
+        new EnableShooterCmd(shooter)
       ),
+      new InstantCommand(shooter::disable),
+      new InstantCommand(storage::stopMotors),
+      
       new PrintCommand("TwoBallAutoCmdGroup ended!")
       
     );

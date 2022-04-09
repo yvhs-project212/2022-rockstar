@@ -54,7 +54,7 @@ public class TurretSubsystem extends SubsystemBase {
     // To the left
     else if (x < 0) {
       // Turn to the left
-      steering_adjust = TurretConstants.kP * heading_error + TurretConstants.MIN_COMMAND;
+      steering_adjust = TurretConstants.kP * heading_error - TurretConstants.MIN_COMMAND;
       
     }
     

@@ -87,6 +87,10 @@ public final class Constants {
 
         public static final double AUTO_LEFT_DRIVE_FORWARD_SPEED = 0.4;
         public static final double AUTO_RIGHT_DRIVE_FORWARD_SPEED = 0.4;
+
+        
+        public static final double AUTO_LEFT_DRIVE_TURN_SPEED = 0.6;
+        public static final double AUTO_RIGHT_DRIVE_TURN_SPEED = 0.6;
         /**
          * 1 / CPR * Diameter Wheel (m) * PI
          * 
@@ -222,7 +226,7 @@ public final class Constants {
              * 
              */
             public final static double TOP_SLOPE = 200; 	// 200 (4.8.22 - 1:19 PM)
-            public final static double TOP_Y_INT = 3470;	// 3419.17 (4.8.22 - 1:19 PM)
+            public final static double TOP_Y_INT = 3595;	// 3419.17 (4.8.22 - 1:19 PM)
         }
         
         public final static class BottomFlywheelConstants {
@@ -236,7 +240,7 @@ public final class Constants {
             }
             // VICTOR
             public final static double BOTTOM_SLOPE = 194.417;	// 194.417 (4.8.22 - 1:19 PM)
-            public final static double BOTTOM_Y_INT = 2550;  // 2493.96 (4.8.22 - 1:19 PM)
+            public final static double BOTTOM_Y_INT = 2675;  // 2493.96 (4.8.22 - 1:19 PM)
         }
         //public static final double kShooterRPM2Velocity = 1; // Per encoder tick to flywheel velocity (ft/min)
     }
@@ -263,7 +267,7 @@ public final class Constants {
 	public static final class TurretConstants{
 		public static final double TURRET_SPEED = 0.15;
 		public static final double kP = 0.0127;          // 0.015
-		public static final double MIN_COMMAND = 0.15;   // 0.1
+		public static final double MIN_COMMAND = 0.03;   // 0.1
 
         
 	}
@@ -273,7 +277,8 @@ public final class Constants {
 		public static final double AUTONOMOUS_SPEED = 0.6;
 
         public static final double FLYWHEEL_REV_TIME_SECONDS = 2;
-        public static final double TIMEOUT_SECONDS = 7; 
+        public static final double ONE_BALL_TIMEOUT_SECONDS = 7; 
+        public static final double TWO_BALL_TIMEOUT_SECONDS = 4; 
 
         
 	}
