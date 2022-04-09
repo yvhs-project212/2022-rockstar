@@ -169,7 +169,7 @@ public class RobotContainer {
     //return null;
     //return oneBallAutoCmdGroup;
 
-    return twoBallAutoCmdGroup;
-    //return autonomous.runAutonomous();
+    //return twoBallAutoCmdGroup;
+    return autonomous.runAutonomous();
   }
 }

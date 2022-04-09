@@ -76,6 +76,7 @@ public class Autonomous extends CommandBase {
         autoCommands = new SequentialCommandGroup (
           new TwoBallAutoCmdGroup(drive, storage, hang, intake, shooter, turret)
         );
+        break;
       default:
         autoCommands = new SequentialCommandGroup (
           new DriveForwardTimedCmd(drive, 0)
