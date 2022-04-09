@@ -26,11 +26,14 @@ public class EnableShooterCmd extends CommandBase {
   @Override
   public void initialize() {
     System.out.println("EnableShooterCmd started!");
+    /*
     if (shooter.getManualMode()) {
       shooter.setVelocityControlMode(VelocityControlMode.MANUAL);
     } else {
       shooter.setVelocityControlMode(VelocityControlMode.LIMELIGHT);
     }
+    */
+    shooter.setVelocityControlMode(VelocityControlMode.LIMELIGHT);
   }
   
 

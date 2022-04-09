@@ -9,7 +9,6 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.OneBallAutoCmdGroup;
 import frc.robot.commands.OutakeCmdGroup;
@@ -141,7 +140,7 @@ public class RobotContainer {
     final JoystickButton toggleShooter = new JoystickButton(gunnerJoystick, XboxController.Button.kLeftBumper.value);
     toggleShooter.whenHeld(enableShooterCmd);
 
-    
+    /*
     // Manual Mode Off
     new JoystickButton(gunnerJoystick, 7)
       .whenPressed(new SequentialCommandGroup(
@@ -153,7 +152,8 @@ public class RobotContainer {
       .whenPressed(new SequentialCommandGroup(
         //new PrintCommand("Set Manual Mode: true"), 
         new InstantCommand(() -> shooter.setManualMode(true))));    
-    
+    */
+
     // Enable Feeder
     final JoystickButton enableFeeder = new JoystickButton(gunnerJoystick, XboxController.Button.kRightBumper.value);
     enableFeeder.whileHeld(enableFeederCmd);
