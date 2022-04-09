@@ -6,7 +6,6 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
@@ -19,7 +18,6 @@ import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.StorageSubsystem;
 import frc.robot.subsystems.TurretSubsystem;
-import frc.robot.subsystems.StorageSubsystem.MotorSelection;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
@@ -39,7 +37,7 @@ public class TwoBallAutoCmdGroup extends SequentialCommandGroup {
         new IntakeCmdGroup(intake)
         ),
       new IntakeRetractCmdGroup(intake),
-      new DriveTurnTimedCmd(drive, 4),
+      new DriveTurnTimedCmd(drive, 1.3),
       
       new WaitCommand(AutonomousConstants.TWO_BALL_TIMEOUT_SECONDS),
       new PrintCommand("Shoot Ball started!"),
