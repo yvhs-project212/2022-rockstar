@@ -65,6 +65,7 @@ public class TwoBallAutoCmdGroup extends SequentialCommandGroup {
       ),
       new InstantCommand(shooter::disable),
       new InstantCommand(storage::stopMotors),
+      new InstantCommand(turret::stopMotors),
       
       new PrintCommand("TwoBallAutoCmdGroup ended!")
       
