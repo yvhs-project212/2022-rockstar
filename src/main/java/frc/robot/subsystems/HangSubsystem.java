@@ -111,7 +111,7 @@ public class HangSubsystem extends SubsystemBase {
   }
   */
 
-  public void stop() {
+  public void stopMotors() {
     hangLeft.stopMotor();
     hangRight.stopMotor();
   }

@@ -34,6 +34,12 @@ public class OneBallAutoCmdGroup extends SequentialCommandGroup {
     addCommands(
       new PrintCommand("OneBallAutoCmdGroup started!"),
       new InstantCommand(() -> drive.setGear(Value.kForward)),
+      
+      new InstantCommand(storage::stopMotors),
+      new InstantCommand(turret::stopMotors),
+      new InstantCommand(shooter::stopMotors),
+      new InstantCommand(hang::stopMotors),
+
       new DriveForwardTimedCmd(drive, -4),
       
       new WaitCommand(AutonomousConstants.ONE_BALL_TIMEOUT_SECONDS),

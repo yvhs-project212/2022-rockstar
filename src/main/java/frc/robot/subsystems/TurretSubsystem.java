@@ -62,6 +62,10 @@ public class TurretSubsystem extends SubsystemBase {
     turret.set(steering_adjust);
   }
 
+  public void stopMotors() {
+    turret.stopMotor();
+  }
+
   public void turretWithPID() {
     /**    Andrew try to find a code and paste it into here
      *    LL - 3.29.22

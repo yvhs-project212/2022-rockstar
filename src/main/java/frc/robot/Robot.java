@@ -87,6 +87,8 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
+    Constants.pcmCompressor.enableDigital();
+    //Constants.pcmCompressor.disable();
   }
 
   /** This function is called periodically during operator control. */
@@ -97,9 +99,11 @@ public class Robot extends TimedRobot {
   public void testInit() {
     // Cancels all running commands at the start of test mode.
     CommandScheduler.getInstance().cancelAll();
+    Constants.pcmCompressor.enableDigital();
   }
 
   /** This function is called periodically during test mode. */
   @Override
-  public void testPeriodic() {}
+  public void testPeriodic() {
+  }
 }

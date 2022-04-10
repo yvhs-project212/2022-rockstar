@@ -116,7 +116,7 @@ public final class Constants {
 	}
 	
 	public static final class IntakeConstants {
-		public static final double INTAKE_SPEED = 0.65; 
+		public static final double INTAKE_SPEED = 0.5; 
         public static final double INTAKE_DEPLOY_TIME = 0.3; // seconds
 	}
 
@@ -278,8 +278,9 @@ public final class Constants {
 
         public static final double FLYWHEEL_REV_TIME_SECONDS = 2;
         public static final double ONE_BALL_TIMEOUT_SECONDS = 6.5; 
-        public static final double TWO_BALL_TIMEOUT_SECONDS = 3.5; 
 
+        public static final double TWO_BALL_TIMEOUT_SECONDS = 3.5; 
+        public static final double TURRET_TIMEOUT_SECONDS = 0.9;
         
 	}
 

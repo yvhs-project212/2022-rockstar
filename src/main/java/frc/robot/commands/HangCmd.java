@@ -30,7 +30,7 @@ public class HangCmd extends CommandBase {
     if (RobotContainer.driverJoystick.getPOV() >= 0) {
       hang.hangWithPOV(RobotContainer.driverJoystick); 
     } else {
-      hang.stop();
+      hang.stopMotors();
     }
   }
 

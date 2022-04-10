@@ -31,13 +31,24 @@ public class TwoBallAutoCmdGroup extends SequentialCommandGroup {
     addCommands(
       new PrintCommand("TwoBallAutoCmdGroup started!"),  
       new InstantCommand(() -> drive.setGear(Value.kForward)),
+      
+      new InstantCommand(storage::stopMotors),
+      new InstantCommand(turret::stopMotors),
+      new InstantCommand(shooter::stopMotors),
+      new InstantCommand(hang::stopMotors),
 
       new ParallelDeadlineGroup(
         new DriveForwardTimedCmd(drive, 4), 
         new IntakeCmdGroup(intake)
         ),
       new IntakeRetractCmdGroup(intake),
-      new DriveTurnTimedCmd(drive, 1.3),
+
+      new ParallelDeadlineGroup(
+        new DriveTurnTimedCmd(drive, 1.3),
+        new SequentialCommandGroup(
+          new WaitCommand(AutonomousConstants.TURRET_TIMEOUT_SECONDS),
+        new RunCommand(turret::turretWithLimelight, turret)
+        )),
       
       new WaitCommand(AutonomousConstants.TWO_BALL_TIMEOUT_SECONDS),
       new PrintCommand("Shoot Ball started!"),
