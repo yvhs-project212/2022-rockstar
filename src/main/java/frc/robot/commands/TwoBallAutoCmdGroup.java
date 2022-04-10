@@ -47,7 +47,7 @@ public class TwoBallAutoCmdGroup extends SequentialCommandGroup {
         new DriveTurnTimedCmd(drive, 1.3),
         new SequentialCommandGroup(
           new WaitCommand(AutonomousConstants.TURRET_TIMEOUT_SECONDS),
-        new RunCommand(turret::turretWithLimelight, turret)
+          new RunCommand(turret::turretWithLimelight, turret)
         )),
       
       new WaitCommand(AutonomousConstants.TWO_BALL_TIMEOUT_SECONDS),
