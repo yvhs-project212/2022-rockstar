@@ -39,7 +39,8 @@ public class TwoBallAutoCmdGroup extends SequentialCommandGroup {
 
       new ParallelDeadlineGroup(
         new DriveForwardTimedCmd(drive, 4), 
-        new IntakeCmdGroup(intake)
+        new IntakeCmdGroup(intake),
+        new StorageCmd(storage)
         ),
       new IntakeRetractCmdGroup(intake),
 
