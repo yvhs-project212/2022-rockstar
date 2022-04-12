@@ -42,6 +42,21 @@ public class TwoBallAutoCmdGroup extends SequentialCommandGroup {
         new IntakeCmdGroup(intake),
         new StorageCmd(storage)
         ),
+      /**
+       * 4.12.22
+       * Post San Jose Regional
+       * by Louie Labata
+       * 
+       * Problems with this autonomous I noticed in competiiton
+       * 
+       * 1) Timed base is inaccurate and is not repeatable
+       * 
+       * - was working for the first 4 games but not for the last 5 games
+       * 
+       * 2) I forgot to add the "StorageCmd(storage)" to index the ball after picking it up
+       * 
+       * 
+       */
       new IntakeRetractCmdGroup(intake),
 
       new ParallelDeadlineGroup(
