@@ -51,8 +51,8 @@ public class ShooterSubsystem extends SubsystemBase {
     table = NetworkTableInstance.getDefault().getTable("limelight");
 
     shooterOnOff = false;
-    manualMode = false;
-    staticMode = false;
+    manualMode = true;
+    staticMode = true;
 
     topFlywheel_targetVelocity_UnitsPer100ms = 0;
     bottomFlywheel_targetVelocity_UnitsPer100ms = 0;
