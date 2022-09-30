@@ -95,6 +95,16 @@ public class DrivetrainSubsystem extends SubsystemBase {
   }
 
   public void driveWithJoysticks(XboxController controller, double forwardSpeed, double turnSpeed) {
+    tankDriveWithJoysticks(controller, forwardSpeed, turnSpeed);
+  }
+  
+  public void tankDriveWithJoysticks(XboxController controller, double forwardSpeed, double turnSpeed) {
+    double leftSpeed = -1 * controller.getRawAxis(Constants.OI.XBOX_Y_AXIS)*forwardSpeed;
+    double rightSpeed = -1 * controller.getRawAxis(Constants.OI.XBOX_Y2_AXIS)*forwardSpeed;
+    drive.tankDrive(leftSpeed, rightSpeed);
+  }
+
+  public void arcadeDriveWithJoysticks(XboxController controller, double forwardSpeed, double turnSpeed) {
     double forward = ((controller.getRightTriggerAxis() - 
     controller.getLeftTriggerAxis())*forwardSpeed);
 

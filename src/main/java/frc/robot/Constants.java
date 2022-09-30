@@ -75,6 +75,8 @@ public final class Constants {
 
         public static final int XBOX_Y_AXIS = 1;
         public static final int XBOX_X_AXIS = 0; 
+        public static final int XBOX_X2_AXIS = 4;
+        public static final int XBOX_Y2_AXIS = 5;
     }
 
     public static final class DriveConstants {
