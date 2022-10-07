@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import java.io.FileReader;
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import edu.wpi.first.wpilibj.Filesystem;
 
@@ -30,22 +31,25 @@ public class Robot extends TimedRobot {
       return gitCommitHash;
     }
 
+    String firstLine;
+
     try{
       File deployDir = Filesystem.getDeployDirectory();
       File branchFile = new File(deployDir, "branch.txt");
       File commitFile = new File(deployDir, "commit.txt");
       FileReader fr = new FileReader(commitFile);
       BufferedReader br = new BufferedReader(fr);
-      String firstLine = br.readLine();
+      firstLine = br.readLine();
       br.close();
-    } catch IOException e {
+    } catch (IOException e) {
       e.getStackTrace();
+      return null;
     }
 
     gitCommitHash = firstLine.trim();
     return gitCommitHash;
     }
-  }
+  
   /**
    * This function is run when the robot is first started up and should be used for any
    * initialization code.
