@@ -113,6 +113,8 @@ public final class Constants {
         public static final double kWheelDiameterMeters = 0; 
         public static final double kP = 0.5;
         */
+        public static final double MAX_FORWARD_ACCELERATION = 2.0 / 20;
+        public static final double MAX_TURN_ACCELERATION = 2.0 / 20;
 	}
 	
 	public static final class IntakeConstants {

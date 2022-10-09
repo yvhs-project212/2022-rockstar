@@ -94,12 +94,42 @@ public class DrivetrainSubsystem extends SubsystemBase {
     */
   }
 
+  private double lastForwardSpeed = 0.0;
+  private double applyForwardSpeedAccelerationLimit(double newForwardSpeed) {
+    double maxAccel = Constants.DriveConstants.MAX_FORWARD_ACCELERATION;
+    double speedChange = newForwardSpeed - lastForwardSpeed;
+    if (speedChange > maxAccel) {
+      speedChange = maxAccel;
+    } else if (speedChange < -maxAccel) {
+      speedChange = -maxAccel;
+    }
+    adjustedSpeed = lastForwardSpeed + speedChange;
+    lastForwardSpeed = adjustedSpeed;
+    return adjustedSpeed;
+  }
+
+  private double lastTurnSpeed = 0.0;
+  private double applyTurnSpeedAccelerationLimit(double newTurnSpeed) {
+    double maxAccel = Constants.DriveConstants.MAX_TURN_ACCELERATION;
+    double speedChange = newTurnSpeed - lastTurnSpeed;
+    if (speedChange > maxAccel) {
+      speedChange = maxAccel;
+    } else if (speedChange < -maxAccel) {
+      speedChange = -maxAccel;
+    }
+    adjustedSpeed = lastTurnSpeed + speedChange;
+    lastTurnSpeed = adjustedSpeed;
+    return adjustedSpeed;
+  }
+
   public void driveWithJoysticks(
       XboxController controller, double maxForwardSpeed, double maxTurnSpeed) {
     double triggerDifference = controller.getRightTriggerAxis() - controller.getLeftTriggerAxis();
-    double forwardSpeed = triggerDifference*maxForwardSpeed;
+    double forwardSpeed =
+      applyForwardSpeedAccelerationLimit(triggerDifference*maxForwardSpeed);
 
-    double turnSpeed = controller.getRawAxis(Constants.OI.XBOX_X_AXIS)*maxTurnSpeed;
+    double turnSpeed = 
+      applyTurnSpeedAccelerationLimit(controller.getRawAxis(Constants.OI.XBOX_X_AXIS)*maxTurnSpeed);
     drive.arcadeDrive(forwardSpeed, turnSpeed);
   }
 
