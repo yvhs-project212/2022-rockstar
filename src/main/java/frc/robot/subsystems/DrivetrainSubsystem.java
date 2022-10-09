@@ -94,12 +94,13 @@ public class DrivetrainSubsystem extends SubsystemBase {
     */
   }
 
-  public void driveWithJoysticks(XboxController controller, double forwardSpeed, double turnSpeed) {
-    double forward = ((controller.getRightTriggerAxis() - 
-    controller.getLeftTriggerAxis())*forwardSpeed);
+  public void driveWithJoysticks(
+      XboxController controller, double maxForwardSpeed, double maxTurnSpeed) {
+    double triggerDifference = controller.getRightTriggerAxis() - controller.getLeftTriggerAxis();
+    double forwardSpeed = triggerDifference*maxForwardSpeed;
 
-    drive.arcadeDrive(forward, controller.getRawAxis(Constants.OI.XBOX_X_AXIS)*turnSpeed);
-    //drive.arcadeDrive(controller.getRawAxis(Constants.OI.XBOX_Y_AXIS)*-(forwardSpeed), controller.getRawAxis(Constants.OI.XBOX_X_AXIS)*turnSpeed);
+    double turnSpeed = controller.getRawAxis(Constants.OI.XBOX_X_AXIS)*maxTurnSpeed;
+    drive.arcadeDrive(forwardSpeed, turnSpeed);
   }
 
   public void setMotors(double left, double right) {
