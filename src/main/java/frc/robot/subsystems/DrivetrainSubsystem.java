@@ -103,7 +103,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
     } else if (speedChange < -maxAccel) {
       speedChange = -maxAccel;
     }
-    adjustedSpeed = lastForwardSpeed + speedChange;
+    double adjustedSpeed = lastForwardSpeed + speedChange;
     lastForwardSpeed = adjustedSpeed;
     return adjustedSpeed;
   }
@@ -117,7 +117,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
     } else if (speedChange < -maxAccel) {
       speedChange = -maxAccel;
     }
-    adjustedSpeed = lastTurnSpeed + speedChange;
+    double adjustedSpeed = lastTurnSpeed + speedChange;
     lastTurnSpeed = adjustedSpeed;
     return adjustedSpeed;
   }
