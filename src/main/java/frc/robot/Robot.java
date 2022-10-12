@@ -8,6 +8,11 @@ import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import java.io.FileReader;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.IOException;
+import edu.wpi.first.wpilibj.Filesystem;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -19,7 +24,55 @@ public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
 
   private RobotContainer m_robotContainer;
+  private String gitCommitHash;
+  private String gitBranch;
 
+  public String getGitCommitHash(){
+    if (gitCommitHash != null){
+      return gitCommitHash;
+    }
+
+    String firstLine;
+
+    try{
+      File deployDir = Filesystem.getDeployDirectory();
+      File commitFile = new File(deployDir, "commit.txt");
+      FileReader fr = new FileReader(commitFile);
+      BufferedReader br = new BufferedReader(fr);
+      firstLine = br.readLine();
+      br.close();
+    } catch (IOException e) {
+      e.getStackTrace();
+      return null;
+    }
+
+    gitCommitHash = firstLine.trim();
+    return gitCommitHash;
+    }
+  
+    public String getGitBranch(){
+      if (gitBranch !=null){
+        return gitBranch;
+      }
+
+      String firstLine;
+
+      try{
+        File deployDir = Filesystem.getDeployDirectory();
+        File branchFile = new File(deployDir, "branch.txt");
+        FileReader fr = new FileReader(branchFile);
+        BufferedReader br = new BufferedReader(fr);
+        firstLine = br.readLine();
+        br.close();
+      } catch (IOException e) {
+        e.getStackTrace();
+        return null;
+      }
+  
+      gitBranch = firstLine.trim();
+      return gitBranch;
+      }
+    
   /**
    * This function is run when the robot is first started up and should be used for any
    * initialization code.
@@ -28,6 +81,8 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
+    System.out.println("Robot is running code from branch '" + getGitBranch() + "'");
+    System.out.println("Robot is running code from Git commit hash '" + getGitCommitHash() + "'");
     m_robotContainer = new RobotContainer();
 
     // Compressor
