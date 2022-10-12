@@ -25,6 +25,7 @@ public class Robot extends TimedRobot {
 
   private RobotContainer m_robotContainer;
   private String gitCommitHash;
+  private String gitBranch;
 
   public String getGitCommitHash(){
     if (gitCommitHash != null){
@@ -35,7 +36,6 @@ public class Robot extends TimedRobot {
 
     try{
       File deployDir = Filesystem.getDeployDirectory();
-      File branchFile = new File(deployDir, "branch.txt");
       File commitFile = new File(deployDir, "commit.txt");
       FileReader fr = new FileReader(commitFile);
       BufferedReader br = new BufferedReader(fr);
@@ -50,6 +50,29 @@ public class Robot extends TimedRobot {
     return gitCommitHash;
     }
   
+    public String getGitBranch(){
+      if (gitBranch !=null){
+        return gitBranch;
+      }
+
+      String firstLine;
+
+      try{
+        File deployDir = Filesystem.getDeployDirectory();
+        File branchFile = new File(deployDir, "branch.txt");
+        FileReader fr = new FileReader(branchFile);
+        BufferedReader br = new BufferedReader(fr);
+        firstLine = br.readLine();
+        br.close();
+      } catch (IOException e) {
+        e.getStackTrace();
+        return null;
+      }
+  
+      gitBranch = firstLine.trim();
+      return gitBranch;
+      }
+    
   /**
    * This function is run when the robot is first started up and should be used for any
    * initialization code.
@@ -58,6 +81,8 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
+    System.out.println("Robot is running code from branch '" + getGitBranch() + "'");
+    System.out.println("Robot is running code from Git commit hash '" + getGitCommitHash() + "'");
     m_robotContainer = new RobotContainer();
 
     // Compressor
